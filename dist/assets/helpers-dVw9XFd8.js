@@ -1,0 +1,1 @@
+const d=()=>typeof window<"u"&&window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches,o=e=>{typeof document<"u"&&(document.title=e?`asad | ${e}`:"asad | portfolio")};export{d as p,o as s};
