@@ -45,9 +45,39 @@ const commands = {
   whoami: () => ['guest@asad.dev'],
   ls: () => ['home/  works/  skills/  about/  contacts/  comparision/'],
   clear: () => ['__CLEAR__'],
-  sudo: () => [
-    '[sudo] password for guest:',
-    'guest is not in the sudoers file. This incident will be reported.',
-  ],
+  sudo: (args) => {
+    if (args[0] === 'asad') {
+      const jokes = [
+        'access granted... just kidding 😂',
+        'nice try bro 😭',
+        'you thought you were root? think again.',
+        'permission denied ❌ ego boosted ✅',
+        'hacking NASA... 1%... failed 🚫',
+        'sudo power not found. install confidence first.',
+        'you are now... still a guest 😎',
+        'error 403: asad is not that powerful',
+        'FBI has entered the chat 🚔',
+        'typing sudo doesn’t make you a hacker bro 💀',
+        'root access? best I can do is console.log',
+        'system says: go study instead 📚',
+        'you unlocked nothing 🔓',
+        'sudo failed successfully',
+        'congrats! you hacked... nothing 🎉',
+        'permission denied but respect granted 🤝',
+        'admin rights loading... never mind.',
+        'this attempt has been reported to your mom 📞',
+        'you need +100 coding skill for this action ⚔️',
+        'try again after 10 years of experience ⏳',
+      ];
+
+      const random = jokes[Math.floor(Math.random() * jokes.length)];
+      return [random];
+    }
+
+    return [
+      '[sudo] password for guest:',
+      'guest is not in the sudoers file. This incident will be reported.',
+    ];
+  },
   echo: (args) => [args.join(' ')],
 };
