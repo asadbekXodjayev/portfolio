@@ -1,0 +1,36 @@
+export const skillGroups = [
+  {
+    title: 'frontend.sys',
+    items: [
+      { name: 'React', level: 99 },
+      { name: 'JavaScript', level: 98 },
+      { name: 'HTML5', level: 100 },
+      { name: 'CSS3 / styled-components / Sass', level: 100 },
+      { name: 'TypeScript', level: 92 },
+    ],
+  },
+  {
+    title: 'tooling.sys',
+    items: [
+      { name: 'Git', level: 90 },
+      { name: 'Webpack / Vite', level: 95 },
+      { name: 'npm', level: 95 },
+      { name: 'Figma', level: 90 },
+    ],
+  },
+  {
+    title: 'backend.sys',
+    items: [
+      { name: 'Node.js', level: 60 },
+      { name: 'REST APIs', level: 85 },
+      { name: 'SQL', level: 55 },
+    ],
+  },
+  {
+    title: 'Languages',
+    items: [
+      { name: 'C++', level: 80 },
+      { name: 'Python', level: 85 },
+    ],
+  },
+];

@@ -1,0 +1,36 @@
+export const config = {
+  name: 'Asad',
+  handle: 'asad',
+  role: 'Front-end Developer',
+  roles: [
+    'Front-end Developer',
+    'React Enthusiast',
+    'Terminal Dweller',
+    'Open Source Contributor',
+  ],
+  email: 'xadasad67@gmail.com',
+  socials: {
+    telegram: 'https://t.me/m2dnight',
+    instagram: 'https://instagram.com/leomessi/',
+    linkedin: 'https://linkedin.com',
+  },
+  version: 'v2.0',
+  systemInfo: {
+    os: 'PortfolioOS 2.0 (terminal-edition)',
+    kernel: '6.6.0-asad',
+    shell: '/bin/zsh',
+    editor: 'neovim',
+    uptime: '∞ days, caffeine-powered',
+    host: 'nerdbek@dev',
+  },
+};
+
+export const interests = [
+  { name: 'Football', desc: 'Since childhood, I have been a fan of one football team — stuck in my heart forever.' },
+  { name: 'Gym', desc: 'In late 2022 I started working out at home, every night.' },
+  { name: 'History', desc: 'From a young age I have been drawn to history and the stories of the past.' },
+  { name: 'Movies', desc: 'Grateful for every TV I had growing up — movies shaped a lot of me.' },
+  { name: 'Music', desc: 'In recent years I started actively listening to music — it rewired my days.' },
+  { name: 'Cars', desc: 'Cars — one of the most intoxicating things mankind has ever forged.' },
+  { name: 'Games', desc: 'Honestly not a gamer, but I appreciate good design when I see it.' },
+];
