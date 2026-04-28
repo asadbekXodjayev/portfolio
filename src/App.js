@@ -14,10 +14,11 @@ const About = lazy(() => import('./pages/About'));
 const Contacts = lazy(() => import('./pages/Contacts'));
 const Blog = lazy(() => import('./pages/Blog'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-
+import { Analytics } from '@vercel/analytics/next';
 const App = () => (
   <ThemeProvider>
-      <Bot/>
+    <Bot />
+    <Analytics />
     <GlobalStyles />
     <ScrollToTop />
     <Layout>
