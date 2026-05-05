@@ -43,7 +43,7 @@ export const projects = [
   {
     key: 'TV app',
     type: 'EXE',
-    href: 'https://s-play-three.vercel.app/',
+    href: 'https://tv2.splay.glob.uz/',
     img: Img13,
     title: 'TV app',
     desc: 'TV app Project',
