@@ -7,8 +7,8 @@ import Img8 from '../Image/img_2.png';
 import Img9 from '../Image/Снимок экрана (284).png';
 import Img10 from '../Image/Снимок экрана (285).png';
 import Img11 from '../Image/image.png';
-import Img11 from '../Image/Снимок экрана (522).png';
-import Img11 from '../Image/Снимок экрана (526).png';
+import Img12 from '../Image/Снимок экрана (522).png';
+import Img13 from '../Image/Снимок экрана (526).png';
 
 export const projects = [
 
