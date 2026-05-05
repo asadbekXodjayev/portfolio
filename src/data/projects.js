@@ -6,6 +6,9 @@ import Img7 from '../Image/img_1.png';
 import Img8 from '../Image/img_2.png';
 import Img9 from '../Image/Снимок экрана (284).png';
 import Img10 from '../Image/Снимок экрана (285).png';
+import Img11 from '../Image/image.png';
+import Img11 from '../Image/Снимок экрана (522).png';
+import Img11 from '../Image/Снимок экрана (526).png';
 
 export const projects = [
 
@@ -16,6 +19,34 @@ export const projects = [
     img: Img9,
     title: 'Gym app',
     desc: 'Planner',
+    tags: ['Next.js', 'state'],
+  },
+  {
+    key: 'Tattoo Studio',
+    type: 'EXE',
+    href: 'https://yun-tattoo.vercel.app/',
+    img: Img11,
+    title: 'Tattoo Studio',
+    desc: 'Tattoo Studio Project',
+    tags: ['Next.js', 'state'],
+  },
+  {
+    key: 'Art Gallery',
+    type: 'EXE',
+    href: 'https://yun-tattoo.vercel.app/',
+    img: Img12,
+    title: 'Art Gallery',
+    desc: 'Art Gallery Project',
+    tags: ['Next.js', 'state'],
+  },
+
+  {
+    key: 'TV app',
+    type: 'EXE',
+    href: 'https://s-play-three.vercel.app/',
+    img: Img13,
+    title: 'TV app',
+    desc: 'TV app Project',
     tags: ['Next.js', 'state'],
   },
 
