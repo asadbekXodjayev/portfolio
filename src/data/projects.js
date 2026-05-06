@@ -9,6 +9,7 @@ import Img10 from '../Image/Снимок экрана (285).png';
 import Img11 from '../Image/image.png';
 import Img12 from '../Image/Снимок экрана (522).png';
 import Img13 from '../Image/Снимок экрана (526).png';
+import Img14 from '../Image/Screenshot 2026-05-06 162242.png';
 
 export const projects = [
 
@@ -49,7 +50,15 @@ export const projects = [
     desc: 'TV app Project',
     tags: ['Next.js', 'state'],
   },
-
+  {
+    key: 'Space Tourism',
+    type: 'EXE',
+    href: 'https://space-cosmic.vercel.app/',
+    img: Img14,
+    title: 'Space Tourism',
+    desc: 'Space Tourism Project',
+    tags: ['Next.js', 'state'],
+  },
   {
     key: 'Spotify stats',
     type: 'EXE',
