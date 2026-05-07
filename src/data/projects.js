@@ -10,6 +10,7 @@ import Img11 from '../Image/image.png';
 import Img12 from '../Image/Снимок экрана (522).png';
 import Img13 from '../Image/Снимок экрана (526).png';
 import Img14 from '../Image/Screenshot 2026-05-06 162242.png';
+import Img15 from '../Image/Screenshot 2026-05-07 133609.png';
 
 export const projects = [
 
@@ -20,7 +21,7 @@ export const projects = [
     img: Img9,
     title: 'Gym app',
     desc: 'Planner',
-    tags: ['Next.js', 'state'],
+    tags: ['Next.js', 'state', 'live'],
   },
   {
     key: 'Tattoo Studio',
@@ -29,16 +30,16 @@ export const projects = [
     img: Img11,
     title: 'Tattoo Studio',
     desc: 'Tattoo Studio Project',
-    tags: ['Next.js', 'state'],
+    tags: ['Next.js', 'state', 'live', 'business'],
   },
   {
     key: 'Art Gallery',
     type: 'EXE',
-    href: 'https://yun-tattoo.vercel.app/',
+    href: 'https://art-codex.vercel.app/',
     img: Img12,
     title: 'Art Gallery',
     desc: 'Art Gallery Project',
-    tags: ['Next.js', 'state'],
+    tags: ['Next.js', 'state', 'motion'],
   },
 
   {
@@ -48,7 +49,7 @@ export const projects = [
     img: Img13,
     title: 'TV app',
     desc: 'TV app Project',
-    tags: ['Next.js', 'state'],
+    tags: ['Next.js', 'state', 'API'],
   },
   {
     key: 'Space Tourism',
@@ -57,7 +58,16 @@ export const projects = [
     img: Img14,
     title: 'Space Tourism',
     desc: 'Space Tourism Project',
-    tags: ['Next.js', 'state'],
+    tags: ['Next.js', 'state', 'motion'],
+  },
+  {
+    key: 'AI recipe',
+    type: 'EXE',
+    href: 'https://ai-reciept.vercel.app/',
+    img: Img15,
+    title: 'AI Recipe',
+    desc: 'AI-powered recipe recommendation app',
+    tags: ['Next.js', 'state', 'AI'],
   },
   {
     key: 'Spotify stats',
@@ -76,7 +86,7 @@ export const projects = [
     img: Img8,
     title: 'Logistics Project',
     desc: 'US logistics',
-    tags: ['react + Vite', 'state'],
+    tags: ['react + Vite', 'state', 'live'],
   },
   {
     key: 'Type game',
@@ -85,7 +95,7 @@ export const projects = [
     img: Img6,
     title: 'Type game Project',
     desc: 'Interactive game project',
-    tags: ['react + Vite', 'state'],
+    tags: ['react + Vite', 'state', 'live'],
   },
 
   {
