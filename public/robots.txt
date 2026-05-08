@@ -1,3 +1,11 @@
+# Robots.txt for xodjayev.uz
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location
+Sitemap: https://xodjayev.uz/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
