@@ -1,12 +1,13 @@
 export const config = {
-  name: 'Asad',
-  handle: 'asad',
+  name: 'Xodjayev Asadbek Utkirov',
+  handle: 'xodjayev',
   role: 'Front-end Developer',
   roles: [
     'Front-end Developer',
-    'React Enthusiast',
-    'Terminal Dweller',
-    'Open Source Contributor',
+    'Xodjayev Asadbek Utkirov',
+    'React Developer',
+    'JavaScript Developer',
+    'Web Developer from Uzbekistan',
   ],
   email: 'xadasad67@gmail.com',
   socials: {

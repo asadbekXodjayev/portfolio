@@ -62,11 +62,13 @@ const Desc = styled.div`
 `;
 
 const bio = [
-  { t: '<strong>user:</strong> asad' },
-  { t: '<strong>role:</strong> front-end developer' },
+  { t: '<strong>name:</strong> Xodjayev Asadbek Utkirov' },
+  { t: '<strong>user:</strong> @xodjayev' },
+  { t: '<strong>role:</strong> Front-end Developer' },
   { t: '<strong>loc:</strong> Uzbekistan' },
-  { t: '<strong>focus:</strong> React, UI, fast interfaces' },
-  { t: 'Greetings! I build web things with React and a strong bias for clean, fast UI. I love terminals, typography, and details.' },
+  { t: '<strong>focus:</strong> React, JavaScript, Modern Web Technologies' },
+  { t: '<strong>email:</strong> xodjayev.uz' },
+  { t: 'Greetings! I am <strong>Xodjayev Asadbek Utkirov</strong>, a professional front-end developer based in Uzbekistan. I build web things with React and a strong bias for clean, fast UI. I love terminals, typography, and details.' },
 ];
 
 const About = () => {
