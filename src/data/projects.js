@@ -11,6 +11,7 @@ import Img12 from '../Image/Снимок экрана (522).png';
 import Img13 from '../Image/Снимок экрана (526).png';
 import Img14 from '../Image/Screenshot 2026-05-06 162242.png';
 import Img15 from '../Image/Screenshot 2026-05-07 133609.png';
+import Img16 from '../Image/Screenshot 2026-05-13 111213.png';
 
 export const projects = [
 
@@ -49,7 +50,7 @@ export const projects = [
     img: Img13,
     title: 'TV app',
     desc: 'TV app Project',
-    tags: ['Next.js', 'state', 'API'],
+    tags: ['Next.js', 'state', 'API', 'motion', 'zustand', 'FSD'],
   },
   {
     key: 'Space Tourism',
@@ -58,8 +59,18 @@ export const projects = [
     img: Img14,
     title: 'Space Tourism',
     desc: 'Space Tourism Project',
-    tags: ['Next.js', 'state', 'motion'],
+    tags: ['Next.js', 'State', 'Motion'],
   },
+  {
+    key: 'FSD structure',
+    type: 'EXE',
+    href: 'https://nova-fsd.vercel.app/',
+    img: Img16,
+    title: 'NOVA-store',
+    desc: 'e-commerce project with FSD structure',
+    tags: ['Next.js', 'state', 'FSD', 'Zustand', 'Motion', 'API'],
+  },
+
   {
     key: 'AI recipe',
     type: 'EXE',
