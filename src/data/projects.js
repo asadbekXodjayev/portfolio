@@ -43,15 +43,15 @@ export const projects = [
     tags: ['Next.js', 'state', 'motion'],
   },
 
-  // {
-  //   key: 'TV app',
-  //   type: 'EXE',
-  //   href: 'https://tv2.splay.glob.uz/',
-  //   img: Img13,
-  //   title: 'TV app',
-  //   desc: 'TV app Project',
-  //   tags: ['Next.js', 'state', 'API', 'motion', 'zustand', 'FSD'],
-  // },
+  {
+    key: 'TV app',
+    type: 'EXE',
+    href: 'https://tv2.splay.glob.uz/',
+    img: Img13,
+    title: 'TV app',
+    desc: 'TV app Project',
+    tags: ['Next.js', 'state', 'API', 'motion', 'zustand', 'FSD'],
+  },
   {
     key: 'Space Tourism',
     type: 'EXE',
