@@ -12,6 +12,8 @@ import Img13 from '../Image/Снимок экрана (526).png';
 import Img14 from '../Image/Screenshot 2026-05-06 162242.png';
 import Img15 from '../Image/Screenshot 2026-05-07 133609.png';
 import Img16 from '../Image/Screenshot 2026-05-13 111213.png';
+import Img17 from '../Image/Screenshot 2026-05-30 093140.png';
+import Img18 from '../Image/Screenshot 2026-05-30 092643.png';
 
 export const projects = [
 
@@ -24,6 +26,17 @@ export const projects = [
     desc: 'Planner',
     tags: ['Next.js', 'state', 'live'],
   },
+
+  {
+    key: 'Sarbon',
+    type: 'EXE',
+    href: 'https://new.sarbon.me/',
+    img: Img17,
+    title: 'Sarbon logistics Project',
+    desc: 'Web page for logistics project',
+    tags: ['react + Vite', 'state', 'live', 'business', 'API', 'motion', 'zustand', 'FSD', 'Localization'],
+  },
+  
   {
     key: 'Tattoo Studio',
     type: 'EXE',
@@ -33,15 +46,7 @@ export const projects = [
     desc: 'Tattoo Studio Project',
     tags: ['Next.js', 'state', 'live', 'business'],
   },
-  {
-    key: 'Art Gallery',
-    type: 'EXE',
-    href: 'https://art-codex.vercel.app/',
-    img: Img12,
-    title: 'Art Gallery',
-    desc: 'Art Gallery Project',
-    tags: ['Next.js', 'state', 'motion'],
-  },
+
 
   {
     key: 'TV app',
@@ -51,6 +56,45 @@ export const projects = [
     title: 'TV app',
     desc: 'TV app Project',
     tags: ['Next.js', 'state', 'API', 'motion', 'zustand', 'FSD'],
+  },
+
+  {
+    key: 'MoGlobeTrucking',
+    type: 'EXE',
+    href: 'https://logistics-update.vercel.app/',
+    img: Img8,
+    title: 'Logistics Project',
+    desc: 'US logistics',
+    tags: ['react + Vite', 'state', 'live'],
+  },
+
+  {
+    key: 'Type game',
+    type: 'EXE',
+    href: 'https://type-com.vercel.app/',
+    img: Img6,
+    title: 'Type game Project',
+    desc: 'Interactive game project',
+    tags: ['react + Vite', 'state', 'live'],
+  },
+
+  {
+    key: 'DATA',
+    type: 'EXE',
+    href: 'https://data-visualy.vercel.app/',
+    img: Img18,
+    title: 'Data Algorithms Project',
+    desc: 'Data visualization project',
+    tags: ['react + Vite', 'state', 'live'],
+  },
+  {
+    key: 'Art Gallery',
+    type: 'EXE',
+    href: 'https://art-codex.vercel.app/',
+    img: Img12,
+    title: 'Art Gallery',
+    desc: 'Art Gallery Project',
+    tags: ['Next.js', 'state', 'motion'],
   },
   {
     key: 'Space Tourism',
@@ -90,24 +134,6 @@ export const projects = [
     tags: ['Next.js', 'state'],
   },
 
-  {
-    key: 'MoGlobeTrucking',
-    type: 'EXE',
-    href: 'https://logistics-update.vercel.app/',
-    img: Img8,
-    title: 'Logistics Project',
-    desc: 'US logistics',
-    tags: ['react + Vite', 'state', 'live'],
-  },
-  {
-    key: 'Type game',
-    type: 'EXE',
-    href: 'https://type-com.vercel.app/',
-    img: Img6,
-    title: 'Type game Project',
-    desc: 'Interactive game project',
-    tags: ['react + Vite', 'state', 'live'],
-  },
 
   {
     key: 'waterpump',
