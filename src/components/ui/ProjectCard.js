@@ -5,14 +5,9 @@ import Badge from './Badge';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
 import { langColor } from '../../lib/github';
 
-// Category -> accent color for the gradient placeholder + card glow.
+// Green + black terminal theme: green everywhere, cyan only for the AI/ML tier.
 const accentFor = (theme, category) =>
-  ({
-    Web: theme.colors.primary,
-    'AI/ML': theme.colors.secondary,
-    Mobile: theme.colors.warning,
-    'C++ / C#': theme.colors.danger,
-  }[category] || theme.colors.primary);
+  category === 'AI/ML' ? theme.colors.secondary : theme.colors.primary;
 
 // Card sets a single CSS var (--accent); every child reads it. Keeps things tidy.
 const Card = styled(motion.article)`

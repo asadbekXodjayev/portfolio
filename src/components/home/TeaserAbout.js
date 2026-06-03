@@ -17,7 +17,7 @@ const Grid = styled.div`
 `;
 
 const Ascii = styled.pre`
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 9px;
   line-height: 1.1;
   margin: 0;
@@ -43,11 +43,11 @@ const P = styled(motion.p)`
 
 const TeaserAbout = () => (
   <Section variants={containerVariants} {...inViewProps}>
-    <Eyebrow variants={itemVariants} $accent="#ffaa00">
+    <Eyebrow variants={itemVariants}>
       <span>$</span> cat ~/about/whoami.md
     </Eyebrow>
     <motion.div variants={itemVariants}>
-      <TerminalWindow title="~/about" variant="amber">
+      <TerminalWindow title="~/about">
         <Grid>
           <Ascii aria-hidden="true">{asciiPortrait}</Ascii>
           <Copy>

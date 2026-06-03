@@ -35,14 +35,14 @@ const Log = styled.div`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 13px;
   color: ${({ theme }) => theme.colors.text};
-  span { color: ${({ theme }) => theme.colors.warning}; }
+  span { color: ${({ theme }) => theme.colors.secondary}; }
 `;
 
 const Verdict = styled.div`
   margin-top: 8px;
   font-size: 18px;
   color: ${({ theme, $kind }) =>
-    $kind === 'mogged' ? theme.colors.danger : $kind === 'cap' ? theme.colors.warning : theme.colors.textMuted};
+    $kind === 'mogged' ? theme.colors.primary : $kind === 'cap' ? theme.colors.textMuted : theme.colors.textMuted};
 `;
 
 const Bars = styled.div`
@@ -86,7 +86,7 @@ const Comparison = () => {
   const userBarH = Math.max(20, Math.min(260, (h / MY_H) * 220));
 
   return (
-    <TerminalWindow title="~/comparision — ./heightmog.sh" variant="amber">
+    <TerminalWindow title="~/comparision — ./heightmog.sh">
       <Form onSubmit={submit}>
         <label>
           $ name:

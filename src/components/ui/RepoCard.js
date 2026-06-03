@@ -5,13 +5,11 @@ import { GitHubIcon } from './ProjectCard';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
 import { langColor, formatUpdated } from '../../lib/github';
 
+// Green + black: green accent; cyan reserved for AI/ML + the live "Open Source" feed.
 const accentFor = (theme, category) =>
-  ({
-    Web: theme.colors.primary,
-    'AI/ML': theme.colors.secondary,
-    Mobile: theme.colors.warning,
-    'C++ / C#': theme.colors.danger,
-  }[category] || theme.colors.secondary);
+  category === 'AI/ML' || category === 'Open Source'
+    ? theme.colors.secondary
+    : theme.colors.primary;
 
 const Card = styled(motion.article)`
   --accent: ${({ theme, $category }) => accentFor(theme, $category)};

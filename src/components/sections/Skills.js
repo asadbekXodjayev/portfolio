@@ -88,7 +88,8 @@ const BarWrap = styled.div`
 `;
 
 const Pct = styled.span`
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.primary};
+  opacity: 0.65;
   text-align: right;
 `;
 

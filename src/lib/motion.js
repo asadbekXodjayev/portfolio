@@ -43,8 +43,11 @@ export const inViewProps = {
   viewport: { once: true, margin: '-80px' },
 };
 
-// Card hover/tap presets (neon lift). Use with a styled motion component.
-export const cardHover = { y: -6, transition: { duration: 0.2, ease: EASE } };
+// Card hover/tap presets (neon lift). Subtle spring feels more natural than a tween.
+export const cardHover = {
+  y: -6,
+  transition: { type: 'spring', stiffness: 300, damping: 22 },
+};
 export const cardTap = { scale: 0.98 };
 
 // Exit used by AnimatePresence when filtering cards out.

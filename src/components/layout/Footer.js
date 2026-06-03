@@ -37,7 +37,7 @@ const Bottom = styled.div`
 `;
 
 const Version = styled.span`
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const Footer = () => (

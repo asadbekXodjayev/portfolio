@@ -64,7 +64,7 @@ const Note = styled.div`
   border-radius: 6px;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 12.5px;
-  color: ${({ theme, $error }) => ($error ? theme.colors.warning : theme.colors.textMuted)};
+  color: ${({ theme, $error }) => ($error ? theme.colors.secondary : theme.colors.textMuted)};
 `;
 
 const Projects = () => {

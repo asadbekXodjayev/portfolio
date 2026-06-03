@@ -50,7 +50,7 @@ const Area = styled.textarea`
 `;
 
 const Status = styled.div`
-  color: ${({ theme, $ok }) => ($ok ? theme.colors.primary : theme.colors.warning)};
+  color: ${({ theme, $ok }) => ($ok ? theme.colors.primary : theme.colors.secondary)};
   font-size: 12px;
 `;
 

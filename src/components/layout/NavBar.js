@@ -31,7 +31,7 @@ const Brand = styled(Link)`
 `;
 
 const Version = styled.span`
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: 10px;
 `;
 

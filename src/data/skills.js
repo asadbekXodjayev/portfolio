@@ -62,7 +62,6 @@ export const skillGroups = [
   },
   {
     title: 'tooling.sys',
-    variant: 'amber',
     items: [
       { name: 'Git', level: 90 },
       { name: 'Vite / Webpack', level: 95 },
@@ -73,7 +72,6 @@ export const skillGroups = [
   },
   {
     title: 'platforms.sys',
-    variant: 'amber',
     items: [
       { name: 'Windows (native C++/C#)', level: 80 },
       { name: 'Linux', level: 70 },

@@ -39,7 +39,7 @@ const Line = styled.div`
 `;
 
 const Tag = styled.span`
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const BootSequence = ({ onDone }) => {

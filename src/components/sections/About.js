@@ -120,7 +120,8 @@ const Entry = styled(motion.div)`
 const Year = styled.div`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.colors.primary};
+  opacity: 0.7;
 `;
 
 const EntryTitle = styled.h3`
@@ -168,7 +169,7 @@ const About = () => {
   return (
     <Stack>
       <Grid>
-        <TerminalWindow title="~/about/portrait" variant="amber">
+        <TerminalWindow title="~/about/portrait">
           <Ascii>{asciiPortrait}</Ascii>
           <div style={{ marginTop: 12, fontSize: 12, color: '#999' }}>
             <div># system</div>
