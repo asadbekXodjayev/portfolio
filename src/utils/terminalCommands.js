@@ -30,7 +30,9 @@ const commands = {
   ],
   projects: () => [
     'projects:',
-    ...projects.map((p) => `  [${p.type}] ${p.title.padEnd(22)} ${p.href}`),
+    ...projects.map(
+      (p) => `  [${p.category.padEnd(9)}] ${p.title.padEnd(22)} ${p.demo || p.github || ''}`,
+    ),
   ],
   skills: () =>
     skillGroups.flatMap((g) => [
@@ -39,7 +41,7 @@ const commands = {
     ]),
   contact: () => [
     `email:    ${config.email}`,
-    `phone:    ${config.phone}`,
+    `github:   ${config.socials.github}`,
     `telegram: ${config.socials.telegram}`,
   ],
   whoami: () => ['guest@asad.dev'],

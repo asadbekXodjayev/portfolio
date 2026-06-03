@@ -8,6 +8,7 @@ import MatrixRain from '../ui/MatrixRain';
 import Button from '../ui/Button';
 import { config } from '../../data/config';
 import { asciiLogo } from '../../utils/ascii';
+import { prefersReducedMotion } from '../../utils/helpers';
 import { containerVariants, itemVariants } from '../../lib/motion';
 
 const Wrap = styled.section`
@@ -78,9 +79,13 @@ const Hero = () => (
         <GlitchText>{config.name.toUpperCase()}</GlitchText>
       </Name>
       <Role variants={itemVariants}>
-        <Typewriter
-          options={{ strings: config.roles, autoStart: true, loop: true, delay: 55, deleteSpeed: 30 }}
-        />
+        {prefersReducedMotion() ? (
+          config.roles[0]
+        ) : (
+          <Typewriter
+            options={{ strings: config.roles, autoStart: true, loop: true, delay: 55, deleteSpeed: 30 }}
+          />
+        )}
       </Role>
       <Tagline variants={itemVariants}>
         Front-end engineer who started in native C++/C#, ships production React, and is going
@@ -94,7 +99,7 @@ const Hero = () => (
           ./about-me
         </Button>
       </Actions>
-      <Ascii variants={itemVariants}>{asciiLogo}</Ascii>
+      <Ascii variants={itemVariants} aria-hidden="true">{asciiLogo}</Ascii>
     </Inner>
   </Wrap>
 );

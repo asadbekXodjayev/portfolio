@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import GlobalStyles from './styles/GlobalStyles';
 import Layout from './components/layout/Layout';
@@ -17,23 +18,25 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 import { Analytics } from '@vercel/analytics/react';
 const App = () => (
   <ThemeProvider>
-    <Bot />
-    <Analytics />
-    <GlobalStyles />
-    <ScrollToTop />
-    <Layout>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/works" element={<Works />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/comparision" element={<Blog />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </Layout>
+    <MotionConfig reducedMotion="user">
+      <Bot />
+      <Analytics />
+      <GlobalStyles />
+      <ScrollToTop />
+      <Layout>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/works" element={<Works />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/comparision" element={<Blog />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+    </MotionConfig>
   </ThemeProvider>
 );
 

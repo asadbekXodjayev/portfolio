@@ -12,6 +12,9 @@ const Grid = styled(motion.div)`
   gap: ${({ theme }) => theme.space(6)};
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: start;
+  @media (max-width: 360px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 // Wrapper lets the AI/ML tier sit "elevated" — tinted background + accent ring.

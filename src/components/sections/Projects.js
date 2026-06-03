@@ -138,7 +138,7 @@ const Projects = () => {
         <Prompt>
           <strong>asad@dev</strong>:~/works$ ls --projects --filter={filter.toLowerCase()}
         </Prompt>
-        <Pills role="tablist" aria-label="project categories">
+        <Pills id="works-filters" role="tablist" aria-label="project categories">
           {categories.map((c) => (
             <Pill
               key={c}
@@ -154,7 +154,14 @@ const Projects = () => {
         </Pills>
       </Header>
 
-      <Grid variants={containerVariants} initial="hidden" animate="visible" layout>
+      <Grid
+        role="tabpanel"
+        aria-labelledby="works-filters"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        layout
+      >
         <AnimatePresence mode="popLayout">
           {visible.map((it) =>
             it.isRepo ? (
