@@ -14,6 +14,7 @@ const Skills = lazy(() => import('./pages/Skills'));
 const About = lazy(() => import('./pages/About'));
 const Contacts = lazy(() => import('./pages/Contacts'));
 const Blog = lazy(() => import('./pages/Blog'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 import { Analytics } from '@vercel/analytics/react';
 const App = () => (
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/comparision" element={<Blog />} />
             <Route path="/skills" element={<Skills />} />
+            <Route path="/blog" element={<BlogPage />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

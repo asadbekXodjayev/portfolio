@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import ProjectCard from '../ui/ProjectCard';
 import { featuredProjects } from '../../data/projects';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow, MoreLink } from './teaser.styles';
+import { Section, Eyebrow, MoreLink } from './previewStyles';
 
 const Head = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Grid = styled.div`
 `;
 
 // Featured cards normally span 2 cols; in the teaser we want 3 equal cards.
-const TeaserWorks = () => (
+const PreviewWorks = () => (
   <Section variants={containerVariants} {...inViewProps}>
     <Head>
       <Eyebrow variants={itemVariants}>
@@ -39,5 +39,5 @@ const TeaserWorks = () => (
   </Section>
 );
 
-TeaserWorks.displayName = 'TeaserWorks';
-export default TeaserWorks;
+PreviewWorks.displayName = 'PreviewWorks';
+export default PreviewWorks;

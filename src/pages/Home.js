@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import BootSequence from '../components/terminal/BootSequence';
 import Hero from '../components/sections/Hero';
 import TerminalInput from '../components/terminal/TerminalInput';
-import TeaserAbout from '../components/home/TeaserAbout';
-import TeaserWorks from '../components/home/TeaserWorks';
-import TeaserSkills from '../components/home/TeaserSkills';
-import TeaserContact from '../components/home/TeaserContact';
+import PreviewAbout from '../components/home/PreviewAbout';
+import PreviewWorks from '../components/home/PreviewWorks';
+import PreviewSkills from '../components/home/PreviewSkills';
+import PreviewContact from '../components/home/PreviewContact';
 import { setDocTitle } from '../utils/helpers';
 
 const Stack = styled.div`
@@ -32,11 +32,11 @@ const Home = () => {
       {!booted && <BootSequence onDone={onDone} />}
       <Stack>
         <Hero />
-        <TeaserAbout />
-        <TeaserWorks />
-        <TeaserSkills />
+        <PreviewAbout />
+        <PreviewWorks />
+        <PreviewSkills />
         <TerminalInput />
-        <TeaserContact />
+        <PreviewContact />
       </Stack>
     </>
   );

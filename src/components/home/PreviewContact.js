@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import { config } from '../../data/config';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow } from './teaser.styles';
+import { Section, Eyebrow } from './previewStyles';
 
 const Panel = styled(motion.div)`
   display: flex;
@@ -35,7 +35,7 @@ const Actions = styled.div`
   flex-wrap: wrap;
 `;
 
-const TeaserContact = () => (
+const PreviewContact = () => (
   <Section variants={containerVariants} {...inViewProps}>
     <Eyebrow variants={itemVariants}>
       <span>$</span> ./contact --start
@@ -56,5 +56,5 @@ const TeaserContact = () => (
   </Section>
 );
 
-TeaserContact.displayName = 'TeaserContact';
-export default TeaserContact;
+PreviewContact.displayName = 'PreviewContact';
+export default PreviewContact;

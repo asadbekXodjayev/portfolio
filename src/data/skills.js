@@ -36,6 +36,14 @@ export const skillGroups = [
     ],
   },
   {
+    title: 'mobile.sys',
+    items: [
+      { name: 'Flutter', level: 70 },
+      { name: 'Swift', level: 62 },
+      { name: 'React Native', level: 75 },
+    ],
+  },
+  {
     title: 'ai-ml.sys',
     variant: 'cyan',
     highlight: true,

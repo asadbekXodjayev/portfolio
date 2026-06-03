@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { topSkills } from '../../data/skills';
 import { fastContainerVariants, fadeInVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow, MoreLink } from './teaser.styles';
+import { Section, Eyebrow, MoreLink } from './previewStyles';
 
 const Cloud = styled(motion.div)`
   display: flex;
@@ -28,7 +28,7 @@ const Tag = styled(motion.span)`
   }
 `;
 
-const TeaserSkills = () => (
+const PreviewSkills = () => (
   <Section variants={fastContainerVariants} {...inViewProps}>
     <Eyebrow variants={fadeInVariants}>
       <span>$</span> echo $SKILLS | head
@@ -44,5 +44,5 @@ const TeaserSkills = () => (
   </Section>
 );
 
-TeaserSkills.displayName = 'TeaserSkills';
-export default TeaserSkills;
+PreviewSkills.displayName = 'PreviewSkills';
+export default PreviewSkills;

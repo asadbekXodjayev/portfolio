@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { GitHubIcon } from './ProjectCard';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
-import { langColor, formatUpdated } from '../../lib/github';
+import { formatUpdated } from '../../lib/github';
 
 // Green + black: green accent; cyan reserved for AI/ML + the live "Open Source" feed.
 const accentFor = (theme, category) =>
@@ -77,14 +77,6 @@ const Lang = styled.span`
   gap: 5px;
 `;
 
-const Dot = styled.span`
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: ${({ $color }) => $color};
-  display: inline-block;
-`;
-
 const View = styled.a`
   display: inline-flex;
   align-items: center;
@@ -125,12 +117,7 @@ const RepoCard = ({ repo }) => {
       </Head>
       <Desc>{repo.description || '// no description provided'}</Desc>
       <Meta>
-        {repo.language && (
-          <Lang>
-            <Dot $color={langColor(repo.language)} />
-            {repo.language}
-          </Lang>
-        )}
+        {repo.language && <Lang>{repo.language}</Lang>}
         <span>★ {repo.stars}</span>
         {repo.updatedAt && <span>updated {formatUpdated(repo.updatedAt)}</span>}
       </Meta>

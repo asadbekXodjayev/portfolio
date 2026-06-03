@@ -14,7 +14,7 @@ export const config = {
     github: 'https://github.com/asadbekXodjayev',
     telegram: 'https://t.me/m2dnight',
     instagram: 'https://instagram.com/leomessi/',
-    linkedin: 'https://linkedin.com',
+    linkedin: 'https://www.linkedin.com/in/asadbek-xodjayev-1bb8a624a/',
   },
   version: 'v2.0',
   systemInfo: {

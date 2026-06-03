@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Badge from './Badge';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
-import { langColor } from '../../lib/github';
 
 // Green + black terminal theme: green everywhere, cyan only for the AI/ML tier.
 const accentFor = (theme, category) =>
@@ -22,10 +21,6 @@ const Card = styled(motion.article)`
   font-family: ${({ theme }) => theme.fonts.mono};
   transition: border-color ${({ theme }) => theme.animation.fast},
     box-shadow ${({ theme }) => theme.animation.fast};
-
-  ${({ $featured }) =>
-    $featured &&
-    `@media (min-width: 760px) { grid-column: span 2; }`}
 
   &:hover {
     border-color: var(--accent);
@@ -160,14 +155,6 @@ const Meta = styled.span`
   font-size: 11px;
 `;
 
-const Dot = styled.span`
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: ${({ $color }) => $color};
-  display: inline-block;
-`;
-
 const Soon = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
   font-size: 11px;
@@ -231,12 +218,7 @@ const ProjectCard = ({ project }) => {
           {placeholder && !demo && !github && <Soon>// details soon</Soon>}
           {(stars != null || language) && (
             <Meta>
-              {language && (
-                <>
-                  <Dot $color={langColor(language)} />
-                  {language}
-                </>
-              )}
+              {language && <span>{language}</span>}
               {stars != null && <span>★ {stars}</span>}
             </Meta>
           )}

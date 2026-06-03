@@ -76,7 +76,6 @@ const TerminalInput = () => {
       <InputRow onSubmit={handleSubmit}>
         <Prompt>guest@asad:~$</Prompt>
         <Input
-          autoFocus
           value={value}
           onChange={(e) => setValue(e.target.value)}
           aria-label="terminal input"

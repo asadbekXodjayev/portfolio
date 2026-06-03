@@ -1,0 +1,16 @@
+[
+  {
+    "id": "seed-welcome",
+    "title": "Welcome to the log",
+    "date": "2026-06-01",
+    "body": "This is my local dev log. I jot down what I'm building, what I'm learning, and the occasional rabbit hole.\n\nTo add a permanent post, edit src/data/blog.json and add an object to this array. Posts you write from the composer below are saved in your browser only.",
+    "images": []
+  },
+  {
+    "id": "seed-now",
+    "title": "What I'm on right now",
+    "date": "2026-05-20",
+    "body": "Going deeper on AI/ML — PyTorch, LLM apps, and wiring models into real product UIs. Also keeping the native C++/C# muscle alive on the side.",
+    "images": []
+  }
+]

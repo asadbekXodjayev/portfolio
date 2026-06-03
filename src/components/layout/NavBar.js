@@ -74,6 +74,7 @@ const links = [
   { to: '/', label: '~/home', end: true },
   { to: '/works', label: '~/works' },
   { to: '/skills', label: '~/skills' },
+  { to: '/blog', label: '~/blog' },
   { to: '/about', label: '~/about' },
   { to: '/contacts', label: '~/contact' },
 ];

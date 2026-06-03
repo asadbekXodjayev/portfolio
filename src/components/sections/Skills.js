@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import TerminalWindow from '../terminal/TerminalWindow';
 import { skillGroups } from '../../data/skills';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
-import { langColor } from '../../lib/github';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
 
 const Grid = styled(motion.div)`
@@ -61,21 +60,10 @@ const Row = styled.div`
 `;
 
 const Name = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 7px;
   color: ${({ theme }) => theme.colors.text};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
-
-const Dot = styled.span`
-  width: 9px;
-  height: 9px;
-  flex: none;
-  border-radius: 50%;
-  background: ${({ $color }) => $color};
 `;
 
 const BarWrap = styled.div`
@@ -115,10 +103,7 @@ const SkillRow = ({ skill }) => {
 
   return (
     <Row ref={ref}>
-      <Name>
-        {skill.colorKey && <Dot $color={langColor(skill.colorKey)} />}
-        {skill.name}
-      </Name>
+      <Name>{skill.name}</Name>
       <BarWrap>{makeBar(skill.level, progress)}</BarWrap>
       <Pct>{Math.round(skill.level * progress)}%</Pct>
     </Row>

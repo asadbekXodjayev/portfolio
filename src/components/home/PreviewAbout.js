@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import TerminalWindow from '../terminal/TerminalWindow';
 import { asciiPortrait } from '../../utils/ascii';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow, MoreLink } from './teaser.styles';
+import { Section, Eyebrow, MoreLink } from './previewStyles';
 
 const Grid = styled.div`
   display: grid;
@@ -41,7 +41,7 @@ const P = styled(motion.p)`
   }
 `;
 
-const TeaserAbout = () => (
+const PreviewAbout = () => (
   <Section variants={containerVariants} {...inViewProps}>
     <Eyebrow variants={itemVariants}>
       <span>$</span> cat ~/about/whoami.md
@@ -67,5 +67,5 @@ const TeaserAbout = () => (
   </Section>
 );
 
-TeaserAbout.displayName = 'TeaserAbout';
-export default TeaserAbout;
+PreviewAbout.displayName = 'PreviewAbout';
+export default PreviewAbout;
