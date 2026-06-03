@@ -28,6 +28,14 @@ const Card = styled(motion.article)`
   }
 `;
 
+// Full-card "stretched link": an invisible anchor covering the whole card.
+// Footer links sit above it (higher z-index) so they still work individually.
+const CardLink = styled.a`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+`;
+
 const Cover = styled.div`
   position: relative;
   aspect-ratio: 16 / 9;
@@ -127,6 +135,8 @@ const Tags = styled.div`
 `;
 
 const Footer = styled.div`
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -172,6 +182,7 @@ export const GitHubIcon = (props) => (
 const ProjectCard = ({ project }) => {
   const { title, desc, tags = [], demo, github, img, category, placeholder, stars, language } =
     project;
+  const primary = demo || github;
 
   return (
     <Card
@@ -183,6 +194,9 @@ const ProjectCard = ({ project }) => {
       whileTap={cardTap}
       exit={cardExit}
     >
+      {primary && (
+        <CardLink href={primary} target="_blank" rel="noreferrer" aria-label={`Open ${title}`} />
+      )}
       <Cover>
         {img ? (
           <img src={img} alt={title} loading="lazy" />
