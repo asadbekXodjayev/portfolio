@@ -15,164 +15,227 @@ import Img16 from '../Image/Screenshot 2026-05-13 111213.png';
 import Img17 from '../Image/Screenshot 2026-05-30 093140.png';
 import Img18 from '../Image/Screenshot 2026-05-30 092643.png';
 
+/**
+ * Filter categories for the Works grid. "Open Source" is special-cased in the
+ * Works section — it renders live repos from the GitHub API instead of this list.
+ */
+export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Open Source'];
+
+/**
+ * @typedef {Object} Project
+ * @property {string} id        stable slug (also React key)
+ * @property {'Web'|'AI/ML'|'C++ / C#'} category
+ * @property {boolean} [featured]  surfaced in the Home "works" teaser
+ * @property {string} title
+ * @property {string} desc      one-line description
+ * @property {string[]} tags    tech stack tags
+ * @property {string} [demo]    live demo URL
+ * @property {string} [repo]    GitHub repo name (used to enrich the card with live stars/lang)
+ * @property {string} [github]  explicit GitHub URL (for projects without a matched repo)
+ * @property {*} [img]          imported cover image; falls back to a category gradient
+ * @property {boolean} [placeholder]  true => owner should fill in real details/links
+ */
+
+/** @type {Project[]} */
 export const projects = [
-
   {
-    key: 'Steel Theraphy',
-    type: 'EXE',
-    href: 'https://steel-theraphy.vercel.app/',
-    img: Img9,
-    title: 'Gym app',
-    desc: 'Planner',
+    id: 'steel-theraphy',
+    category: 'Web',
+    featured: true,
+    title: 'Steel Theraphy',
+    desc: 'Gym workout planner with saved routines.',
     tags: ['Next.js', 'state', 'live'],
+    demo: 'https://steel-theraphy.vercel.app/',
+    repo: 'steal',
+    img: Img9,
   },
-
   {
-    key: 'Sarbon',
-    type: 'EXE',
-    href: 'https://new.sarbon.me/',
+    id: 'sarbon',
+    category: 'Web',
+    featured: true,
+    title: 'Sarbon Logistics',
+    desc: 'Production logistics platform with i18n and FSD architecture.',
+    tags: ['react + Vite', 'API', 'motion', 'zustand', 'FSD', 'Localization', 'business'],
+    demo: 'https://new.sarbon.me/',
+    repo: 'sarbon',
     img: Img17,
-    title: 'Sarbon logistics Project',
-    desc: 'Web page for logistics project',
-    tags: ['react + Vite', 'state', 'live', 'business', 'API', 'motion', 'zustand', 'FSD', 'Localization'],
   },
-  
   {
-    key: 'Tattoo Studio',
-    type: 'EXE',
-    href: 'https://yun-tattoo.vercel.app/',
-    img: Img11,
-    title: 'Tattoo Studio',
-    desc: 'Tattoo Studio Project',
+    id: 'tattoo-studio',
+    category: 'Web',
+    title: 'Yun Tattoo Studio',
+    desc: 'Marketing site for a tattoo studio.',
     tags: ['Next.js', 'state', 'live', 'business'],
+    demo: 'https://yun-tattoo.vercel.app/',
+    repo: 'Yun',
+    img: Img11,
   },
-
-
   {
-    key: 'TV app',
-    type: 'EXE',
-    href: 'https://tv2.splay.glob.uz/',
+    id: 'tv-app',
+    category: 'Web',
+    featured: true,
+    title: 'Splay TV App',
+    desc: 'Smart-TV streaming UI with spatial navigation.',
+    tags: ['Next.js', 'API', 'motion', 'zustand', 'FSD'],
+    demo: 'https://tv2.splay.glob.uz/',
+    repo: 's-play',
     img: Img13,
-    title: 'TV app',
-    desc: 'TV app Project',
-    tags: ['Next.js', 'state', 'API', 'motion', 'zustand', 'FSD'],
   },
-
   {
-    key: 'MoGlobeTrucking',
-    type: 'EXE',
-    href: 'https://logistics-update.vercel.app/',
+    id: 'moglobe-trucking',
+    category: 'Web',
+    title: 'MoGlobe Trucking',
+    desc: 'US logistics company website.',
+    tags: ['react + Vite', 'state', 'live', 'business'],
+    demo: 'https://logistics-update.vercel.app/',
+    repo: 'logistics-update',
     img: Img8,
-    title: 'Logistics Project',
-    desc: 'US logistics',
-    tags: ['react + Vite', 'state', 'live'],
   },
-
   {
-    key: 'Type game',
-    type: 'EXE',
-    href: 'https://type-com.vercel.app/',
+    id: 'type-game',
+    category: 'Web',
+    title: 'Type Game',
+    desc: 'Typing-speed game with live WPM scoring.',
+    tags: ['react + Vite', 'state', 'live', 'game'],
+    demo: 'https://type-game-v2.vercel.app/',
+    repo: 'type-game',
     img: Img6,
-    title: 'Type game Project',
-    desc: 'Interactive game project',
-    tags: ['react + Vite', 'state', 'live'],
   },
-
   {
-    key: 'DATA',
-    type: 'EXE',
-    href: 'https://data-visualy.vercel.app/',
+    id: 'data-algorithms',
+    category: 'Web',
+    title: 'Data Algorithms',
+    desc: 'Interactive sorting & pathfinding visualizer.',
+    tags: ['react + Vite', 'state', 'live', 'algorithms'],
+    demo: 'https://data-visualy.vercel.app/',
+    repo: 'data-visual',
     img: Img18,
-    title: 'Data Algorithms Project',
-    desc: 'Data visualization project',
-    tags: ['react + Vite', 'state', 'live'],
   },
   {
-    key: 'Art Gallery',
-    type: 'EXE',
-    href: 'https://art-codex.vercel.app/',
-    img: Img12,
-    title: 'Art Gallery',
-    desc: 'Art Gallery Project',
+    id: 'art-gallery',
+    category: 'Web',
+    title: 'Art Codex Gallery',
+    desc: 'Animated art gallery experience.',
     tags: ['Next.js', 'state', 'motion'],
+    demo: 'https://art-codex.vercel.app/',
+    repo: 'art',
+    img: Img12,
   },
   {
-    key: 'Space Tourism',
-    type: 'EXE',
-    href: 'https://space-cosmic.vercel.app/',
-    img: Img14,
+    id: 'davinchi-codex',
+    category: 'AI/ML',
+    title: 'DaVinci Codex',
+    desc: 'AI-assisted creative / art generation experience.',
+    tags: ['AI', 'Next.js', 'API', 'motion'],
+    demo: 'https://davinchi-codex.vercel.app/',
+    repo: 'davinchi-codex',
+  },
+  {
+    id: 'space-tourism',
+    category: 'Web',
     title: 'Space Tourism',
-    desc: 'Space Tourism Project',
-    tags: ['Next.js', 'State', 'Motion'],
+    desc: 'Multi-page space tourism concept site.',
+    tags: ['Next.js', 'state', 'motion'],
+    demo: 'https://space-cosmic.vercel.app/',
+    repo: 'space',
+    img: Img14,
   },
   {
-    key: 'FSD structure',
-    type: 'EXE',
-    href: 'https://nova-fsd.vercel.app/',
+    id: 'nova-store',
+    category: 'Web',
+    featured: true,
+    title: 'NOVA Store',
+    desc: 'E-commerce storefront built on Feature-Sliced Design.',
+    tags: ['Next.js', 'FSD', 'Zustand', 'Motion', 'API'],
+    demo: 'https://nova-fsd.vercel.app/',
+    repo: 'fsd-store',
     img: Img16,
-    title: 'NOVA-store',
-    desc: 'e-commerce project with FSD structure',
-    tags: ['Next.js', 'state', 'FSD', 'Zustand', 'Motion', 'API'],
   },
-
   {
-    key: 'AI recipe',
-    type: 'EXE',
-    href: 'https://ai-reciept.vercel.app/',
-    img: Img15,
+    id: 'ai-recipe',
+    category: 'AI/ML',
     title: 'AI Recipe',
-    desc: 'AI-powered recipe recommendation app',
-    tags: ['Next.js', 'state', 'AI'],
+    desc: 'AI-powered recipe recommendation app.',
+    tags: ['AI', 'Next.js', 'API', 'state'],
+    demo: 'https://ai-reciept.vercel.app/',
+    repo: 'ai-reciept',
+    img: Img15,
   },
   {
-    key: 'Spotify stats',
-    type: 'EXE',
-    href: 'https://spotify-api-flax.vercel.app/',
+    id: 'spotify-stats',
+    category: 'Web',
+    title: 'Spotify Stats',
+    desc: 'Listening-statistics dashboard via the Spotify API.',
+    tags: ['Next.js', 'API', 'state'],
+    demo: 'https://spotify-api-flax.vercel.app/',
     img: Img10,
-    title: 'Spotify Project',
-    desc: 'Statistic Project',
-    tags: ['Next.js', 'state'],
   },
-
-
   {
-    key: 'waterpump',
-    type: 'EXE',
-    href: 'https://waterpump-page.netlify.app/',
-    img: Img2,
-    title: 'Water Pump Project',
-    desc: 'Commercial site for a water pump business.',
+    id: 'waterpump',
+    category: 'Web',
+    title: 'Water Pump',
+    desc: 'Commercial site for a water-pump business.',
     tags: ['react', 'business', 'live'],
+    demo: 'https://waterpump-page.netlify.app/',
+    img: Img2,
   },
-
   {
-    key: 'gamestore',
-    type: 'EXE',
-    href: 'https://game-store-by-asad.netlify.app/',
-    img: Img4,
+    id: 'game-store',
+    category: 'Web',
     title: 'Game Store',
     desc: 'Storefront for browsing and listing games.',
     tags: ['react', 'store'],
+    demo: 'https://game-store-by-asad.netlify.app/',
+    img: Img4,
   },
-
   {
-    key: 'Online School',
-    type: 'EXE',
-    href: 'https://school-neuro.vercel.app/',
-    img: Img7,
-    title: 'School Project',
-    desc: 'Online School Project',
+    id: 'online-school',
+    category: 'Web',
+    title: 'Online School',
+    desc: 'Landing site for an online school.',
     tags: ['Next.js', 'state'],
+    demo: 'https://school-neuro.vercel.app/',
+    repo: 'school',
+    img: Img7,
   },
   {
-    key: 'calculator',
-    type: 'EXE',
-    href: 'https://calculator-by-asad.netlify.app/',
-    img: Img1,
+    id: 'calculator',
+    category: 'Web',
     title: 'Calculator',
-    desc: 'Classic calculator with clean UI.',
+    desc: 'Classic calculator with a clean UI.',
     tags: ['react', 'ui'],
+    demo: 'https://calculator-by-asad.netlify.app/',
+    img: Img1,
   },
 
-
+  // ── Native desktop work (C++ / C# Windows Forms) ──────────────────────────
+  // PLACEHOLDERS: edit titles/desc/links, add a `github` URL or `demo`, and a
+  // cover image when available. These aren't on GitHub yet, so they're curated
+  // here by hand. `placeholder: true` just hints that the details are stubbed.
+  {
+    id: 'winforms-inventory',
+    category: 'C++ / C#',
+    placeholder: true,
+    title: 'Inventory Manager',
+    desc: 'Windows Forms desktop app for stock & sales tracking.',
+    tags: ['C#', '.NET', 'WinForms', 'SQL'],
+  },
+  {
+    id: 'cpp-algorithms-suite',
+    category: 'C++ / C#',
+    placeholder: true,
+    title: 'C++ Algorithms Suite',
+    desc: 'Native console toolkit: data structures & algorithm demos.',
+    tags: ['C++', 'STL', 'algorithms'],
+  },
+  {
+    id: 'winforms-utility',
+    category: 'C++ / C#',
+    placeholder: true,
+    title: 'Desktop Utility Tool',
+    desc: 'Windows Forms utility for everyday automation.',
+    tags: ['C#', '.NET', 'WinForms'],
+  },
 ];
+
+export const featuredProjects = projects.filter((p) => p.featured);

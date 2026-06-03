@@ -11,6 +11,7 @@ export const config = {
   ],
   email: 'xadasad67@gmail.com',
   socials: {
+    github: 'https://github.com/asadbekXodjayev',
     telegram: 'https://t.me/m2dnight',
     instagram: 'https://instagram.com/leomessi/',
     linkedin: 'https://linkedin.com',
