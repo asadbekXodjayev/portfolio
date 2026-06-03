@@ -1,143 +1,189 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import TerminalWindow from '../terminal/TerminalWindow';
-import Badge from '../ui/Badge';
-import { projects } from '../../data/projects';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProjectCard from '../ui/ProjectCard';
+import RepoCard from '../ui/RepoCard';
+import SkeletonCard from '../ui/SkeletonCard';
+import { projects, categories } from '../../data/projects';
+import { repoCuration, SHOW_UNLISTED } from '../../data/repos';
+import { useGithubRepos } from '../../hooks/useGithubRepos';
+import { containerVariants } from '../../lib/motion';
 
-const FilterBar = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
+const Header = styled.div`
+  margin-bottom: ${({ theme }) => theme.space(5)};
+`;
+
+const Prompt = styled.div`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 13px;
+  color: ${({ theme }) => theme.colors.textMuted};
   margin-bottom: ${({ theme }) => theme.space(4)};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  color: ${({ theme }) => theme.colors.secondary};
-  flex-wrap: wrap;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 140px;
-  border: 1px dashed ${({ theme }) => theme.colors.border};
-  padding: 4px 8px;
-  color: ${({ theme }) => theme.colors.primary};
-  font-family: inherit;
-  font-size: inherit;
-  outline: none;
-`;
-
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Row = styled.a`
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 12px;
-  padding: 10px 8px;
-  border-bottom: 1px dashed ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.text};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  align-items: center;
-  transition: background ${({ theme }) => theme.animation.fast};
-  &:hover {
-    background: ${({ theme }) => theme.colors.primary}11;
+  strong {
     color: ${({ theme }) => theme.colors.primary};
   }
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
+`;
+
+const Pills = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const Pill = styled.button`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 12.5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.border)};
+  background: ${({ theme, $active }) => ($active ? theme.colors.primary : 'transparent')};
+  color: ${({ theme, $active }) => ($active ? theme.colors.bg : theme.colors.text)};
+  transition: all ${({ theme }) => theme.animation.fast};
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme, $active }) => ($active ? theme.colors.bg : theme.colors.primary)};
   }
 `;
 
-const Type = styled.span`
-  color: ${({ theme }) => theme.colors.warning};
+const Count = styled.span`
+  margin-left: 4px;
+  opacity: 0.6;
 `;
 
-const Name = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  strong { color: ${({ theme }) => theme.colors.primary}; }
-  span { color: ${({ theme }) => theme.colors.textMuted}; font-size: 12px; }
+const Grid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: ${({ theme }) => theme.space(5)};
+  align-items: stretch;
 `;
 
-const Tags = styled.div`
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-`;
-
-const Thumb = styled.img`
-  width: 100%;
-  max-width: 320px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  margin-top: 12px;
-  border-radius: 4px;
-  display: block;
+const Note = styled.div`
+  grid-column: 1 / -1;
+  padding: ${({ theme }) => theme.space(4)};
+  border: 1px dashed ${({ theme }) => theme.colors.border};
+  border-radius: 6px;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 12.5px;
+  color: ${({ theme, $error }) => ($error ? theme.colors.warning : theme.colors.textMuted)};
 `;
 
 const Projects = () => {
-  const [filter, setFilter] = useState('');
-  const [openKey, setOpenKey] = useState(null);
+  const [filter, setFilter] = useState('All');
+  const { repos, loading, error } = useGithubRepos();
 
-  const filtered = useMemo(() => {
-    const q = filter.toLowerCase().replace(/^--tag=/, '').trim();
-    if (!q) return projects;
-    return projects.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.tags.some((t) => t.includes(q)) ||
-        p.desc.toLowerCase().includes(q),
-    );
-  }, [filter]);
+  // repo names already represented by a curated project -> don't duplicate, enrich instead.
+  const curatedRepoNames = useMemo(
+    () => new Set(projects.filter((p) => p.repo).map((p) => p.repo)),
+    [],
+  );
+
+  // live { repoName -> {stars, language} } for enriching matching curated cards.
+  const enrichment = useMemo(() => {
+    const map = {};
+    repos.forEach((r) => {
+      map[r.name] = { stars: r.stars, language: r.language };
+    });
+    return map;
+  }, [repos]);
+
+  const projectItems = useMemo(
+    () =>
+      projects.map((p) => {
+        const live = p.repo ? enrichment[p.repo] : null;
+        return live ? { ...p, ...live } : p;
+      }),
+    [enrichment],
+  );
+
+  // Build repo cards from the live feed, honoring the curation config.
+  const repoItems = useMemo(() => {
+    return repos
+      .filter((r) => !curatedRepoNames.has(r.name))
+      .map((r) => {
+        const c = repoCuration[r.name];
+        if (c?.hide) return null;
+        if (!c && !SHOW_UNLISTED) return null;
+        return {
+          ...r,
+          isRepo: true,
+          category: c?.category || 'Open Source',
+          title: c?.title || r.name,
+          description: c?.desc || r.description,
+        };
+      })
+      .filter(Boolean);
+  }, [repos, curatedRepoNames]);
+
+  const visible = useMemo(() => {
+    const all = [...projectItems, ...repoItems];
+    if (filter === 'All') return all;
+    if (filter === 'Open Source') return repoItems;
+    return all.filter((it) => it.category === filter);
+  }, [projectItems, repoItems, filter]);
+
+  // counts for the pills
+  const countFor = (cat) => {
+    const all = [...projectItems, ...repoItems];
+    if (cat === 'All') return all.length;
+    if (cat === 'Open Source') return repoItems.length;
+    return all.filter((it) => it.category === cat).length;
+  };
+
+  const showSkeletons = loading && (filter === 'All' || filter === 'Open Source');
+  const showError = error && (filter === 'All' || filter === 'Open Source');
 
   return (
-    <TerminalWindow title="~/works/projects — ls -la">
-      <FilterBar>
-        <span>$ filter</span>
-        <Input
-          placeholder="--tag=react"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          aria-label="filter projects"
-        />
-      </FilterBar>
-      <List>
-        {filtered.map((p) => {
-          const open = openKey === p.key;
-          return (
-            <Row
-              key={p.key}
-              href={p.href}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => {
-                if (!open) {
-                  e.preventDefault();
-                  setOpenKey(p.key);
-                }
-              }}
+    <section>
+      <Header>
+        <Prompt>
+          <strong>asad@dev</strong>:~/works$ ls --projects --filter={filter.toLowerCase()}
+        </Prompt>
+        <Pills role="tablist" aria-label="project categories">
+          {categories.map((c) => (
+            <Pill
+              key={c}
+              role="tab"
+              aria-selected={filter === c}
+              $active={filter === c}
+              onClick={() => setFilter(c)}
             >
-              <Type>[{p.type}]</Type>
-              <Name>
-                <strong>{p.title}</strong>
-                <span>{p.desc}</span>
-                {open && <Thumb src={p.img} alt={p.title} loading="lazy" />}
-              </Name>
-              <Tags>
-                {p.tags.map((t) => (
-                  <Badge key={t}>#{t}</Badge>
-                ))}
-              </Tags>
-            </Row>
-          );
-        })}
-        {filtered.length === 0 && <Row as="div">no matches.</Row>}
-      </List>
-    </TerminalWindow>
+              {c}
+              <Count>[{countFor(c)}]</Count>
+            </Pill>
+          ))}
+        </Pills>
+      </Header>
+
+      <Grid variants={containerVariants} initial="hidden" animate="visible" layout>
+        <AnimatePresence mode="popLayout">
+          {visible.map((it) =>
+            it.isRepo ? (
+              <RepoCard key={`repo-${it.id}`} repo={it} />
+            ) : (
+              <ProjectCard key={it.id} project={it} />
+            ),
+          )}
+
+          {showSkeletons &&
+            Array.from({ length: 4 }).map((_, i) => (
+              <motion.div key={`sk-${i}`} layout>
+                <SkeletonCard />
+              </motion.div>
+            ))}
+
+          {showError && (
+            <Note key="err" $error>
+              ✗ couldn't reach the GitHub API (rate limit or offline). Curated projects are
+              still listed above.
+            </Note>
+          )}
+
+          {!loading && visible.length === 0 && (
+            <Note key="empty">// no projects in this category yet.</Note>
+          )}
+        </AnimatePresence>
+      </Grid>
+    </section>
   );
 };
 
