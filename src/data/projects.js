@@ -14,17 +14,18 @@ import Img15 from '../Image/Screenshot 2026-05-07 133609.png';
 import Img16 from '../Image/Screenshot 2026-05-13 111213.png';
 import Img17 from '../Image/Screenshot 2026-05-30 093140.png';
 import Img18 from '../Image/Screenshot 2026-05-30 092643.png';
+import Img19 from '../Image/Screenshot 2026-06-04 153100.png';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
  * Works section — it renders live repos from the GitHub API instead of this list.
  */
-export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Open Source'];
+export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Python', 'Open Source'];
 
 /**
  * @typedef {Object} Project
  * @property {string} id        stable slug (also React key)
- * @property {'Web'|'AI/ML'|'C++ / C#'} category
+ * @property {'Web'|'AI/ML'|'C++ / C#'|'Python'} category
  * @property {boolean} [featured]  surfaced in the Home "works" teaser
  * @property {string} title
  * @property {string} desc      one-line description
@@ -129,6 +130,7 @@ export const projects = [
     tags: ['Next.js', 'frontend', 'motion'],
     demo: 'https://davinchi-codex.vercel.app/',
     repo: 'davinchi-codex',
+    img: Img19,
   },
   {
     id: 'space-tourism',
@@ -208,34 +210,8 @@ export const projects = [
     img: Img1,
   },
 
-  // ── Native desktop work (C++ / C# Windows Forms) ──────────────────────────
-  // PLACEHOLDERS: edit titles/desc/links, add a `github` URL or `demo`, and a
-  // cover image when available. These aren't on GitHub yet, so they're curated
-  // here by hand. `placeholder: true` just hints that the details are stubbed.
-  {
-    id: 'winforms-inventory',
-    category: 'C++ / C#',
-    placeholder: true,
-    title: 'Inventory Manager',
-    desc: 'Windows Forms desktop app for stock & sales tracking.',
-    tags: ['C#', '.NET', 'WinForms', 'SQL'],
-  },
-  {
-    id: 'cpp-algorithms-suite',
-    category: 'C++ / C#',
-    placeholder: true,
-    title: 'C++ Algorithms Suite',
-    desc: 'Native console toolkit: data structures & algorithm demos.',
-    tags: ['C++', 'STL', 'algorithms'],
-  },
-  {
-    id: 'winforms-utility',
-    category: 'C++ / C#',
-    placeholder: true,
-    title: 'Desktop Utility Tool',
-    desc: 'Windows Forms utility for everyday automation.',
-    tags: ['C#', '.NET', 'WinForms'],
-  },
+  // Native desktop work (C++/C#/Python) now lives on GitHub — those repos are
+  // curated in data/repos.js and rendered live under the "Open Source" pill.
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
