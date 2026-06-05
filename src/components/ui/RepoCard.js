@@ -16,11 +16,10 @@ const Card = styled(motion.article)`
   --accent: ${({ theme, $category }) => accentFor(theme, $category)};
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: ${({ theme }) => theme.space(4)};
   background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 6px;
+  overflow: hidden;
   font-family: ${({ theme }) => theme.fonts.mono};
   transition: border-color ${({ theme }) => theme.animation.fast},
     box-shadow ${({ theme }) => theme.animation.fast};
@@ -28,6 +27,31 @@ const Card = styled(motion.article)`
     border-color: var(--accent);
     box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent);
   }
+`;
+
+const Cover = styled.div`
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: ${({ theme }) => theme.colors.surface};
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform ${({ theme }) => theme.animation.normal}
+      ${({ theme }) => theme.animation.easing};
+  }
+  ${Card}:hover & img {
+    transform: scale(1.05);
+  }
+`;
+
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: ${({ theme }) => theme.space(4)};
+  flex: 1;
 `;
 
 const Head = styled.div`
@@ -117,32 +141,39 @@ const RepoCard = ({ repo }) => {
       whileTap={cardTap}
       exit={cardExit}
     >
-      <Head>
-        <GitHubIcon />
-        <Name>{repo.title || repo.name}</Name>
-        <Cat>{category}</Cat>
-      </Head>
-      <Desc>{repo.description || '// no description provided'}</Desc>
-      <Meta>
-        {repo.language && <Lang>{repo.language}</Lang>}
-        <span>★ {repo.stars}</span>
-        {repo.updatedAt && <span>updated {formatUpdated(repo.updatedAt)}</span>}
-      </Meta>
-      <Actions>
-        <View href={repo.htmlUrl} target="_blank" rel="noreferrer">
-          <GitHubIcon /> view on github ↗
-        </View>
-        {repo.graph && (
-          <View
-            href={`${appgraphUrl}/apps/${repo.graph}`}
-            target="_blank"
-            rel="noreferrer"
-            title="Interactive architecture graphs — file tree, system design, flows"
-          >
-            <GraphIcon /> sys-design
+      {repo.img && (
+        <Cover>
+          <img src={repo.img} alt={repo.title || repo.name} loading="lazy" />
+        </Cover>
+      )}
+      <Body>
+        <Head>
+          <GitHubIcon />
+          <Name>{repo.title || repo.name}</Name>
+          <Cat>{category}</Cat>
+        </Head>
+        <Desc>{repo.description || '// no description provided'}</Desc>
+        <Meta>
+          {repo.language && <Lang>{repo.language}</Lang>}
+          <span>★ {repo.stars}</span>
+          {repo.updatedAt && <span>updated {formatUpdated(repo.updatedAt)}</span>}
+        </Meta>
+        <Actions>
+          <View href={repo.htmlUrl} target="_blank" rel="noreferrer">
+            <GitHubIcon /> view on github ↗
           </View>
-        )}
-      </Actions>
+          {repo.graph && (
+            <View
+              href={`${appgraphUrl}/apps/${repo.graph}`}
+              target="_blank"
+              rel="noreferrer"
+              title="Interactive architecture graphs — file tree, system design, flows"
+            >
+              <GraphIcon /> sys-design
+            </View>
+          )}
+        </Actions>
+      </Body>
     </Card>
   );
 };

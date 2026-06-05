@@ -153,6 +153,7 @@ const Projects = () => {
           title: c?.title || r.name,
           description: c?.desc || r.description,
           graph: c?.graph,
+          img: c?.img,
         };
       })
       .filter(Boolean);

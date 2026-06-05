@@ -19,11 +19,21 @@
  *  repos you curate here.
  */
 
+// Card previews — screenshots of the apps actually running locally
+// (front + back), captured headlessly / via the Tk window.
+import PrevDigit from '../Image/previews/digit-recognizer.jpg';
+import PrevChess from '../Image/previews/chess-bot.jpg';
+import PrevDocReader from '../Image/previews/doc-reader.jpg';
+import PrevFacescan from '../Image/previews/facescan-app.jpg';
+import PrevPrice from '../Image/previews/price-predictor.jpg';
+import PrevDijkstraPy from '../Image/previews/dijkstra-python.jpg';
+
 export const SHOW_UNLISTED = false;
 
-/** @type {Record<string, {category: 'Web'|'AI/ML'|'Mobile'|'C++ / C#'|'Python', title?: string, desc?: string, featured?: boolean, hide?: boolean, graph?: string}>} */
+/** @type {Record<string, {category: 'Web'|'AI/ML'|'Mobile'|'C++ / C#'|'Python', title?: string, desc?: string, featured?: boolean, hide?: boolean, graph?: string, img?: *}>} */
 // `graph` = AppGraph slug — adds a "sys-design" link to the repo card
 // (→ appgraphUrl/apps/<slug>, see data/config.js).
+// `img` = cover screenshot shown above the card body.
 export const repoCuration = {
   '-Dijkstra-Path-Finder-C-CLI-': {
     category: 'C++ / C#',
@@ -36,6 +46,7 @@ export const repoCuration = {
     title: 'Dijkstra Visualizer (Python)',
     desc: "Tkinter desktop app that visualizes Dijkstra's algorithm step-by-step on a user-built weighted graph, with login, animated traversal, and a live step log.",
     graph: 'shortest-path-finder',
+    img: PrevDijkstraPy,
   },
   'WinForms-App-Skeleton': {
     category: 'C++ / C#',
@@ -55,10 +66,12 @@ export const repoCuration = {
     title: 'FACESCAN — Face Analysis',
     desc: 'Real-time biometric terminal — the webcam stream is analyzed live for age, gender, emotion, head pose and landmarks, and recognizes enrolled faces. React + TypeScript + Zustand front-end (EN/RU/UZ) over FastAPI + DeepFace + OpenCV.',
     graph: 'facescan',
+    img: PrevFacescan,
   },
   'ai-chess-bot': {
     category: 'AI/ML',
     title: 'Chess.com AI Bot',
+    img: PrevChess,
     desc: 'Play chess against a PyTorch neural network (500K+ params) driving minimax with alpha-beta pruning — Chess.com-style React UI, FastAPI backend, dual-layer move validation and synthesized sound.',
   },
   '3-projectAI': {
@@ -66,18 +79,21 @@ export const repoCuration = {
     title: 'AI Documentation Reader',
     desc: 'ML-powered documentation reader — PyTorch + Python backend paired with a React + Vite web app.',
     graph: 'rag-knowledge-base',
+    img: PrevDocReader,
   },
   'digit-predicterAI': {
     category: 'AI/ML',
     title: 'Digit Predicter (MNIST)',
     desc: 'Handwritten-digit recognition — a CNN trained on MNIST with PyTorch, served over FastAPI to a React + Vite drawing canvas.',
     graph: 'hand-drawn-digit-recognizer',
+    img: PrevDigit,
   },
   'ai-pricePredicter': {
     category: 'AI/ML',
     title: 'Real Estate Price Predictor',
     desc: 'Property-price prediction with scikit-learn gradient boosting (R² ~0.92) behind a FastAPI API — glassmorphic React + Vite UI with live sliders and debounced real-time predictions.',
     graph: 'real-estate-price-predictor',
+    img: PrevPrice,
   },
   // 'ai-front-end': {
   //   category: 'AI/ML',
