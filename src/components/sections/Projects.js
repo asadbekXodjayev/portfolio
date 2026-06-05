@@ -5,6 +5,7 @@ import ProjectCard from '../ui/ProjectCard';
 import RepoCard from '../ui/RepoCard';
 import SkeletonCard from '../ui/SkeletonCard';
 import { projects, categories } from '../../data/projects';
+import { appgraphUrl } from '../../data/config';
 import { repoCuration, SHOW_UNLISTED } from '../../data/repos';
 import { useGithubRepos } from '../../hooks/useGithubRepos';
 import { containerVariants } from '../../lib/motion';
@@ -48,6 +49,45 @@ const Pill = styled.button`
 const Count = styled.span`
   margin-left: 4px;
   opacity: 0.6;
+`;
+
+/* Banner linking to AppGraph — the sys-design hub with interactive
+   architecture graphs (file tree / system design / flows) for these works. */
+const SysDesignBanner = styled.a`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: ${({ theme }) => theme.space(4)};
+  padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(4)};
+  border: 1px dashed ${({ theme }) => theme.colors.border};
+  border-radius: 6px;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 12.5px;
+  color: ${({ theme }) => theme.colors.textMuted};
+  transition: all ${({ theme }) => theme.animation.fast};
+
+  strong {
+    color: ${({ theme }) => theme.colors.primary};
+    font-weight: 600;
+  }
+
+  .cta {
+    margin-left: auto;
+    color: ${({ theme }) => theme.colors.secondary};
+    white-space: nowrap;
+  }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    border-style: solid;
+    color: ${({ theme }) => theme.colors.text};
+    box-shadow: 0 0 24px
+      color-mix(in srgb, ${({ theme }) => theme.colors.primary} 15%, transparent);
+    .cta {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+  }
 `;
 
 const Grid = styled(motion.div)`
@@ -155,6 +195,19 @@ const Projects = () => {
             </Pill>
           ))}
         </Pills>
+
+        <SysDesignBanner
+          href={appgraphUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open AppGraph — interactive architecture graphs for these projects"
+        >
+          <span>
+            $ open <strong>sys-design</strong> — interactive architecture graphs (file tree ·
+            system design · flows) for the projects below
+          </span>
+          <span className="cta">go to AppGraph →</span>
+        </SysDesignBanner>
       </Header>
 
       <Grid

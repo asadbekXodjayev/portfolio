@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Badge from './Badge';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
+import { appgraphUrl } from '../../data/config';
 
 // Green + black terminal theme: green everywhere, cyan only for the AI/ML tier.
 const accentFor = (theme, category) =>
@@ -179,8 +180,18 @@ export const GitHubIcon = (props) => (
 /**
  * @param {{ project: import('../../data/projects').Project & { stars?: number, language?: string } }} props
  */
+// Tiny node-graph glyph for the sys-design link.
+const GraphIcon = (props) => (
+  <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true" {...props}>
+    <circle cx="8" cy="3.2" r="1.8" />
+    <circle cx="3.2" cy="12" r="1.8" />
+    <circle cx="12.8" cy="12" r="1.8" />
+    <path d="M8 5v3M6.8 9.8 4.2 10.6M9.2 9.8l2.6.8" />
+  </svg>
+);
+
 const ProjectCard = ({ project }) => {
-  const { title, desc, tags = [], demo, github, img, category, placeholder, stars, language } =
+  const { title, desc, tags = [], demo, github, graph, img, category, placeholder, stars, language } =
     project;
   const primary = demo || github;
 
@@ -227,6 +238,16 @@ const ProjectCard = ({ project }) => {
           {demo && (
             <ActionLink href={demo} target="_blank" rel="noreferrer">
               live ↗
+            </ActionLink>
+          )}
+          {graph && (
+            <ActionLink
+              href={`${appgraphUrl}/apps/${graph}`}
+              target="_blank"
+              rel="noreferrer"
+              title="Interactive architecture graphs — file tree, system design, flows"
+            >
+              <GraphIcon /> sys-design
             </ActionLink>
           )}
           {placeholder && !demo && !github && <Soon>// details soon</Soon>}

@@ -1,20 +1,24 @@
-import Img1 from '../Image/Screenshot 2024-06-06 155652.webp';
-import Img2 from '../Image/Screenshot 2024-06-06 155702.webp';
-import Img4 from '../Image/Screenshot 2024-06-06 155751.webp';
-import Img6 from '../Image/img.png';
-import Img7 from '../Image/img_1.png';
-import Img8 from '../Image/img_2.png';
-import Img9 from '../Image/Снимок экрана (284).png';
-import Img10 from '../Image/Снимок экрана (285).png';
-import Img11 from '../Image/image.png';
-import Img12 from '../Image/Снимок экрана (522).png';
-import Img13 from '../Image/Снимок экрана (526).png';
-import Img14 from '../Image/Screenshot 2026-05-06 162242.png';
-import Img15 from '../Image/Screenshot 2026-05-07 133609.png';
-import Img16 from '../Image/Screenshot 2026-05-13 111213.png';
-import Img17 from '../Image/Screenshot 2026-05-30 093140.png';
-import Img18 from '../Image/Screenshot 2026-05-30 092643.png';
-import Img19 from '../Image/Screenshot 2026-06-04 153100.png';
+// Card previews — live home-page screenshots (1440×810), captured headlessly.
+// Refresh any of them with: node appgraph/scripts/shoot-previews.mjs
+import PrevSteel from '../Image/previews/steel-theraphy.jpg';
+import PrevSarbon from '../Image/previews/sarbon.jpg';
+import PrevTattoo from '../Image/previews/tattoo-studio.jpg';
+import PrevTv from '../Image/previews/tv-app.jpg';
+import PrevMoglobe from '../Image/previews/moglobe-trucking.jpg';
+import PrevType from '../Image/previews/type-game.jpg';
+import PrevData from '../Image/previews/data-algorithms.jpg';
+import PrevArt from '../Image/previews/art-gallery.jpg';
+import PrevDavinchi from '../Image/previews/davinchi-codex.jpg';
+import PrevSpace from '../Image/previews/space-tourism.jpg';
+import PrevNova from '../Image/previews/nova-store.jpg';
+import PrevAiRecipe from '../Image/previews/ai-recipe.jpg';
+import PrevSpotify from '../Image/previews/spotify-stats.jpg';
+import PrevWaterpump from '../Image/previews/waterpump.jpg';
+import PrevGameStore from '../Image/previews/game-store.jpg';
+import PrevSchool from '../Image/previews/online-school.jpg';
+import PrevCalculator from '../Image/previews/calculator.jpg';
+import PrevImposter from '../Image/previews/imposter.jpg';
+import PrevMoodBoard from '../Image/previews/dev-mood-board.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -33,6 +37,8 @@ export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Python'
  * @property {string} [demo]    live demo URL
  * @property {string} [repo]    GitHub repo name (used to enrich the card with live stars/lang)
  * @property {string} [github]  explicit GitHub URL (for projects without a matched repo)
+ * @property {string} [graph]   AppGraph slug — adds a "sys-design" link to the card
+ *                              (→ appgraphUrl/apps/<slug>, see data/config.js)
  * @property {*} [img]          imported cover image; falls back to a category gradient
  * @property {boolean} [placeholder]  true => owner should fill in real details/links
  */
@@ -41,14 +47,15 @@ export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Python'
 export const projects = [
   {
     id: 'steel-theraphy',
+    graph: 'my-frontend-app',
     category: 'Web',
     featured: true,
     title: 'Steel Theraphy',
     desc: 'Gym workout planner — build training splits, track sets and reps, and save routines you can come back to.',
     tags: ['Next.js', 'state', 'live'],
-    demo: 'https://steel-theraphy.vercel.app/',
+    demo: 'https://steel.xodjayev.uz/',
     repo: 'steal',
-    img: Img9,
+    img: PrevSteel,
   },
   {
     id: 'sarbon',
@@ -59,17 +66,18 @@ export const projects = [
     tags: ['react + Vite', 'API', 'motion', 'zustand', 'FSD', 'i18n', 'business'],
     demo: 'https://new.sarbon.me/',
     repo: 'sarbon',
-    img: Img17,
+    img: PrevSarbon,
   },
   {
     id: 'tattoo-studio',
+    graph: 'yun',
     category: 'Web',
     title: 'Yun Tattoo Studio',
     desc: 'Marketing site for a tattoo studio — artist galleries, services and a contact flow for bookings.',
     tags: ['Next.js', 'state', 'live', 'business'],
-    demo: 'https://yun-tattoo.vercel.app/',
+    demo: 'https://yoon.xodjayev.uz/ru/',
     repo: 'Yun',
-    img: Img11,
+    img: PrevTattoo,
   },
   {
     id: 'tv-app',
@@ -80,7 +88,7 @@ export const projects = [
     tags: ['Next.js', 'API', 'motion', 'zustand', 'FSD', 'TV'],
     demo: 'https://tv2.splay.glob.uz/',
     repo: 's-play',
-    img: Img13,
+    img: PrevTv,
   },
   {
     id: 'moglobe-trucking',
@@ -88,9 +96,9 @@ export const projects = [
     title: 'MoGlobe Trucking',
     desc: 'Marketing site for a US trucking & logistics company — services, fleet info and quote requests.',
     tags: ['react + Vite', 'state', 'live', 'business'],
-    demo: 'https://logistics-update.vercel.app/',
+    demo: 'https://dev.moglobetrucking.com/',
     repo: 'logistics-update',
-    img: Img8,
+    img: PrevMoglobe,
   },
   {
     id: 'type-game',
@@ -98,79 +106,113 @@ export const projects = [
     title: 'Type Game',
     desc: 'Typing-speed game with live WPM and accuracy scoring, timed runs and a clean retro UI.',
     tags: ['react + Vite', 'state', 'live', 'game'],
-    demo: 'https://type-game-v2.vercel.app/',
+    demo: 'https://type.xodjayev.uz/',
     repo: 'type-game',
-    img: Img6,
+    img: PrevType,
   },
   {
     id: 'data-algorithms',
+    graph: 'data',
     category: 'Web',
     title: 'Data Algorithms',
     desc: 'Interactive visualizer for sorting and pathfinding algorithms, with step-by-step playback so you can watch them run.',
     tags: ['react + Vite', 'state', 'live', 'algorithms'],
-    demo: 'https://data-visualy.vercel.app/',
+    demo: 'https://data.xodjayev.uz/',
     repo: 'data-visual',
-    img: Img18,
+    img: PrevData,
   },
   {
     id: 'art-gallery',
+    graph: 'codex-art',
     category: 'Web',
     title: 'Art Codex Gallery',
     desc: 'Animated digital art gallery with smooth scroll and motion-driven transitions between works.',
     tags: ['Next.js', 'state', 'motion'],
     demo: 'https://art-codex.vercel.app/',
     repo: 'art',
-    img: Img12,
+    img: PrevArt,
   },
   {
     id: 'davinchi-codex',
+    graph: 'da-vinchi',
     category: 'Web',
     title: 'DaVinci Codex',
-    desc: 'Front-end app for DaVinci — a polished, animated interface built with a focus on motion and detail.',
+    desc: 'A digital illuminated manuscript dedicated to Leonardo da Vinci — timeline, artworks and inventions with motion-driven detail.',
     tags: ['Next.js', 'frontend', 'motion'],
-    demo: 'https://davinchi-codex.vercel.app/',
+    demo: 'https://davinchi.xodjayev.uz/',
     repo: 'davinchi-codex',
-    img: Img19,
+    img: PrevDavinchi,
   },
   {
     id: 'space-tourism',
+    graph: 'space',
     category: 'Web',
     title: 'Space Tourism',
     desc: 'Multi-page space-tourism concept site (destinations, crew, technology) with client-side routing and motion.',
     tags: ['Next.js', 'state', 'motion'],
-    demo: 'https://space-cosmic.vercel.app/',
+    demo: 'https://space.xodjayev.uz/',
     repo: 'space',
-    img: Img14,
+    img: PrevSpace,
   },
   {
     id: 'nova-store',
+    graph: 'e-commerse',
     category: 'Web',
     featured: true,
     title: 'NOVA Store',
     desc: 'E-commerce storefront on Feature-Sliced Design — product catalog, cart and global state with Zustand, data over an API.',
     tags: ['Next.js', 'FSD', 'Zustand', 'Motion', 'API'],
-    demo: 'https://nova-fsd.vercel.app/',
+    demo: 'https://store.xodjayev.uz/',
     repo: 'fsd-store',
-    img: Img16,
+    img: PrevNova,
   },
   {
     id: 'ai-recipe',
+    graph: 'ai-recipe',
     category: 'AI/ML',
     title: 'AI Recipe',
     desc: 'AI-powered recipe generator — enter the ingredients you have and an LLM suggests recipes you can actually cook.',
     tags: ['AI', 'LLM', 'Next.js', 'API'],
-    demo: 'https://ai-reciept.vercel.app/',
+    demo: 'https://airecipe.xodjayev.uz/',
     repo: 'ai-reciept',
-    img: Img15,
+    img: PrevAiRecipe,
+  },
+  {
+    id: 'dev-mood-board',
+    category: 'AI/ML',
+    title: 'Dev Mood Board',
+    desc: 'AI design-system generator for developers — describe your product idea and get three complete visual directions to start from.',
+    tags: ['AI', 'design systems', 'generator'],
+    demo: 'https://aifront.sys.xodjayev.uz/',
+    img: PrevMoodBoard,
   },
   {
     id: 'spotify-stats',
+    graph: 'spotify-app',
     category: 'Web',
     title: 'Spotify Stats',
     desc: 'Spotify dashboard — your top artists, tracks and listening stats pulled live from the Spotify API.',
     tags: ['Next.js', 'API', 'OAuth'],
-    demo: 'https://spotify-api-flax.vercel.app/',
-    img: Img10,
+    demo: 'https://spotifystat.xodjayev.uz/',
+    img: PrevSpotify,
+  },
+  {
+    id: 'imposter',
+    category: 'Web',
+    title: 'Imposter',
+    desc: 'One device, one liar — pass-and-play party word game of bluffing and deduction for 3–12 players, right in the browser.',
+    tags: ['react', 'game', 'offline', 'i18n'],
+    demo: 'https://imposter.xodjayev.uz/',
+    img: PrevImposter,
+  },
+  {
+    id: 'imposter-android',
+    graph: 'imposter',
+    category: 'Mobile',
+    title: 'Imposter (Android)',
+    desc: 'The original native Android version — single-process, fully offline party game for 3–12 players on one phone, built with Kotlin and Jetpack Compose.',
+    tags: ['Kotlin', 'Jetpack Compose', 'Hilt', 'game', 'offline'],
+    placeholder: true,
   },
   {
     id: 'waterpump',
@@ -179,7 +221,7 @@ export const projects = [
     desc: 'Commercial site for a water-pump business — product range and inquiry contact.',
     tags: ['react', 'business', 'live'],
     demo: 'https://waterpump-page.netlify.app/',
-    img: Img2,
+    img: PrevWaterpump,
   },
   {
     id: 'game-store',
@@ -188,17 +230,18 @@ export const projects = [
     desc: 'Game storefront — browse, filter and view listings in a responsive catalog.',
     tags: ['react', 'store'],
     demo: 'https://game-store-by-asad.netlify.app/',
-    img: Img4,
+    img: PrevGameStore,
   },
   {
     id: 'online-school',
+    graph: 'school',
     category: 'Web',
     title: 'Online School',
     desc: 'Landing site for an online school — courses, enrollment and program info.',
     tags: ['Next.js', 'state'],
     demo: 'https://school-neuro.vercel.app/',
     repo: 'school',
-    img: Img7,
+    img: PrevSchool,
   },
   {
     id: 'calculator',
@@ -207,7 +250,7 @@ export const projects = [
     desc: 'Classic calculator with keyboard support and a clean, minimal UI.',
     tags: ['react', 'ui'],
     demo: 'https://calculator-by-asad.netlify.app/',
-    img: Img1,
+    img: PrevCalculator,
   },
 
   // Native desktop work (C++/C#/Python) now lives on GitHub — those repos are
