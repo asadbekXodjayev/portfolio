@@ -19,6 +19,7 @@ import PrevSchool from '../Image/previews/online-school.jpg';
 import PrevCalculator from '../Image/previews/calculator.jpg';
 import PrevImposter from '../Image/previews/imposter.jpg';
 import PrevMoodBoard from '../Image/previews/dev-mood-board.jpg';
+import PrevAppGraph from '../Image/previews/appgraph.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -45,6 +46,16 @@ export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Python'
 
 /** @type {Project[]} */
 export const projects = [
+  {
+    id: 'appgraph',
+    category: 'Web',
+    featured: true,
+    title: 'AppGraph — sys-design hub',
+    desc: 'One hub for the architecture of all 19 of my apps — interactive file trees, zoned system topologies and flow diagrams, laid out collision-free with ELK and explorable as an Obsidian-style cluster.',
+    tags: ['Next.js', 'TypeScript', 'ELK.js', 'd3-force', 'SVG', 'meta'],
+    demo: 'https://sys.xodjayev.uz/',
+    img: PrevAppGraph,
+  },
   {
     id: 'steel-theraphy',
     graph: 'my-frontend-app',

@@ -1,9 +1,10 @@
 /**
  * AppGraph — the sys-design hub rendering interactive architecture graphs
  * (file trees, system topologies, flow diagrams) for the projects below.
- * Local dev runs on :3000; set VITE_APPGRAPH_URL when it gets deployed.
+ * Deployed at sys.xodjayev.uz; override with VITE_APPGRAPH_URL
+ * (e.g. http://localhost:3000 while developing AppGraph locally).
  */
-export const appgraphUrl = import.meta.env.VITE_APPGRAPH_URL || 'http://localhost:3000';
+export const appgraphUrl = import.meta.env.VITE_APPGRAPH_URL || 'https://sys.xodjayev.uz';
 
 export const config = {
   name: 'Xodjayev Asadbek Utkirov',
