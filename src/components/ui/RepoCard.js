@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { GitHubIcon } from './ProjectCard';
+import { GitHubIcon, GraphIcon } from './ProjectCard';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
 import { formatUpdated } from '../../lib/github';
+import { appgraphUrl } from '../../data/config';
 
 // Green + black: green accent; cyan reserved for AI/ML + the live "Open Source" feed.
 const accentFor = (theme, category) =>
@@ -77,6 +78,12 @@ const Lang = styled.span`
   gap: 5px;
 `;
 
+const Actions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
 const View = styled.a`
   display: inline-flex;
   align-items: center;
@@ -121,9 +128,21 @@ const RepoCard = ({ repo }) => {
         <span>★ {repo.stars}</span>
         {repo.updatedAt && <span>updated {formatUpdated(repo.updatedAt)}</span>}
       </Meta>
-      <View href={repo.htmlUrl} target="_blank" rel="noreferrer">
-        <GitHubIcon /> view on github ↗
-      </View>
+      <Actions>
+        <View href={repo.htmlUrl} target="_blank" rel="noreferrer">
+          <GitHubIcon /> view on github ↗
+        </View>
+        {repo.graph && (
+          <View
+            href={`${appgraphUrl}/apps/${repo.graph}`}
+            target="_blank"
+            rel="noreferrer"
+            title="Interactive architecture graphs — file tree, system design, flows"
+          >
+            <GraphIcon /> sys-design
+          </View>
+        )}
+      </Actions>
     </Card>
   );
 };

@@ -152,6 +152,7 @@ const Projects = () => {
           category: c?.category || 'Open Source',
           title: c?.title || r.name,
           description: c?.desc || r.description,
+          graph: c?.graph,
         };
       })
       .filter(Boolean);

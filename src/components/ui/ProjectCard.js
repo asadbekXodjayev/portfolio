@@ -180,8 +180,8 @@ export const GitHubIcon = (props) => (
 /**
  * @param {{ project: import('../../data/projects').Project & { stars?: number, language?: string } }} props
  */
-// Tiny node-graph glyph for the sys-design link.
-const GraphIcon = (props) => (
+// Tiny node-graph glyph for the sys-design link (also used by RepoCard).
+export const GraphIcon = (props) => (
   <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true" {...props}>
     <circle cx="8" cy="3.2" r="1.8" />
     <circle cx="3.2" cy="12" r="1.8" />

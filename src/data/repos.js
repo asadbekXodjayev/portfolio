@@ -21,17 +21,21 @@
 
 export const SHOW_UNLISTED = false;
 
-/** @type {Record<string, {category: 'Web'|'AI/ML'|'Mobile'|'C++ / C#'|'Python', title?: string, desc?: string, featured?: boolean, hide?: boolean}>} */
+/** @type {Record<string, {category: 'Web'|'AI/ML'|'Mobile'|'C++ / C#'|'Python', title?: string, desc?: string, featured?: boolean, hide?: boolean, graph?: string}>} */
+// `graph` = AppGraph slug — adds a "sys-design" link to the repo card
+// (→ appgraphUrl/apps/<slug>, see data/config.js).
 export const repoCuration = {
   '-Dijkstra-Path-Finder-C-CLI-': {
     category: 'C++ / C#',
     title: 'Dijkstra Path Finder (C++/CLI)',
     desc: "Interactive WinForms app to build a graph and watch Dijkstra's shortest-path algorithm run step-by-step, with a glassmorphic dark UI.",
+    graph: 'dijkstra-path-finder',
   },
   'Dijkstra-Visualizer-Python-': {
     category: 'Python',
     title: 'Dijkstra Visualizer (Python)',
     desc: "Tkinter desktop app that visualizes Dijkstra's algorithm step-by-step on a user-built weighted graph, with login, animated traversal, and a live step log.",
+    graph: 'shortest-path-finder',
   },
   'WinForms-App-Skeleton': {
     category: 'C++ / C#',
@@ -42,6 +46,7 @@ export const repoCuration = {
     category: 'C++ / C#',
     title: 'Dijkstra Visualizer (.NET 8)',
     desc: "C#/.NET 8 WinForms app visualizing Dijkstra's shortest path on a custom glassmorphic canvas, with local SHA-256 authentication.",
+    graph: 'winforms-dijkstra',
   },
 
   // ── AI/ML full-stack (React front-end + Python AI backend) ────────────────
@@ -49,6 +54,7 @@ export const repoCuration = {
     category: 'AI/ML',
     title: 'FACESCAN — Face Analysis',
     desc: 'Real-time biometric terminal — the webcam stream is analyzed live for age, gender, emotion, head pose and landmarks, and recognizes enrolled faces. React + TypeScript + Zustand front-end (EN/RU/UZ) over FastAPI + DeepFace + OpenCV.',
+    graph: 'facescan',
   },
   'ai-chess-bot': {
     category: 'AI/ML',
@@ -59,16 +65,19 @@ export const repoCuration = {
     category: 'AI/ML',
     title: 'AI Documentation Reader',
     desc: 'ML-powered documentation reader — PyTorch + Python backend paired with a React + Vite web app.',
+    graph: 'rag-knowledge-base',
   },
   'digit-predicterAI': {
     category: 'AI/ML',
     title: 'Digit Predicter (MNIST)',
     desc: 'Handwritten-digit recognition — a CNN trained on MNIST with PyTorch, served over FastAPI to a React + Vite drawing canvas.',
+    graph: 'hand-drawn-digit-recognizer',
   },
   'ai-pricePredicter': {
     category: 'AI/ML',
     title: 'Real Estate Price Predictor',
     desc: 'Property-price prediction with scikit-learn gradient boosting (R² ~0.92) behind a FastAPI API — glassmorphic React + Vite UI with live sliders and debounced real-time predictions.',
+    graph: 'real-estate-price-predictor',
   },
   // 'ai-front-end': {
   //   category: 'AI/ML',
