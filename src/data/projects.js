@@ -53,7 +53,7 @@ export const projects = [
     title: 'Academic Portfolio',
     desc: 'Professional and academic portfolio built for graduate programme applications — Vite + React + TypeScript, triple-language i18n (EN/RU/UZ), Zustand, Motion v12, and a full academic profile with coursework, research interests, and recommendations.',
     tags: ['Vite', 'TypeScript', 'React', 'i18n', 'Motion', 'Zustand', 'academic'],
-    demo: 'https://pro.xodjayev.uz/',
+    demo: 'https://asadbe.uz/',
   },
   {
     id: 'appgraph',
