@@ -47,6 +47,15 @@ export const categories = ['All', 'Web', 'AI/ML', 'Mobile', 'C++ / C#', 'Python'
 /** @type {Project[]} */
 export const projects = [
   {
+    id: 'academic-portfolio',
+    category: 'Web',
+    featured: true,
+    title: 'Academic Portfolio',
+    desc: 'Professional and academic portfolio built for graduate programme applications — Vite + React + TypeScript, triple-language i18n (EN/RU/UZ), Zustand, Motion v12, and a full academic profile with coursework, research interests, and recommendations.',
+    tags: ['Vite', 'TypeScript', 'React', 'i18n', 'Motion', 'Zustand', 'academic'],
+    demo: 'https://pro.xodjayev.uz/',
+  },
+  {
     id: 'appgraph',
     category: 'Web',
     featured: true,
