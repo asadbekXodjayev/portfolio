@@ -19,6 +19,7 @@ import PrevSchool from '../Image/previews/online-school.jpg';
 import PrevCalculator from '../Image/previews/calculator.jpg';
 import PrevImposter from '../Image/previews/imposter.jpg';
 import PrevMoodBoard from '../Image/previews/dev-mood-board.jpg';
+import AcademicPortfolio from '../Image/Снимок экрана (550).png';
 import PrevAppGraph from '../Image/previews/appgraph.jpg';
 
 /**
@@ -54,6 +55,8 @@ export const projects = [
     desc: 'Professional and academic portfolio built for graduate programme applications — Vite + React + TypeScript, triple-language i18n (EN/RU/UZ), Zustand, Motion v12, and a full academic profile with coursework, research interests, and recommendations.',
     tags: ['Vite', 'TypeScript', 'React', 'i18n', 'Motion', 'Zustand', 'academic'],
     demo: 'https://asadbe.uz/',
+    img: AcademicPortfolio,
+
   },
   {
     id: 'appgraph',
