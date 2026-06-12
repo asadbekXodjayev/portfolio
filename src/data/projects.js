@@ -21,6 +21,8 @@ import PrevImposter from '../Image/previews/imposter.jpg';
 import PrevMoodBoard from '../Image/previews/dev-mood-board.jpg';
 import AcademicPortfolio from '../Image/Снимок экрана (550).png';
 import PrevAppGraph from '../Image/previews/appgraph.jpg';
+import PrevInteractiveWorks from '../Image/previews/interactive-works.jpg';
+import PrevCodexLuminara from '../Image/previews/codex-luminara.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -67,6 +69,28 @@ export const projects = [
     tags: ['Next.js', 'TypeScript', 'ELK.js', 'd3-force', 'SVG', 'meta'],
     demo: 'https://sys.xodjayev.uz/',
     img: PrevAppGraph,
+  },
+  {
+    id: 'interactive-works',
+    graph: 'interactive-works',
+    category: 'Web',
+    featured: true,
+    title: 'Interactive Works — Sphere Gallery',
+    desc: 'Phantom.land-style 3D work gallery — the camera sits inside a sphere lined with project cards: inertial drag, a custom lens-distortion shader (vignette, edge blur, grain), list view, era filter and deep-linked detail pages.',
+    tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'GLSL', 'Vite'],
+    github: 'https://github.com/asadbekXodjayev/interactive-works',
+    img: PrevInteractiveWorks,
+  },
+  {
+    id: 'codex-luminara',
+    graph: 'codex-luminara',
+    category: 'Web',
+    featured: true,
+    title: 'Codex Luminara — 3D Art Gallery',
+    desc: 'A portal to the Renaissance: thirteen public-domain masterworks hung inside a WebGL sphere with gilded frames, illuminated folio pages (catalogue, palette, curiosities), era filters and a low-volume classical soundtrack.',
+    tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'art', 'audio'],
+    github: 'https://github.com/asadbekXodjayev/art-ThreeJs',
+    img: PrevCodexLuminara,
   },
   {
     id: 'steel-theraphy',
