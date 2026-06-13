@@ -56,7 +56,7 @@ export const projects = [
     title: 'Academic Portfolio',
     desc: 'Professional and academic portfolio built for graduate programme applications — Vite + React + TypeScript, triple-language i18n (EN/RU/UZ), Zustand, Motion v12, and a full academic profile with coursework, research interests, and recommendations.',
     tags: ['Vite', 'TypeScript', 'React', 'i18n', 'Motion', 'Zustand', 'academic'],
-    demo: 'https://asadbe.uz/',
+    demo: 'https://asadbek.xodjayev.uz/',
     img: AcademicPortfolio,
 
   },
@@ -79,6 +79,7 @@ export const projects = [
     desc: 'Phantom.land-style 3D work gallery — the camera sits inside a sphere lined with project cards: inertial drag, a custom lens-distortion shader (vignette, edge blur, grain), list view, era filter and deep-linked detail pages.',
     tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'GLSL', 'Vite'],
     github: 'https://github.com/asadbekXodjayev/interactive-works',
+    demo: 'https://asadbe.uz/',
     img: PrevInteractiveWorks,
   },
   {
@@ -90,6 +91,7 @@ export const projects = [
     desc: 'A portal to the Renaissance: thirteen public-domain masterworks hung inside a WebGL sphere with gilded frames, illuminated folio pages (catalogue, palette, curiosities), era filters and a low-volume classical soundtrack.',
     tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'art', 'audio'],
     github: 'https://github.com/asadbekXodjayev/art-ThreeJs',
+    demo: 'https://art.asadbe.uz/',
     img: PrevCodexLuminara,
   },
   {
