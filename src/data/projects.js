@@ -23,6 +23,10 @@ import AcademicPortfolio from '../Image/Снимок экрана (550).png';
 import PrevAppGraph from '../Image/previews/appgraph.jpg';
 import PrevInteractiveWorks from '../Image/previews/interactive-works.jpg';
 import PrevCodexLuminara from '../Image/previews/codex-luminara.jpg';
+import PrevVoid from '../Image/previews/void.jpg';
+import PrevCosmic from '../Image/previews/cosmic.jpg';
+import PrevAeternum from '../Image/previews/aeternum.jpg';
+import PrevCargoLink from '../Image/previews/cargolink.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -71,6 +75,17 @@ export const projects = [
     img: PrevAppGraph,
   },
   {
+    id: 'cargolink',
+    graph: 'cargolink-app',
+    category: 'Web',
+    featured: true,
+    title: 'CargoLink — Freight Marketplace',
+    desc: 'B2B freight & warehouse marketplace for Uzbekistan and the CIS — cargo and warehouse listings, token-gated contact reveals, SMS-OTP auth and a 10-tab profile dashboard over the Karvon API.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind v4', 'Zustand', 'shadcn/ui', 'i18n', 'business'],
+    demo: 'https://cargo.xodjayev.uz/',
+    img: PrevCargoLink,
+  },
+  {
     id: 'interactive-works',
     graph: 'interactive-works',
     category: 'Web',
@@ -93,6 +108,39 @@ export const projects = [
     github: 'https://github.com/asadbekXodjayev/art-ThreeJs',
     demo: 'https://art.asadbe.uz/',
     img: PrevCodexLuminara,
+  },
+  {
+    id: 'void',
+    graph: 'void-threejs',
+    category: 'Web',
+    featured: true,
+    title: 'VOID — Grimoire of the Dead',
+    desc: 'A black-magic rite forged in WebGL — a scroll-driven occult grimoire of five movements (The Black Gate, The Bone Oracle, The Sigil Wakes, The Summoning, The Void) with a glowing skull, drifting embers and animated sigils.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'scrollytelling'],
+    github: 'https://github.com/asadbekXodjayev/void-threeJs',
+    demo: 'https://void.xodjayev.uz/',
+    img: PrevVoid,
+  },
+  {
+    id: 'cosmic',
+    graph: 'cosmic-threejs',
+    category: 'Web',
+    featured: true,
+    title: 'COSMIC — Atlas of Extreme Objects',
+    desc: 'An interactive WebGL atlas of five cosmic extremes — black hole, galaxy, nebula, pulsar and star — falling through real astrophysics with a scroll-driven descent, GPU particle fields and an accretion-disk shader.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'astronomy'],
+    demo: 'https://cosmic.xodjayev.uz/',
+    img: PrevCosmic,
+  },
+  {
+    id: 'aeternum',
+    graph: 'aeternum-threejs',
+    category: 'Web',
+    title: 'AETERNUM — Memento Mori',
+    desc: 'An interactive relic forged in WebGL — a four-act meditation on mortality (The Descent, The Relic, The Reckoning, Eternity) built around a smouldering stone with scroll-bound camera moves and film-grain post.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'art'],
+    demo: 'https://3js.xodjayev.uz/',
+    img: PrevAeternum,
   },
   {
     id: 'steel-theraphy',
@@ -269,7 +317,7 @@ export const projects = [
     title: 'Water Pump',
     desc: 'Commercial site for a water-pump business — product range and inquiry contact.',
     tags: ['react', 'business', 'live'],
-    demo: 'https://waterpump-page.netlify.app/',
+    demo: 'https://waterpump.xodjayev.uz/',
     img: PrevWaterpump,
   },
   {

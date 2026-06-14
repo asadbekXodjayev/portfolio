@@ -32,6 +32,7 @@ export const skillGroups = [
     items: [
       { name: 'React', level: 99 },
       { name: 'Next.js', level: 95 },
+      { name: 'Three.js', level: 84 },
       { name: 'Framer Motion', level: 90 },
       { name: 'styled-components / Sass', level: 100 },
       { name: 'Tailwind CSS', level: 88 },
@@ -102,6 +103,7 @@ export const topSkills = [
   'React',
   'TypeScript',
   'Next.js',
+  'Three.js',
   'Framer Motion',
   'Python',
   'PyTorch',
