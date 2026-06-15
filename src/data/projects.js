@@ -27,6 +27,12 @@ import PrevVoid from '../Image/previews/void.jpg';
 import PrevCosmic from '../Image/previews/cosmic.jpg';
 import PrevAeternum from '../Image/previews/aeternum.jpg';
 import PrevCargoLink from '../Image/previews/cargolink.jpg';
+import PrevVantage from '../Image/previews/vantage.jpg';
+import PrevNeonfall from '../Image/previews/neonfall.jpg';
+import PrevStrata from '../Image/previews/strata.jpg';
+import PrevCompile from '../Image/previews/compile.jpg';
+import PrevSubstrate from '../Image/previews/substrate.jpg';
+import PrevEndlessDrive from '../Image/previews/endless-drive.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -141,6 +147,69 @@ export const projects = [
     tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'art'],
     demo: 'https://3js.xodjayev.uz/',
     img: PrevAeternum,
+  },
+  {
+    id: 'vantage',
+    graph: 'vantage-threejs',
+    category: 'Web',
+    featured: true,
+    title: 'VANTAGE — 3D Car Walkaround',
+    desc: 'A scroll-driven walkaround of a 2026 concept car rendered as real geometry in a virtual studio — silhouette → exterior → engine teardown → live paint configurator (MeshPhysicalMaterial clearcoat) → telemetry, with LOD for mobile.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'PBR', 'automotive'],
+    demo: 'https://cars.xodjayev.uz/',
+    img: PrevVantage,
+  },
+  {
+    id: 'neonfall',
+    graph: 'neonfall-threejs',
+    category: 'Web',
+    featured: true,
+    title: 'NEONFALL — Arcade Experience',
+    desc: 'A scroll-driven neon-noir arcade that boots up around you — a world hub of game portals, two procedural low-poly levels (Neon Spire, Undergrid) and a playable scout-ship arena, lit by an UnrealBloom glow pipeline.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'Bloom', 'game'],
+    demo: 'https://gaming.xodjayev.uz/',
+    img: PrevNeonfall,
+  },
+  {
+    id: 'strata',
+    graph: 'strata-threejs',
+    category: 'Web',
+    title: 'STRATA — Scroll Through Deep Time',
+    desc: 'An interactive timeline where scroll is time — descend from 3000 BCE to today through six eras, each anchored by a procedurally generated monument with era-tinted fog and light, plus an artifact ledger.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'procedural', 'history'],
+    demo: 'https://history.xodjayev.uz/',
+    img: PrevStrata,
+  },
+  {
+    id: 'compile',
+    graph: 'compile-threejs',
+    category: 'Web',
+    title: 'COMPILE — Source Becomes System',
+    desc: 'A scroll-driven visualization of a compiler pipeline — source text assembles into tokens and a syntax tree, imports resolve into a force-directed dependency graph, the graph executes as light pulses, then scales to a full architecture.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'InstancedMesh', 'dataviz'],
+    demo: 'https://coding.xodjayev.uz/',
+    img: PrevCompile,
+  },
+  {
+    id: 'substrate',
+    graph: 'substrate-threejs',
+    category: 'Web',
+    title: 'SUBSTRATE — A Zoom Across Scale',
+    desc: 'A scroll-driven zoom across nine orders of magnitude — from a single transistor gate to a chip, a device, a global network and a planet of data — with instanced network nodes and an adaptive DPR ladder for mobile.',
+    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'InstancedMesh', 'tech'],
+    demo: 'https://tech.xodjayev.uz/',
+    img: PrevSubstrate,
+  },
+  {
+    id: 'endless-drive',
+    graph: 'endless-drive-threejs',
+    category: 'Web',
+    featured: true,
+    title: 'ENDLESS DRIVE — Procedural Road Trip',
+    desc: 'A chill, fully playable 3D driving game — no score, no game over, just a procedurally generated road with dynamic weather, eight selectable vehicles, cinematic camera modes and a photo mode.',
+    tags: ['Three.js', 'WebGL', 'procedural', 'game', 'playable'],
+    demo: 'https://game.xodjayev.uz/',
+    img: PrevEndlessDrive,
   },
   {
     id: 'steel-theraphy',
