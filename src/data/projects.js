@@ -33,6 +33,8 @@ import PrevStrata from '../Image/previews/strata.jpg';
 import PrevCompile from '../Image/previews/compile.jpg';
 import PrevSubstrate from '../Image/previews/substrate.jpg';
 import PrevEndlessDrive from '../Image/previews/endless-drive.jpg';
+import PrevBackrooms from '../Image/previews/backrooms.jpg';
+import PrevCTM from '../Image/previews/ctm.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -90,6 +92,16 @@ export const projects = [
     tags: ['Next.js', 'TypeScript', 'Tailwind v4', 'Zustand', 'shadcn/ui', 'i18n', 'business'],
     demo: 'https://cargo.xodjayev.uz/',
     img: PrevCargoLink,
+  },
+  {
+    id: 'ctm',
+    category: 'Web',
+    featured: true,
+    title: 'Central Trade Market (CTM)',
+    desc: 'Production freight & carrier marketplace for Uzbekistan and the CIS — verified cargo, warehouse and carrier listings with direct negotiation, search by route and a token-gated contact economy over the Karvon API.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind v4', 'Zustand', 'i18n', 'marketplace', 'business'],
+    demo: 'https://centraltrademarket.com/',
+    img: PrevCTM,
   },
   {
     id: 'interactive-works',
@@ -210,6 +222,16 @@ export const projects = [
     tags: ['Three.js', 'WebGL', 'procedural', 'game', 'playable'],
     demo: 'https://game.xodjayev.uz/',
     img: PrevEndlessDrive,
+  },
+  {
+    id: 'backrooms',
+    category: 'Web',
+    featured: true,
+    title: 'The Backrooms',
+    desc: 'First-person liminal-horror maze in WebGL — noclip into an endless, fully-sealed procedural labyrinth of mono-yellow rooms where a sanity system drives the fog, grain, audio and entity behaviour. Zero third-party assets.',
+    tags: ['Three.js', 'WebGL', 'GLSL', 'procedural', 'WebAudio', 'game'],
+    demo: 'https://backrooms.xodjayev.uz/',
+    img: PrevBackrooms,
   },
   {
     id: 'steel-theraphy',

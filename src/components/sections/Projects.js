@@ -8,6 +8,7 @@ import { projects, categories } from '../../data/projects';
 import { appgraphUrl } from '../../data/config';
 import { repoCuration, SHOW_UNLISTED } from '../../data/repos';
 import { useGithubRepos } from '../../hooks/useGithubRepos';
+import { GITHUB_USERNAME } from '../../lib/github';
 import { containerVariants } from '../../lib/motion';
 
 const Header = styled.div`
@@ -138,25 +139,50 @@ const Projects = () => {
     [enrichment],
   );
 
-  // Build repo cards from the live feed, honoring the curation config.
+  // Curated open-source / desktop repos. These render straight from the static
+  // curation map so the C++ / C#, Python and Open Source pills are never empty
+  // when the GitHub API is rate-limited or offline; live stars / language /
+  // updated-date enrich the matching cards whenever the feed is available.
   const repoItems = useMemo(() => {
-    return repos
-      .filter((r) => !curatedRepoNames.has(r.name))
-      .map((r) => {
-        const c = repoCuration[r.name];
-        if (c?.hide) return null;
-        if (!c && !SHOW_UNLISTED) return null;
+    const live = {};
+    repos.forEach((r) => {
+      live[r.name] = r;
+    });
+
+    const curated = Object.entries(repoCuration)
+      .filter(([, c]) => !c.hide)
+      .map(([name, c]) => {
+        const l = live[name];
         return {
-          ...r,
+          id: l?.id ?? name,
+          name,
           isRepo: true,
-          category: c?.category || 'Open Source',
-          title: c?.title || r.name,
-          description: c?.desc || r.description,
-          graph: c?.graph,
-          img: c?.img,
+          category: c.category || 'Open Source',
+          title: c.title || name,
+          description: c.desc || l?.description || null,
+          language: l?.language || null,
+          stars: l?.stars ?? 0,
+          updatedAt: l?.updatedAt || null,
+          htmlUrl: l?.htmlUrl || `https://github.com/${GITHUB_USERNAME}/${name}`,
+          graph: c.graph,
+          img: c.img,
         };
-      })
-      .filter(Boolean);
+      });
+
+    // Extra public repos not in the curation map — only when SHOW_UNLISTED.
+    const extra = SHOW_UNLISTED
+      ? repos
+          .filter((r) => !curatedRepoNames.has(r.name) && !repoCuration[r.name])
+          .map((r) => ({
+            ...r,
+            isRepo: true,
+            category: 'Open Source',
+            title: r.name,
+            description: r.description,
+          }))
+      : [];
+
+    return [...curated, ...extra];
   }, [repos, curatedRepoNames]);
 
   const visible = useMemo(() => {
