@@ -35,31 +35,6 @@ export const SHOW_UNLISTED = false;
 // (→ appgraphUrl/apps/<slug>, see data/config.js).
 // `img` = cover screenshot shown above the card body.
 export const repoCuration = {
-  '-Dijkstra-Path-Finder-C-CLI-': {
-    category: 'C++ / C#',
-    title: 'Dijkstra Path Finder (C++/CLI)',
-    desc: "Interactive WinForms app to build a graph and watch Dijkstra's shortest-path algorithm run step-by-step, with a glassmorphic dark UI.",
-    graph: 'dijkstra-path-finder',
-  },
-  'Dijkstra-Visualizer-Python-': {
-    category: 'Python',
-    title: 'Dijkstra Visualizer (Python)',
-    desc: "Tkinter desktop app that visualizes Dijkstra's algorithm step-by-step on a user-built weighted graph, with login, animated traversal, and a live step log.",
-    graph: 'shortest-path-finder',
-    img: PrevDijkstraPy,
-  },
-  'WinForms-App-Skeleton': {
-    category: 'C++ / C#',
-    title: 'WinForms App Skeleton',
-    desc: 'Minimal C# Windows Forms (.NET Framework 4.7.2) single-window shell, ready to be extended.',
-  },
-  'Dijkstra-Visualizer-.NET-8-': {
-    category: 'C++ / C#',
-    title: 'Dijkstra Visualizer (.NET 8)',
-    desc: "C#/.NET 8 WinForms app visualizing Dijkstra's shortest path on a custom glassmorphic canvas, with local SHA-256 authentication.",
-    graph: 'winforms-dijkstra',
-  },
-
   // ── AI/ML full-stack (React front-end + Python AI backend) ────────────────
   'ai-face-recognition': {
     category: 'AI/ML',
@@ -95,6 +70,33 @@ export const repoCuration = {
     graph: 'real-estate-price-predictor',
     img: PrevPrice,
   },
+
+  // ── native desktop (C++/C#/Python) — rendered last of all ──────────────────
+  '-Dijkstra-Path-Finder-C-CLI-': {
+    category: 'C++ / C#',
+    title: 'Dijkstra Path Finder (C++/CLI)',
+    desc: "Interactive WinForms app to build a graph and watch Dijkstra's shortest-path algorithm run step-by-step, with a glassmorphic dark UI.",
+    graph: 'dijkstra-path-finder',
+  },
+  'Dijkstra-Visualizer-Python-': {
+    category: 'Python',
+    title: 'Dijkstra Visualizer (Python)',
+    desc: "Tkinter desktop app that visualizes Dijkstra's algorithm step-by-step on a user-built weighted graph, with login, animated traversal, and a live step log.",
+    graph: 'shortest-path-finder',
+    img: PrevDijkstraPy,
+  },
+  'WinForms-App-Skeleton': {
+    category: 'C++ / C#',
+    title: 'WinForms App Skeleton',
+    desc: 'Minimal C# Windows Forms (.NET Framework 4.7.2) single-window shell, ready to be extended.',
+  },
+  'Dijkstra-Visualizer-.NET-8-': {
+    category: 'C++ / C#',
+    title: 'Dijkstra Visualizer (.NET 8)',
+    desc: "C#/.NET 8 WinForms app visualizing Dijkstra's shortest path on a custom glassmorphic canvas, with local SHA-256 authentication.",
+    graph: 'winforms-dijkstra',
+  },
+
   // 'ai-front-end': {
   //   category: 'AI/ML',
   //   title: 'AI Front-End',
