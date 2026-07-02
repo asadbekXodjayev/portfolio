@@ -6,6 +6,7 @@ import TerminalInput from '../components/terminal/TerminalInput';
 import PreviewAbout from '../components/home/PreviewAbout';
 import PreviewWorks from '../components/home/PreviewWorks';
 import PreviewSkills from '../components/home/PreviewSkills';
+import PreviewAI from '../components/home/PreviewAI';
 import PreviewContact from '../components/home/PreviewContact';
 import { setDocTitle } from '../utils/helpers';
 
@@ -35,6 +36,7 @@ const Home = () => {
         <PreviewAbout />
         <PreviewWorks />
         <PreviewSkills />
+        <PreviewAI />
         <TerminalInput />
         <PreviewContact />
       </Stack>
