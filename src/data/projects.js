@@ -33,6 +33,7 @@ import PrevSubstrate from '../Image/previews/substrate.jpg';
 import PrevEndlessDrive from '../Image/previews/endless-drive.jpg';
 import PrevBackrooms from '../Image/previews/backrooms.jpg';
 import PrevCTM from '../Image/previews/ctm.jpg';
+import Corvette from '../Image/Снимок экрана (562).png';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -141,6 +142,16 @@ export const projects = [
     github: 'https://github.com/asadbekXodjayev/art-ThreeJs',
     demo: 'https://art.asadbe.uz/',
     img: PrevCodexLuminara,
+  },
+  {
+    id: 'Corvette ThreeJS',
+    category: 'Web',
+    title: 'Storytelling Corvette',
+    desc: 'A 3D storytelling experience built with Three.js, featuring a detailed Corvette model, interactive animations, and immersive audio effects.',
+    tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'art', 'audio'],
+    github: 'https://github.com/asadbekXodjayev/Threejs-corvette',
+    demo: 'https://corvette.asadbe.uz/',
+    img: Corvette,
   },
   {
     id: 'waterpump',
