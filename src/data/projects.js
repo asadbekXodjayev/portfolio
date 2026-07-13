@@ -34,6 +34,9 @@ import PrevEndlessDrive from '../Image/previews/endless-drive.jpg';
 import PrevBackrooms from '../Image/previews/backrooms.jpg';
 import PrevCTM from '../Image/previews/ctm.jpg';
 import Corvette from '../Image/Снимок экрана (562).png';
+import PrevFlowers from '../Image/previews/flowers.jpg';
+import PrevShajara from '../Image/previews/shajara.jpg';
+import PrevGraphForge from '../Image/previews/graphforge.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -150,8 +153,36 @@ export const projects = [
     desc: 'A 3D storytelling experience built with Three.js, featuring a detailed Corvette model, interactive animations, and immersive audio effects.',
     tags: ['Three.js', 'GSAP', 'TypeScript', 'WebGL', 'art', 'audio'],
     github: 'https://github.com/asadbekXodjayev/Threejs-corvette',
-    demo: 'https://corvette.asadbe.uz/',
+    demo: 'https://corvette.xodjayev.uz/',
     img: Corvette,
+  },
+  {
+    id: 'flowers',
+    category: 'Web',
+    featured: true,
+    title: 'Vesna — Florist Store',
+    desc: 'Boutique florist storefront ("Vesna") — product catalog, an AI-assisted bouquet finder, cart and checkout, built from a Figma design with triple-language i18n (RU/EN/UZ).',
+    tags: ['Next.js', 'TypeScript', 'next-intl', 'TanStack Query', 'OpenAI', 'zustand', 'e-commerce'],
+    demo: 'https://flowers.xodjayev.uz/ru',
+    img: PrevFlowers,
+  },
+  {
+    id: 'shajara',
+    category: 'Web',
+    title: 'Shajara — Family Tree',
+    desc: 'Interactive family-tree (shajara) builder — expand and collapse branches, search relatives by name, export the tree to PNG or JSON, with auth and multiple family trees over a Node backend.',
+    tags: ['React', 'Vite', 'TypeScript', 'Node', 'SVG', 'i18n'],
+    demo: 'https://fam.xodjayev.uz/',
+    img: PrevShajara,
+  },
+  {
+    id: 'graphforge',
+    category: 'Web',
+    title: 'GraphForge — Collaborative Diagram Editor',
+    desc: 'Universal, plugin-based collaborative diagram editor — draw flowcharts, state machines and network graphs on an SVG canvas with real-time Yjs collaboration and dagre/ELK/d3-force auto-layout. Next.js + NestJS.',
+    tags: ['Next.js', 'NestJS', 'Yjs', 'CRDT', 'ELK', 'SVG'],
+    demo: 'https://graph.xodjayev.uz/editor',
+    img: PrevGraphForge,
   },
   {
     id: 'waterpump',
