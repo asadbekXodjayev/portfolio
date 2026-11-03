@@ -38,7 +38,7 @@ const Msg = styled.p`
 
 const POSTER_T = 3.2; // the frame shown when paused / reduced motion (seconds into the piece)
 
-const PieceCanvas = ({ entry, playing, speed, fill, inset = 24, nonce }) => {
+const PieceCanvas = ({ entry, playing, speed, fill, cover = false, inset = 24, nonce }) => {
   const wrap = useRef(null);
   const cv = useRef(null);
   const piece = useRef({ draw: null, meta: null });
@@ -81,7 +81,7 @@ const PieceCanvas = ({ entry, playing, speed, fill, inset = 24, nonce }) => {
         height: Math.floor(h * dpr),
         bg: BG,
         ink: '#e8e8ea',
-        fit: 'contain',
+        fit: cover ? 'cover' : 'contain',
         margin: 0,
         meta,
       });
@@ -89,7 +89,7 @@ const PieceCanvas = ({ entry, playing, speed, fill, inset = 24, nonce }) => {
       c.style.height = `${h}px`;
     };
     drawNow.current();
-  }, [state, aspect]);
+  }, [state, aspect, cover]);
 
   // size: as wide as the column, or (full screen) the largest that fits both ways
   useEffect(() => {
@@ -99,7 +99,8 @@ const PieceCanvas = ({ entry, playing, speed, fill, inset = 24, nonce }) => {
       const H = el.clientHeight;
       let w = W;
       let h = W * aspect;
-      if (fill && H && h > H) { h = H; w = H / aspect; }
+      if (fill && H && cover) { w = W; h = H; }
+      else if (fill && H && h > H) { h = H; w = H / aspect; }
       box.current = { w: Math.max(80, Math.floor(w)), h: Math.max(40, Math.floor(h)) };
       drawNow.current();
     };
@@ -107,7 +108,7 @@ const PieceCanvas = ({ entry, playing, speed, fill, inset = 24, nonce }) => {
     ro.observe(el);
     resize();
     return () => ro.disconnect();
-  }, [fill, aspect, state]);
+  }, [fill, aspect, state, cover]);
 
   // the loop
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../ui/Button';
-import KissCanvas from './KissCanvas';
+import ArtCanvas from './ArtCanvas';
 import PieceCanvas from './PieceCanvas';
 import { posterFrame, COLS, ROWS } from '../../data/ascii/animations';
 import { ENTRIES, GROUPS } from '../../data/ascii/entries';
@@ -79,6 +79,7 @@ const Window = styled.figure`
   ${pixelBox(6)}
   scroll-margin-top: 76px;
   background: ${({ theme }) => theme.colors.bgSecondary};
+  position: relative;
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -122,6 +123,7 @@ const Title = styled.figcaption`
   font-size: 17px;
   font-weight: 600;
   flex: none;
+  ${({ $overlay }) => ($overlay ? 'position: absolute; top: 0; left: 0; right: 0; z-index: 3; opacity: 0.85;' : '')}
   span { font-family: ${({ theme }) => theme.fonts.mono}; font-size: 12px; font-weight: 400; }
   button {
     font-family: ${({ theme }) => theme.fonts.pixel};
@@ -135,7 +137,7 @@ const Title = styled.figcaption`
 
 // The screen is always a dark "sky" with light text, in both themes (night scenes need it).
 const Screen = styled.div`
-  padding: ${({ $fill }) => ($fill ? '12px' : '14px')};
+  padding: ${({ $cover, $fill }) => ($cover ? '0' : $fill ? '12px' : '14px')};
   background: #000;
   color: #fff;
   overflow: hidden;
@@ -204,13 +206,14 @@ const AsciiRoom = () => {
   const [nonce, setNonce] = useState(0);
   const [size, setSize] = useState('fit'); // small | fit | full
   const [fake, setFake] = useState(false); // CSS fallback when the Fullscreen API is unavailable
-  const [kissMode, setKissMode] = useState('ascii');
+  const [artMode, setArtMode] = useState('ascii');
 
   const anim = ENTRIES.find((a) => a.id === id);
-  const isKiss = anim.kind === 'kiss';
+  const isArt = anim.kind === 'art';
   const isPiece = anim.kind === 'piece';
-  const isCanvas = isKiss || isPiece; // anything that is not the text <pre>
-  const full = size === 'full';
+  const isCanvas = isArt || isPiece; // anything that is not the text <pre>
+  const full = size === 'full' || size === 'fill';
+  const cover = size === 'fill'; // edge to edge across the whole screen, cropping if needed
 
   const pre = useRef(null);
   const frame = useRef(null);
@@ -228,18 +231,19 @@ const AsciiRoom = () => {
       const w = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const h = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
       const byWidth = w / (COLS * CHAR_W);
-      const fs = Math.min(byWidth, h / (ROWS * LINE_HEIGHT)); // always fit both ways
+      const byHeight = h / (ROWS * LINE_HEIGHT);
+      const fs = cover ? Math.max(byWidth, byHeight) : Math.min(byWidth, byHeight); // cover crops, otherwise fit both ways
       pre.current.style.fontSize = `${Math.max(5, fs).toFixed(2)}px`;
     };
     const ro = new ResizeObserver(fit);
     ro.observe(el);
     fit();
     return () => ro.disconnect();
-  }, [isCanvas, full, fake, size, id]);
+  }, [isCanvas, full, fake, size, cover, id]);
 
   /* ── full screen: real Fullscreen API, with a CSS overlay as the fallback ── */
-  const enterFull = useCallback(async () => {
-    setSize('full');
+  const enterFull = useCallback(async (kind = 'full') => {
+    setSize(kind);
     try {
       if (frame.current?.requestFullscreen) await frame.current.requestFullscreen();
       else setFake(true);
@@ -257,7 +261,7 @@ const AsciiRoom = () => {
   }, []);
 
   useEffect(() => {
-    const onChange = () => { if (!document.fullscreenElement) { setFake(false); setSize((s) => (s === 'full' ? 'fit' : s)); } };
+    const onChange = () => { if (!document.fullscreenElement) { setFake(false); setSize((s) => (s === 'full' || s === 'fill' ? 'fit' : s)); } };
     document.addEventListener('fullscreenchange', onChange);
     return () => document.removeEventListener('fullscreenchange', onChange);
   }, []);
@@ -347,7 +351,8 @@ const AsciiRoom = () => {
       if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
       else if (e.key === ' ' && (document.activeElement === document.body || full)) { e.preventDefault(); setPlaying((p) => !p); }
-      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); (full ? exitFull : enterFull)(); }
+      else if (e.key === 'F') { e.preventDefault(); (full ? exitFull : () => enterFull('fill'))(); } // Shift+F: edge to edge
+      else if (e.key === 'f') { e.preventDefault(); (full ? exitFull : () => enterFull('full'))(); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -377,17 +382,17 @@ const AsciiRoom = () => {
 
       <Stage>
         <Window ref={frame} $size={size} $full={fake} aria-label={`${isCanvas ? 'Artwork' : 'ASCII animation'}: ${anim.name}`}>
-          <Title>
+          <Title $overlay={cover}>
             {anim.name}
             {isFull ? (
               <button type="button" onClick={exitFull}>Exit full screen (Esc)</button>
             ) : (
-              <span>{isKiss ? 'Klimt, 1908' : `${Math.round(Math.min(anim.fps, 30) * (isPiece ? 1 : speed))} fps`}</span>
+              <span>{isArt ? `${anim.art.artist}, ${anim.art.year}` : `${Math.round(Math.min(anim.fps, 30) * (isPiece ? 1 : speed))} fps`}</span>
             )}
           </Title>
-          <Screen ref={screen} $fill={fillScreen}>
-            {isKiss && <KissCanvas playing={playing} speed={speed} mode={kissMode} fill={fillScreen} inset={isFull ? 24 : 12} nonce={nonce} />}
-            {isPiece && <PieceCanvas key={anim.id} entry={anim} playing={playing} speed={speed} fill={fillScreen} inset={isFull ? 24 : 12} nonce={nonce} />}
+          <Screen ref={screen} $fill={fillScreen} $cover={cover}>
+            {isArt && <ArtCanvas art={anim.art} playing={playing} speed={speed} mode={artMode} fill={fillScreen} cover={cover} inset={cover ? 0 : isFull ? 24 : 12} nonce={nonce} />}
+            {isPiece && <PieceCanvas key={anim.id} entry={anim} playing={playing} speed={speed} fill={fillScreen} cover={cover} inset={cover ? 0 : isFull ? 24 : 12} nonce={nonce} />}
             {!isCanvas && <Pre ref={pre} aria-hidden="true" />}
           </Screen>
         </Window>
@@ -424,17 +429,20 @@ const AsciiRoom = () => {
             <Seg type="button" $on={size === 'fit'} aria-pressed={size === 'fit'} onClick={() => (isFull ? exitFull() : setSize('fit'))}>
               Fit
             </Seg>
-            <Seg type="button" $on={isFull} aria-pressed={isFull} onClick={enterFull}>
+            <Seg type="button" $on={size === 'full'} aria-pressed={size === 'full'} onClick={() => enterFull('full')}>
               Full
             </Seg>
+            <Seg type="button" $on={size === 'fill'} aria-pressed={size === 'fill'} onClick={() => enterFull('fill')} title="Whole screen, edge to edge (the picture is cropped to fit)">
+              Fill
+            </Seg>
           </div>
-          {isKiss && (
+          {isArt && (
             <div className="group" role="group" aria-label="Artwork view">
               <span className="lbl">View</span>
-              <Seg type="button" $on={kissMode === 'ascii'} aria-pressed={kissMode === 'ascii'} onClick={() => setKissMode('ascii')}>
+              <Seg type="button" $on={artMode === 'ascii'} aria-pressed={artMode === 'ascii'} onClick={() => setArtMode('ascii')}>
                 ASCII
               </Seg>
-              <Seg type="button" $on={kissMode === 'painting'} aria-pressed={kissMode === 'painting'} onClick={() => setKissMode('painting')}>
+              <Seg type="button" $on={artMode === 'painting'} aria-pressed={artMode === 'painting'} onClick={() => setArtMode('painting')}>
                 Painting
               </Seg>
             </div>
@@ -442,8 +450,8 @@ const AsciiRoom = () => {
         </Controls>
 
         <Hint>
-          Keys: <kbd>←</kbd> <kbd>→</kbd> switch · <kbd>Space</kbd> play or pause · <kbd>F</kbd> full screen.{' '}
-          {isKiss && 'Gustav Klimt, The Kiss (1907–08), public domain. Photograph: Google Art Project, via Wikimedia Commons.'}
+          Keys: <kbd>←</kbd> <kbd>→</kbd> switch · <kbd>Space</kbd> play or pause · <kbd>F</kbd> full screen · <kbd>Shift</kbd>+<kbd>F</kbd> fill the whole screen.{' '}
+          {isArt && `${anim.art.artist}, ${anim.art.title} (${anim.art.year}), public domain. ${anim.art.credit}`}
           {isPiece && (
             <>
               “{anim.name}” is from <a href="https://github.com/kailashsr38/ascii-magic-art" target="_blank" rel="noreferrer">ascii-magic-art</a> by

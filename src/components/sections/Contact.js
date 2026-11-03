@@ -6,6 +6,7 @@ import Panel from '../ui/Panel';
 import Button from '../ui/Button';
 import { GitHubIcon } from '../ui/ProjectCard';
 import { config } from '../../data/config';
+import { getVisitorInfo, deviceSummary, sessionId } from '../../lib/visitor';
 import { containerVariants, itemVariants } from '../../lib/motion';
 
 const Layout = styled.div`
@@ -76,8 +77,15 @@ const LinkList = styled.ul`
   a { display: inline-flex; align-items: center; gap: 8px; }
 `;
 
-const BOT = '5564814493:AAE-fW4LsvsR5azRSdOu24GRpEiuFxt3Em8';
-const CHAT = '-1001756381397';
+// Messages go through /api/telegram (api/telegram.js), which holds the bot token on the server.
+
+const Trap = styled.div`
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+`;
 
 const socialLinks = [
   { key: 'github', label: 'GitHub', href: config.socials.github, icon: <GitHubIcon /> },
@@ -91,25 +99,37 @@ const Contact = () => {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
   const [busy, setBusy] = useState(false);
+  const [trap, setTrap] = useState(''); // honeypot: real people never fill this in
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!name || !link || !message) return;
     setBusy(true);
     setStatus('');
+    // The group also gets the sender's device and page, so a message can be matched to a visit.
+    let meta = {};
+    try {
+      const info = await getVisitorInfo();
+      meta = { page: info.page, device: deviceSummary(info) };
+    } catch {
+      /* the message is still sent without it */
+    }
     axios
-      .post(
-        `https://api.telegram.org/bot${BOT}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(
-          `<b>Contacts:</b>\n<b>Name:</b> ${name}\n<b>Link:</b> ${link}\n<b>Message:</b> ${message}`,
-        )}&parse_mode=html`,
-      )
+      .post('/api/telegram', { type: 'contact', name, contact: link, message, website: trap, sid: sessionId(), meta })
       .then(() => {
         setStatus('ok:Message sent. I will reply as soon as I can.');
         setName('');
         setLink('');
         setMessage('');
       })
-      .catch(() => setStatus(`err:The message could not be sent. Please email ${config.academicEmail} instead.`))
+      .catch((err) => {
+        const code = err?.response?.status;
+        setStatus(
+          code === 429
+            ? 'err:Too many messages in a short time. Please try again in a few minutes.'
+            : `err:The message could not be sent. Please email ${config.academicEmail} instead.`,
+        );
+      })
       .finally(() => setBusy(false));
   };
 
@@ -131,6 +151,12 @@ const Contact = () => {
             Message
             <Area value={message} onChange={(e) => setMessage(e.target.value)} required />
           </Row>
+          <Trap aria-hidden="true">
+            <label>
+              Website
+              <input value={trap} onChange={(e) => setTrap(e.target.value)} tabIndex={-1} autoComplete="off" name="website" />
+            </label>
+          </Trap>
           <motion.div variants={itemVariants}>
             <Button type="submit" disabled={busy}>
               {busy ? 'Sending…' : 'Send message'}
