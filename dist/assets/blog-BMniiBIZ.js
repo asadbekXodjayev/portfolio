@@ -1,4 +1,4 @@
-import{r as c,j as t,L as h,a as d,x,i as b}from"./index-D-dtmmbl.js";import{P as k}from"./PageHeader-BalC8BnC.js";import"./Scramble-CpNVHYa-.js";const m=[{id:"future-goals",title:"Where I am heading: goals for the next few years",date:"2026-11-03",tags:["Goals","AI systems","Open source"],summary:"From building interfaces to understanding the systems underneath them: what I want to learn, build and publish next.",body:`I started with native C++ and C#, moved to the web, and spent the last few years shipping production software in React. This year something shifted. My first merged pull requests landed in NVIDIA repositories, and reading production code for training and inference systems made it clear where I want to spend the next stretch of my career. This post is a record of that direction, so I can check later whether I followed it.
+const e=[{id:"future-goals",title:"Where I am heading: goals for the next few years",date:"2026-11-03",tags:["Goals","AI systems","Open source"],summary:"From building interfaces to understanding the systems underneath them: what I want to learn, build and publish next.",body:`I started with native C++ and C#, moved to the web, and spent the last few years shipping production software in React. This year something shifted. My first merged pull requests landed in NVIDIA repositories, and reading production code for training and inference systems made it clear where I want to spend the next stretch of my career. This post is a record of that direction, so I can check later whether I followed it.
 
 ## 1. Move from interfaces toward AI systems
 
@@ -106,63 +106,4 @@ The thing that makes this workable is automated testing. Playwright with Allure 
 
 ## What I am still working out
 
-How to evaluate agent-written tests for real coverage rather than coverage on paper, and how to keep prompts and workflows reproducible enough that someone else can rerun them. Those questions are part of the research direction I describe in my goals post.`,images:[]}],l=[...m].sort((e,n)=>String(n.date).localeCompare(String(e.date))),f=e=>new Date(e).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}),w=e=>Math.max(1,Math.round(e.split(/\s+/).length/220)),I=d.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: ${({theme:e})=>e.space(8)};
-`,v=d.button`
-  padding: 4px 12px;
-  font-family: ${({theme:e})=>e.fonts.pixel};
-  font-size: 16px;
-  border: 2px solid ${({theme:e})=>e.colors.ink};
-  background: ${({theme:e,$on:n})=>n?e.colors.primary:e.colors.bgSecondary};
-  color: ${({theme:e,$on:n})=>n?e.colors.bgSecondary:e.colors.text};
-  box-shadow: ${({$on:e})=>e?"none":"3px 3px 0"} ${({theme:e})=>e.colors.shadow};
-  transform: ${({$on:e})=>e?"translate(3px, 3px)":"none"};
-  &:hover { background: ${({theme:e})=>e.colors.accent}; color: ${({theme:e})=>e.colors.accentInk}; }
-`,j=d.ol`
-  list-style: none;
-  border-top: 2px solid ${({theme:e})=>e.colors.ink};
-`,T=d.li`
-  border-bottom: 2px dotted ${({theme:e})=>e.colors.border};
-  a.row {
-    display: grid;
-    grid-template-columns: 170px minmax(0, 1fr);
-    gap: ${({theme:e})=>e.space(6)};
-    padding: ${({theme:e})=>e.space(6)} 0;
-    text-decoration: none;
-    color: inherit;
-  }
-  a.row:hover h2 { background: ${({theme:e})=>e.colors.accent}; color: ${({theme:e})=>e.colors.accentInk}; }
-  @media (max-width: 700px) { a.row { grid-template-columns: 1fr; gap: 6px; } }
-  time, .min { font-family: ${({theme:e})=>e.fonts.mono}; font-size: 13px; color: ${({theme:e})=>e.colors.textMuted}; display: block; }
-  h2 { font-size: 28px; margin-bottom: 8px; width: fit-content; }
-  p { font-size: 18px; color: ${({theme:e})=>e.colors.textMuted}; }
-  .tags { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; font-family: ${({theme:e})=>e.fonts.ui}; font-size: 13px; color: ${({theme:e})=>e.colors.textMuted}; }
-  .tags span { padding: 1px 8px; border: 2px solid ${({theme:e})=>e.colors.border}; background: ${({theme:e})=>e.colors.bgSecondary}; }
-`,y=()=>{const[e,n]=c.useState("All"),o=c.useMemo(()=>["All",...new Set(l.flatMap(a=>a.tags||[]))],[]),i=e==="All"?l:l.filter(a=>(a.tags||[]).includes(e));return t.jsxs("div",{children:[t.jsx(I,{role:"group","aria-label":"Filter posts by topic",children:o.map(a=>t.jsx(v,{type:"button",$on:a===e,"aria-pressed":a===e,onClick:()=>n(a),children:a},a))}),t.jsx(j,{children:i.map(a=>t.jsx(T,{children:t.jsxs(h,{className:"row",to:`/blog/${a.id}`,children:[t.jsxs("div",{children:[t.jsx("time",{dateTime:a.date,children:f(a.date)}),t.jsxs("span",{className:"min",children:[w(a.body)," min read"]})]}),t.jsxs("div",{children:[t.jsx("h2",{children:a.title}),t.jsx("p",{children:a.summary}),t.jsx("div",{className:"tags",children:(a.tags||[]).map(s=>t.jsx("span",{children:s},s))})]})]})},a.id))})]})},A=d.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 8px;
-  z-index: 300;
-  width: ${({$p:e})=>e}%;
-  background: ${({theme:e})=>e.colors.accent};
-  border-bottom: 2px solid ${({theme:e})=>e.colors.ink};
-  border-right: 2px solid ${({theme:e})=>e.colors.ink};
-`,g=d.article`
-  max-width: 68ch;
-  margin: 0 auto;
-  h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 400; letter-spacing: -0.02em; margin: 12px 0 16px; }
-  h2 { font-size: 28px; margin: 44px 0 12px; }
-  p { font-size: 20px; line-height: 1.7; margin-bottom: 20px; max-width: none; }
-  ul { margin: 0 0 20px 22px; font-size: 20px; line-height: 1.7; }
-  li { margin-bottom: 6px; }
-  .meta { font-family: ${({theme:e})=>e.fonts.mono}; font-size: 13px; color: ${({theme:e})=>e.colors.textMuted}; }
-  .lede { font-size: 22px; color: ${({theme:e})=>e.colors.textMuted}; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px dotted ${({theme:e})=>e.colors.ink}; }
-  .back { font-family: ${({theme:e})=>e.fonts.ui}; font-size: 14px; }
-  .end { margin-top: 48px; padding-top: 24px; border-top: 2px dotted ${({theme:e})=>e.colors.ink}; font-family: ${({theme:e})=>e.fonts.pixel}; font-size: 17px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-`,u=e=>e.split(/(https?:\/\/[^\s)]+)/g).map((n,o)=>/^https?:\/\//.test(n)?t.jsx("a",{href:n,target:"_blank",rel:"noreferrer",children:n.replace(/^https?:\/\//,"")},o):n),$=e=>{const n=[];let o=[];const i=()=>{o.length&&(n.push(t.jsx("ul",{children:o.map((a,s)=>t.jsx("li",{children:u(a)},s))},`ul-${n.length}`)),o=[])};return e.split(/\n\n+/).forEach((a,s)=>{a.startsWith("## ")?(i(),n.push(t.jsx("h2",{children:a.slice(3)},s))):a.split(`
-`).every(r=>r.startsWith("- "))?(o.push(...a.split(`
-`).map(r=>r.slice(2))),i()):(i(),n.push(t.jsx("p",{children:u(a)},s)))}),i(),n},S=({id:e})=>{const n=l.find(r=>r.id===e),[o,i]=c.useState(0);if(c.useEffect(()=>{const r=()=>{const p=document.documentElement.scrollHeight-window.innerHeight;i(p>0?Math.min(100,window.scrollY/p*100):0)};return r(),window.addEventListener("scroll",r,{passive:!0}),()=>window.removeEventListener("scroll",r)},[e]),!n)return t.jsxs(g,{children:[t.jsx("h1",{children:"Post not found"}),t.jsxs("p",{children:["That post does not exist. ",t.jsx(h,{to:"/blog",children:"Back to all writing"}),"."]})]});const a=l.findIndex(r=>r.id===e),s=l[a+1];return t.jsxs(t.Fragment,{children:[t.jsx(A,{$p:o,"aria-hidden":"true"}),t.jsxs(g,{children:[t.jsx(h,{className:"back",to:"/blog",children:"← All writing"}),t.jsxs("div",{className:"meta",style:{marginTop:24},children:[f(n.date)," · ",w(n.body)," min read"]}),t.jsx("h1",{children:n.title}),t.jsx("p",{className:"lede",children:n.summary}),$(n.body),t.jsxs("div",{className:"end",children:[t.jsx(h,{to:"/blog",children:"← All writing"}),s&&t.jsxs(h,{to:`/blog/${s.id}`,children:["Older: ",s.title," →"]})]})]})]})};y.displayName="Blog";const M=()=>{const{id:e}=x(),n=e?m.find(o=>o.id===e):null;return c.useEffect(()=>b(n?n.title:"writing"),[n]),e?t.jsx(S,{id:e}):t.jsxs(t.Fragment,{children:[t.jsx(k,{title:"Writing",lede:"Notes on my open-source work, what I am studying in AI, and where I am heading."}),t.jsx(y,{})]})};M.displayName="BlogPage";export{M as default};
+How to evaluate agent-written tests for real coverage rather than coverage on paper, and how to keep prompts and workflows reproducible enough that someone else can rerun them. Those questions are part of the research direction I describe in my goals post.`,images:[]}];export{e as default};

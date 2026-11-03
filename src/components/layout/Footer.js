@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { config } from '../../data/config';
 import { Sprite } from '../ui/PixelArt';
 import { heart } from '../../data/pixelArt';
+import { isOptedOut, setOptOut } from '../../lib/visitor';
 
 const Wrap = styled.footer`
   border-top: 2px solid ${({ theme }) => theme.colors.ink};
@@ -79,6 +80,45 @@ const HeartLink = styled(Link)`
   &:hover { transform: translateY(-3px); }
 `;
 
+const Notice = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  padding: 0 0 ${({ theme }) => theme.space(8)};
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: none;
+  p { max-width: 80ch; margin-bottom: 8px; }
+  button {
+    padding: 3px 10px;
+    font-family: ${({ theme }) => theme.fonts.pixel};
+    font-size: 15px;
+    background: ${({ theme }) => theme.colors.bgSecondary};
+    color: ${({ theme }) => theme.colors.text};
+    box-shadow: 3px 3px 0 ${({ theme }) => theme.colors.shadow};
+  }
+  button:hover { background: ${({ theme }) => theme.colors.accent}; color: ${({ theme }) => theme.colors.accentInk}; }
+`;
+
+const Privacy = () => {
+  const [off, setOff] = useState(() => isOptedOut());
+  const toggle = () => {
+    setOptOut(!off);
+    setOff(!off);
+  };
+  return (
+    <Notice>
+      <p>
+        {off
+          ? 'Reporting is off for this browser. Nothing about your visit is sent to the site owner, and the random id used to tell new from returning visitors has been deleted.'
+          : 'Visits are reported to the site owner: country and city, device and browser, pages viewed, how far you scrolled, and which links you click. A random id stored in this browser tells new from returning visitors. No account or name is involved.'}
+      </p>
+      <button type="button" onClick={toggle} aria-pressed={off}>
+        {off ? 'Turn reporting back on' : 'Stop reporting my visits'}
+      </button>
+    </Notice>
+  );
+};
+
 const Footer = () => (
   <Wrap>
     <Inner>
@@ -111,6 +151,7 @@ const Footer = () => (
       </HeartLink>
       <Clock />
     </Bottom>
+    <Privacy />
   </Wrap>
 );
 

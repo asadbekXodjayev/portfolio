@@ -6,7 +6,7 @@ import Panel from '../ui/Panel';
 import Button from '../ui/Button';
 import { GitHubIcon } from '../ui/ProjectCard';
 import { config } from '../../data/config';
-import { getVisitorInfo, deviceSummary, sessionId } from '../../lib/visitor';
+import { getVisitorInfo, deviceSummary, sessionId, isOptedOut } from '../../lib/visitor';
 import { containerVariants, itemVariants } from '../../lib/motion';
 
 const Layout = styled.div`
@@ -109,6 +109,7 @@ const Contact = () => {
     // The group also gets the sender's device and page, so a message can be matched to a visit.
     let meta = {};
     try {
+      if (isOptedOut()) throw new Error('opted out'); // they asked not to be reported: send only the message
       const info = await getVisitorInfo();
       meta = { page: info.page, device: deviceSummary(info) };
     } catch {
