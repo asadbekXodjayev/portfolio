@@ -5,28 +5,20 @@ import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import { config } from '../../data/config';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow } from './previewStyles';
+import { Section, Head, Heading } from './previewStyles';
 
 const Panel = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.space(4)};
+  gap: ${({ theme }) => theme.space(5)};
   flex-wrap: wrap;
   padding: ${({ theme }) => theme.space(6)};
-  border: 1px dashed ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  box-shadow: 6px 6px 0 ${({ theme }) => theme.colors.shadow};
   background: ${({ theme }) => theme.colors.bgSecondary};
-`;
-
-const Line = styled.p`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.text};
-  strong {
-    color: ${({ theme }) => theme.colors.primary};
-  }
+  p { font-size: 19px; max-width: 46ch; }
+  a.mail { font-family: ${({ theme }) => theme.fonts.ui}; font-size: 15px; }
 `;
 
 const Actions = styled.div`
@@ -37,20 +29,17 @@ const Actions = styled.div`
 
 const PreviewContact = () => (
   <Section variants={containerVariants} {...inViewProps}>
-    <Eyebrow variants={itemVariants}>
-      <span>$</span> ./contact --start
-    </Eyebrow>
+    <Head>
+      <Heading variants={itemVariants}>Contact</Heading>
+    </Head>
     <Panel variants={itemVariants}>
-      <Line>
-        Got a project, a role, or just want to talk shop? <strong>Let's build something.</strong>
-      </Line>
+      <p>
+        For research, collaboration or roles, write to{' '}
+        <a className="mail" href={`mailto:${config.academicEmail}`}>{config.academicEmail}</a>.
+      </p>
       <Actions>
-        <Button as="a" href={`mailto:${config.email}`}>
-          ./email-me
-        </Button>
-        <Button as={Link} to="/contacts">
-          open form →
-        </Button>
+        <Button as="a" href={`mailto:${config.academicEmail}`}>Send an email</Button>
+        <Button as={Link} to="/contacts" $ghost>Contact form</Button>
       </Actions>
     </Panel>
   </Section>

@@ -7,31 +7,17 @@
 export const appgraphUrl = import.meta.env.VITE_APPGRAPH_URL || 'https://sys.xodjayev.uz';
 
 export const config = {
-  name: 'Xodjayev Asadbek Utkirov',
-  handle: 'xodjayev',
-  role: 'Front-end Developer',
-  roles: [
-    'Front-end Developer',
-    'Xodjayev Asadbek Utkirov',
-    'React Developer',
-    'JavaScript Developer',
-    'Web Developer from Uzbekistan',
-  ],
+  name: 'Asadbek Xodjayev',
+  fullName: 'Xodjayev Asadbek Utkirov',
+  handle: 'asadbekXodjayev',
+  role: 'Software Developer',
+  // Primary contact for academic / professional enquiries.
+  academicEmail: 'asadbekxodjayev@webster.edu',
   email: 'xadasad67@gmail.com',
   socials: {
     github: 'https://github.com/asadbekXodjayev',
     telegram: 'https://t.me/m2dnight',
-    instagram: 'https://instagram.com/leomessi/',
     linkedin: 'https://www.linkedin.com/in/asadbek-xodjayev-1bb8a624a/',
-  },
-  version: 'v2.0',
-  systemInfo: {
-    os: 'PortfolioOS 2.0 (terminal-edition)',
-    kernel: '6.6.0-asad',
-    shell: '/bin/zsh',
-    editor: 'neovim',
-    uptime: '∞ days, caffeine-powered',
-    host: 'nerdbek@dev',
   },
 };
 

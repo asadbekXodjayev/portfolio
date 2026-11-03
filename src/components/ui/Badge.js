@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 const Badge = styled.span`
   display: inline-block;
-  padding: 2px 8px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 3px;
-  font-size: 11px;
-  color: ${({ theme }) => theme.colors.secondary};
-  background: ${({ theme }) => theme.colors.surface};
+  padding: 1px 8px;
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  font-size: 12px;
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.textMuted};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   font-family: ${({ theme }) => theme.fonts.mono};
 `;
 

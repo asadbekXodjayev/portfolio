@@ -13,14 +13,14 @@ const Card = styled.div`
   padding: ${({ theme }) => theme.space(4)};
   background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
+  border-radius: 0;
   min-height: 160px;
 `;
 
 const Bar = styled.div`
   height: ${({ $h }) => $h || 12}px;
   width: ${({ $w }) => $w || '100%'};
-  border-radius: 3px;
+  border-radius: 0;
   background: linear-gradient(
     90deg,
     ${({ theme }) => theme.colors.surface} 25%,

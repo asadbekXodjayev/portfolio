@@ -1,309 +1,216 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
-import TerminalWindow from '../terminal/TerminalWindow';
-import Button from '../ui/Button';
-import { containerVariants, itemVariants, inViewProps, cardExit } from '../../lib/motion';
-import seedPosts from '../../data/blog.json';
+import posts from '../../data/blog.json';
 
-const LS_KEY = 'blog_local_v1';
+const sorted = [...posts].sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-/**
- * @typedef {Object} Post
- * @property {string} id
- * @property {string} title
- * @property {string} date   ISO-ish date string
- * @property {string} body
- * @property {string[]} images  data URLs (local) or plain URLs (seed)
- * @property {boolean} [local]  true => stored in this browser, deletable
- */
+const fmt = (iso) =>
+  new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-const readLocal = () => {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr : [];
-  } catch {
-    return [];
-  }
-};
+const readingMinutes = (body) => Math.max(1, Math.round(body.split(/\s+/).length / 220));
 
-const Wrap = styled.div`
+/* ───────────── Index ───────────── */
+
+const Filters = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.space(8)};
-`;
-
-const Field = styled.input`
-  padding: 8px 10px;
-  background: ${({ theme }) => theme.colors.bg};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.primary};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  outline: none;
-  width: 100%;
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-`;
-
-const Area = styled.textarea`
-  padding: 8px 10px;
-  min-height: 120px;
-  background: ${({ theme }) => theme.colors.bg};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.primary};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  outline: none;
-  resize: vertical;
-  width: 100%;
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-`;
-
-const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: ${({ theme }) => theme.space(3)};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.secondary};
-`;
-
-const FileRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: ${({ theme }) => theme.space(3)};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-const HiddenFile = styled.input`
-  display: none;
-`;
-
-const Previews = styled.div`
-  display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  margin-bottom: ${({ theme }) => theme.space(8)};
 `;
 
-const Thumb = styled.div`
-  position: relative;
-  width: 64px;
-  height: 64px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 4px;
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+const FilterBtn = styled.button`
+  padding: 4px 12px;
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 16px;
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  background: ${({ theme, $on }) => ($on ? theme.colors.primary : theme.colors.bgSecondary)};
+  color: ${({ theme, $on }) => ($on ? theme.colors.bgSecondary : theme.colors.text)};
+  box-shadow: ${({ $on }) => ($on ? 'none' : '3px 3px 0')} ${({ theme }) => theme.colors.shadow};
+  transform: ${({ $on }) => ($on ? 'translate(3px, 3px)' : 'none')};
+  &:hover { background: ${({ theme }) => theme.colors.accent}; color: ${({ theme }) => theme.colors.accentInk}; }
+`;
+
+const List = styled.ol`
+  list-style: none;
+  border-top: 2px solid ${({ theme }) => theme.colors.ink};
+`;
+
+const Item = styled.li`
+  border-bottom: 2px dotted ${({ theme }) => theme.colors.border};
+  a.row {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: ${({ theme }) => theme.space(6)};
+    padding: ${({ theme }) => theme.space(6)} 0;
+    text-decoration: none;
+    color: inherit;
   }
-  button {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 16px;
-    height: 16px;
-    line-height: 1;
-    padding: 0;
-    border: none;
-    border-radius: 3px;
-    background: ${({ theme }) => theme.colors.bg}cc;
-    color: ${({ theme }) => theme.colors.danger};
-    font-size: 12px;
-    cursor: pointer;
-  }
+  a.row:hover h2 { background: ${({ theme }) => theme.colors.accent}; color: ${({ theme }) => theme.colors.accentInk}; }
+  @media (max-width: 700px) { a.row { grid-template-columns: 1fr; gap: 6px; } }
+  time, .min { font-family: ${({ theme }) => theme.fonts.mono}; font-size: 13px; color: ${({ theme }) => theme.colors.textMuted}; display: block; }
+  h2 { font-size: 28px; margin-bottom: 8px; width: fit-content; }
+  p { font-size: 18px; color: ${({ theme }) => theme.colors.textMuted}; }
+  .tags { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; font-family: ${({ theme }) => theme.fonts.ui}; font-size: 13px; color: ${({ theme }) => theme.colors.textMuted}; }
+  .tags span { padding: 1px 8px; border: 2px solid ${({ theme }) => theme.colors.border}; background: ${({ theme }) => theme.colors.bgSecondary}; }
 `;
-
-const Note = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 11px;
-  color: ${({ theme, $err }) => ($err ? theme.colors.secondary : theme.colors.textMuted)};
-  margin-top: 6px;
-`;
-
-const PostMeta = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 8px;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-const PostBody = styled.p`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13.5px;
-  line-height: 1.65;
-  white-space: pre-wrap;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const PostImages = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
-  margin-top: 12px;
-  img {
-    width: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: 4px;
-  }
-`;
-
-const Rm = styled.button`
-  margin-left: auto;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  background: transparent;
-  color: ${({ theme }) => theme.colors.danger};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 3px;
-  cursor: pointer;
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.danger};
-  }
-`;
-
-const fileToDataUrl = (file) =>
-  new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
 
 const Blog = () => {
-  const [local, setLocal] = useState(readLocal);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [images, setImages] = useState([]);
-  const [note, setNote] = useState('');
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(LS_KEY, JSON.stringify(local));
-    } catch {
-      setNote('⚠ storage full — remove some image-heavy posts.');
-    }
-  }, [local]);
-
-  const posts = useMemo(() => {
-    const seeds = seedPosts.map((p) => ({ ...p, local: false }));
-    return [...local, ...seeds].sort((a, b) => String(b.date).localeCompare(String(a.date)));
-  }, [local]);
-
-  const onPickFiles = async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    const urls = await Promise.all(files.map(fileToDataUrl));
-    setImages((prev) => [...prev, ...urls]);
-    e.target.value = '';
-  };
-
-  const removeImage = (i) => setImages((prev) => prev.filter((_, idx) => idx !== i));
-
-  const publish = (e) => {
-    e.preventDefault();
-    if (!title.trim() && !body.trim()) {
-      setNote('⚠ add a title or some text first.');
-      return;
-    }
-    const post = {
-      id: `local-${Date.now()}`,
-      title: title.trim() || 'untitled',
-      date: new Date().toISOString().slice(0, 10),
-      body: body.trim(),
-      images,
-      local: true,
-    };
-    setLocal((prev) => [post, ...prev]);
-    setTitle('');
-    setBody('');
-    setImages([]);
-    setNote('✔ published locally (saved in this browser).');
-  };
-
-  const removePost = (id) => setLocal((prev) => prev.filter((p) => p.id !== id));
+  const [tag, setTag] = useState('All');
+  const tags = useMemo(() => ['All', ...new Set(sorted.flatMap((p) => p.tags || []))], []);
+  const shown = tag === 'All' ? sorted : sorted.filter((p) => (p.tags || []).includes(tag));
 
   return (
-    <Wrap>
-      <TerminalWindow title="~/blog — ./new-post" variant="cyan">
-        <form onSubmit={publish}>
-          <Label>
-            $ title:
-            <Field value={title} onChange={(e) => setTitle(e.target.value)} placeholder="post title" />
-          </Label>
-          <Label>
-            $ body:
-            <Area value={body} onChange={(e) => setBody(e.target.value)} placeholder="write your post... (newlines preserved)" />
-          </Label>
-          <FileRow>
-            <Button as="label" htmlFor="blog-images" type="button">
-              + add images
-            </Button>
-            <HiddenFile id="blog-images" type="file" accept="image/*" multiple onChange={onPickFiles} />
-            {images.length > 0 && <span>{images.length} attached</span>}
-          </FileRow>
-          {images.length > 0 && (
-            <Previews>
-              {images.map((src, i) => (
-                <Thumb key={i}>
-                  <img src={src} alt={`attachment ${i + 1}`} />
-                  <button type="button" onClick={() => removeImage(i)} aria-label="remove image">
-                    ×
-                  </button>
-                </Thumb>
-              ))}
-            </Previews>
-          )}
-          <div style={{ marginTop: 12 }}>
-            <Button type="submit">[ publish &gt; ]</Button>
-          </div>
-          {note && <Note $err={note.startsWith('⚠')}>{note}</Note>}
-          <Note>
-            // local only — nothing is uploaded. Permanent posts go in src/data/blog.json
-          </Note>
-        </form>
-      </TerminalWindow>
+    <div>
+      <Filters role="group" aria-label="Filter posts by topic">
+        {tags.map((t) => (
+          <FilterBtn key={t} type="button" $on={t === tag} aria-pressed={t === tag} onClick={() => setTag(t)}>
+            {t}
+          </FilterBtn>
+        ))}
+      </Filters>
+      <List>
+        {shown.map((p) => (
+          <Item key={p.id}>
+            <Link className="row" to={`/blog/${p.id}`}>
+              <div>
+                <time dateTime={p.date}>{fmt(p.date)}</time>
+                <span className="min">{readingMinutes(p.body)} min read</span>
+              </div>
+              <div>
+                <h2>{p.title}</h2>
+                <p>{p.summary}</p>
+                <div className="tags">
+                  {(p.tags || []).map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </Item>
+        ))}
+      </List>
+    </div>
+  );
+};
 
-      <motion.div variants={containerVariants} {...inViewProps}>
-        <AnimatePresence mode="popLayout">
-          {posts.map((p) => (
-            <motion.div key={p.id} variants={itemVariants} exit={cardExit} layout style={{ marginBottom: 24 }}>
-              <TerminalWindow title={`~/blog/${p.id}`}>
-                <PostMeta>
-                  <strong style={{ color: '#00ff88' }}>{p.title}</strong>
-                  <span>{p.date}</span>
-                  {p.local && <span>· local</span>}
-                  {p.local && <Rm onClick={() => removePost(p.id)}>rm</Rm>}
-                </PostMeta>
-                {p.body && <PostBody>{p.body}</PostBody>}
-                {p.images && p.images.length > 0 && (
-                  <PostImages>
-                    {p.images.map((src, i) => (
-                      <img key={i} src={src} alt={`${p.title} ${i + 1}`} loading="lazy" />
-                    ))}
-                  </PostImages>
-                )}
-              </TerminalWindow>
-            </motion.div>
+/* ───────────── Post view ───────────── */
+
+const Progress = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 8px;
+  z-index: 300;
+  width: ${({ $p }) => $p}%;
+  background: ${({ theme }) => theme.colors.accent};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.ink};
+  border-right: 2px solid ${({ theme }) => theme.colors.ink};
+`;
+
+const Article = styled.article`
+  max-width: 68ch;
+  margin: 0 auto;
+  h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 400; letter-spacing: -0.02em; margin: 12px 0 16px; }
+  h2 { font-size: 28px; margin: 44px 0 12px; }
+  p { font-size: 20px; line-height: 1.7; margin-bottom: 20px; max-width: none; }
+  ul { margin: 0 0 20px 22px; font-size: 20px; line-height: 1.7; }
+  li { margin-bottom: 6px; }
+  .meta { font-family: ${({ theme }) => theme.fonts.mono}; font-size: 13px; color: ${({ theme }) => theme.colors.textMuted}; }
+  .lede { font-size: 22px; color: ${({ theme }) => theme.colors.textMuted}; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px dotted ${({ theme }) => theme.colors.ink}; }
+  .back { font-family: ${({ theme }) => theme.fonts.ui}; font-size: 14px; }
+  .end { margin-top: 48px; padding-top: 24px; border-top: 2px dotted ${({ theme }) => theme.colors.ink}; font-family: ${({ theme }) => theme.fonts.pixel}; font-size: 17px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+`;
+
+const linkify = (text) =>
+  text.split(/(https?:\/\/[^\s)]+)/g).map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <a key={i} href={part} target="_blank" rel="noreferrer">
+        {part.replace(/^https?:\/\//, '')}
+      </a>
+    ) : (
+      part
+    ),
+  );
+
+const renderBody = (body) => {
+  const out = [];
+  let bullets = [];
+  const flush = () => {
+    if (bullets.length) {
+      out.push(
+        <ul key={`ul-${out.length}`}>
+          {bullets.map((b, i) => (
+            <li key={i}>{linkify(b)}</li>
           ))}
-        </AnimatePresence>
-      </motion.div>
-    </Wrap>
+        </ul>,
+      );
+      bullets = [];
+    }
+  };
+  body.split(/\n\n+/).forEach((block, idx) => {
+    if (block.startsWith('## ')) {
+      flush();
+      out.push(<h2 key={idx}>{block.slice(3)}</h2>);
+    } else if (block.split('\n').every((l) => l.startsWith('- '))) {
+      bullets.push(...block.split('\n').map((l) => l.slice(2)));
+      flush();
+    } else {
+      flush();
+      out.push(<p key={idx}>{linkify(block)}</p>);
+    }
+  });
+  flush();
+  return out;
+};
+
+export const PostView = ({ id }) => {
+  const post = sorted.find((p) => p.id === id);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [id]);
+
+  if (!post) {
+    return (
+      <Article>
+        <h1>Post not found</h1>
+        <p>
+          That post does not exist. <Link to="/blog">Back to all writing</Link>.
+        </p>
+      </Article>
+    );
+  }
+
+  const i = sorted.findIndex((p) => p.id === id);
+  const next = sorted[i + 1];
+
+  return (
+    <>
+      <Progress $p={progress} aria-hidden="true" />
+      <Article>
+        <Link className="back" to="/blog">
+          ← All writing
+        </Link>
+        <div className="meta" style={{ marginTop: 24 }}>
+          {fmt(post.date)} · {readingMinutes(post.body)} min read
+        </div>
+        <h1>{post.title}</h1>
+        <p className="lede">{post.summary}</p>
+        {renderBody(post.body)}
+        <div className="end">
+          <Link to="/blog">← All writing</Link>
+          {next && <Link to={`/blog/${next.id}`}>Older: {next.title} →</Link>}
+        </div>
+      </Article>
+    </>
   );
 };
 

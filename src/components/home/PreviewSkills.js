@@ -3,36 +3,31 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { topSkills } from '../../data/skills';
 import { fastContainerVariants, fadeInVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow, MoreLink } from './previewStyles';
+import { Section, Head, Heading, MoreLink } from './previewStyles';
 
-const Cloud = styled(motion.div)`
+const Cloud = styled(motion.ul)`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  list-style: none;
 `;
 
-const Tag = styled(motion.span)`
+const Tag = styled(motion.li)`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 13px;
   padding: 6px 12px;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  box-shadow: 3px 3px 0 ${({ theme }) => theme.colors.shadow};
   background: ${({ theme }) => theme.colors.bgSecondary};
   color: ${({ theme }) => theme.colors.text};
-  cursor: default;
-  transition: all ${({ theme }) => theme.animation.fast};
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 16px ${({ theme }) => theme.colors.primary}33;
-  }
 `;
 
 const PreviewSkills = () => (
   <Section variants={fastContainerVariants} {...inViewProps}>
-    <Eyebrow variants={fadeInVariants}>
-      <span>$</span> echo $SKILLS | head
-    </Eyebrow>
+    <Head>
+      <Heading variants={fadeInVariants}>Technical skills</Heading>
+      <MoreLink to="/skills">Full list</MoreLink>
+    </Head>
     <Cloud variants={fastContainerVariants}>
       {topSkills.map((s) => (
         <Tag key={s} variants={itemVariants}>
@@ -40,7 +35,6 @@ const PreviewSkills = () => (
         </Tag>
       ))}
     </Cloud>
-    <MoreLink to="/skills">see full skill set →</MoreLink>
   </Section>
 );
 

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectCard from '../ui/ProjectCard';
+import { pixelBox, pixelPress } from '../../styles/pixel';
 import RepoCard from '../ui/RepoCard';
 import SkeletonCard from '../ui/SkeletonCard';
 import { projects, categories } from '../../data/projects';
@@ -11,18 +12,18 @@ import { useGithubRepos } from '../../hooks/useGithubRepos';
 import { GITHUB_USERNAME } from '../../lib/github';
 import { containerVariants } from '../../lib/motion';
 
-const Header = styled.div`
-  margin-bottom: ${({ theme }) => theme.space(5)};
+const VisuallyHidden = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 `;
 
-const Prompt = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  color: ${({ theme }) => theme.colors.textMuted};
-  margin-bottom: ${({ theme }) => theme.space(4)};
-  strong {
-    color: ${({ theme }) => theme.colors.primary};
-  }
+const Header = styled.div`
+  margin-bottom: ${({ theme }) => theme.space(5)};
 `;
 
 const Pills = styled.div`
@@ -32,18 +33,19 @@ const Pills = styled.div`
 `;
 
 const Pill = styled.button`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12.5px;
-  padding: 6px 12px;
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 16px;
+  font-weight: 500;
+  padding: 5px 12px;
   cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.border)};
-  background: ${({ theme, $active }) => ($active ? theme.colors.primary : 'transparent')};
-  color: ${({ theme, $active }) => ($active ? theme.colors.bg : theme.colors.text)};
-  transition: all ${({ theme }) => theme.animation.fast};
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  background: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.bgSecondary)};
+  color: ${({ theme, $active }) => ($active ? theme.colors.bgSecondary : theme.colors.text)};
+  box-shadow: ${({ $active }) => ($active ? 'none' : '3px 3px 0')} ${({ theme }) => theme.colors.shadow};
+  transform: ${({ $active }) => ($active ? 'translate(3px, 3px)' : 'none')};
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme, $active }) => ($active ? theme.colors.bg : theme.colors.primary)};
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accentInk};
   }
 `;
 
@@ -55,40 +57,23 @@ const Count = styled.span`
 /* Banner linking to AppGraph — the sys-design hub with interactive
    architecture graphs (file tree / system design / flows) for these works. */
 const SysDesignBanner = styled.a`
+  ${pixelBox(4)}
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin-top: ${({ theme }) => theme.space(4)};
+  margin-top: ${({ theme }) => theme.space(5)};
   padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(4)};
-  border: 1px dashed ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12.5px;
+  background: ${({ theme }) => theme.colors.bgSecondary};
+  font-family: ${({ theme }) => theme.fonts.ui};
+  font-size: 14px;
+  text-decoration: none;
   color: ${({ theme }) => theme.colors.textMuted};
-  transition: all ${({ theme }) => theme.animation.fast};
+  ${pixelPress}
 
-  strong {
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: 600;
-  }
-
-  .cta {
-    margin-left: auto;
-    color: ${({ theme }) => theme.colors.secondary};
-    white-space: nowrap;
-  }
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    border-style: solid;
-    color: ${({ theme }) => theme.colors.text};
-    box-shadow: 0 0 24px
-      color-mix(in srgb, ${({ theme }) => theme.colors.primary} 15%, transparent);
-    .cta {
-      color: ${({ theme }) => theme.colors.primary};
-    }
-  }
+  strong { color: ${({ theme }) => theme.colors.text}; font-weight: 600; }
+  .cta { margin-left: auto; font-family: ${({ theme }) => theme.fonts.pixel}; font-size: 17px; color: ${({ theme }) => theme.colors.primary}; white-space: nowrap; }
+  &:hover .cta { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 `;
 
 const Grid = styled(motion.div)`
@@ -104,11 +89,11 @@ const Grid = styled(motion.div)`
 const Note = styled.div`
   grid-column: 1 / -1;
   padding: ${({ theme }) => theme.space(4)};
-  border: 1px dashed ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12.5px;
-  color: ${({ theme, $error }) => ($error ? theme.colors.secondary : theme.colors.textMuted)};
+  border: 2px dotted ${({ theme }) => theme.colors.ink};
+  background: ${({ theme }) => theme.colors.bgSecondary};
+  font-family: ${({ theme }) => theme.fonts.ui};
+  font-size: 14px;
+  color: ${({ theme, $error }) => ($error ? theme.colors.danger : theme.colors.textMuted)};
 `;
 
 const Projects = () => {
@@ -206,9 +191,6 @@ const Projects = () => {
   return (
     <section>
       <Header>
-        <Prompt>
-          <strong>asad@dev</strong>:~/works$ ls --projects --filter={filter.toLowerCase()}
-        </Prompt>
         <Pills id="works-filters" role="tablist" aria-label="project categories">
           {categories.map((c) => (
             <Pill
@@ -219,7 +201,7 @@ const Projects = () => {
               onClick={() => setFilter(c)}
             >
               {c}
-              <Count>[{countFor(c)}]</Count>
+              <Count>{countFor(c)}</Count>
             </Pill>
           ))}
         </Pills>
@@ -231,13 +213,14 @@ const Projects = () => {
           aria-label="Open AppGraph — interactive architecture graphs for these projects"
         >
           <span>
-            $ open <strong>sys-design</strong> — interactive architecture graphs (file tree ·
-            system design · flows) for the projects below
+            <strong>Architecture graphs.</strong> Interactive file trees, system designs and flow
+            diagrams for these projects.
           </span>
-          <span className="cta">go to AppGraph →</span>
+          <span className="cta">Open AppGraph</span>
         </SysDesignBanner>
       </Header>
 
+      <VisuallyHidden as="h2">Project list</VisuallyHidden>
       <Grid
         role="tabpanel"
         aria-labelledby="works-filters"
@@ -264,13 +247,13 @@ const Projects = () => {
 
           {showError && (
             <Note key="err" $error>
-              ✗ couldn't reach the GitHub API (rate limit or offline). Curated projects are
-              still listed above.
+              The GitHub feed could not be reached (rate limit or offline). Curated projects are
+              still listed.
             </Note>
           )}
 
           {!loading && visible.length === 0 && (
-            <Note key="empty">// no projects in this category yet.</Note>
+            <Note key="empty">No projects in this category yet.</Note>
           )}
         </AnimatePresence>
       </Grid>

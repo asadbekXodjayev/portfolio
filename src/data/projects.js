@@ -12,8 +12,6 @@ import PrevDavinchi from '../Image/previews/davinchi-codex.jpg';
 import PrevSpace from '../Image/previews/space-tourism.jpg';
 import PrevNova from '../Image/previews/nova-store.jpg';
 import PrevAiRecipe from '../Image/previews/ai-recipe.jpg';
-import PrevSpotify from '../Image/previews/spotify-stats.jpg';
-import PrevWaterpump from '../Image/previews/waterpump.jpg';
 import PrevGameStore from '../Image/previews/game-store.jpg';
 import PrevSchool from '../Image/previews/online-school.jpg';
 import PrevCalculator from '../Image/previews/calculator.jpg';
@@ -22,11 +20,7 @@ import AcademicPortfolio from '../Image/Снимок экрана (550).png';
 import PrevAppGraph from '../Image/previews/appgraph.jpg';
 import PrevInteractiveWorks from '../Image/previews/interactive-works.jpg';
 import PrevCodexLuminara from '../Image/previews/codex-luminara.jpg';
-import PrevVoid from '../Image/previews/void.jpg';
 import PrevCosmic from '../Image/previews/cosmic.jpg';
-import PrevAeternum from '../Image/previews/aeternum.jpg';
-import PrevVantage from '../Image/previews/vantage.jpg';
-import PrevNeonfall from '../Image/previews/neonfall.jpg';
 import PrevStrata from '../Image/previews/strata.jpg';
 import PrevCompile from '../Image/previews/compile.jpg';
 import PrevSubstrate from '../Image/previews/substrate.jpg';
@@ -36,7 +30,6 @@ import PrevCTM from '../Image/previews/ctm.jpg';
 import Corvette from '../Image/Снимок экрана (562).png';
 import PrevFlowers from '../Image/previews/flowers.jpg';
 import PrevShajara from '../Image/previews/shajara.jpg';
-import PrevGraphForge from '../Image/previews/graphforge.jpg';
 
 /**
  * Filter categories for the Works grid. "Open Source" is special-cased in the
@@ -176,24 +169,6 @@ export const projects = [
     img: PrevShajara,
   },
   {
-    id: 'graphforge',
-    category: 'Web',
-    title: 'GraphForge — Collaborative Diagram Editor',
-    desc: 'Universal, plugin-based collaborative diagram editor — draw flowcharts, state machines and network graphs on an SVG canvas with real-time Yjs collaboration and dagre/ELK/d3-force auto-layout. Next.js + NestJS.',
-    tags: ['Next.js', 'NestJS', 'Yjs', 'CRDT', 'ELK', 'SVG'],
-    demo: 'https://graph.xodjayev.uz/editor',
-    img: PrevGraphForge,
-  },
-  {
-    id: 'waterpump',
-    category: 'Web',
-    title: 'Water Pump',
-    desc: 'Commercial site for a water-pump business — product range and inquiry contact.',
-    tags: ['react', 'business', 'live'],
-    demo: 'https://waterpump.xodjayev.uz/',
-    img: PrevWaterpump,
-  },
-  {
     id: 'online-school',
     graph: 'school',
     category: 'Web',
@@ -292,16 +267,6 @@ export const projects = [
     img: PrevAiRecipe,
   },
   {
-    id: 'spotify-stats',
-    graph: 'spotify-app',
-    category: 'Web',
-    title: 'Spotify Stats',
-    desc: 'Spotify dashboard — your top artists, tracks and listening stats pulled live from the Spotify API.',
-    tags: ['Next.js', 'API', 'OAuth'],
-    demo: 'https://spotifystat.xodjayev.uz/',
-    img: PrevSpotify,
-  },
-  {
     id: 'type-game',
     category: 'Web',
     title: 'Type Game',
@@ -361,17 +326,6 @@ export const projects = [
 
   // ── Three.js / WebGL showcase pieces ────────────────────────────────────
   {
-    id: 'void',
-    graph: 'void-threejs',
-    category: 'Web',
-    title: 'VOID — Grimoire of the Dead',
-    desc: 'A black-magic rite forged in WebGL — a scroll-driven occult grimoire of five movements (The Black Gate, The Bone Oracle, The Sigil Wakes, The Summoning, The Void) with a glowing skull, drifting embers and animated sigils.',
-    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'scrollytelling'],
-    github: 'https://github.com/asadbekXodjayev/void-threeJs',
-    demo: 'https://void.xodjayev.uz/',
-    img: PrevVoid,
-  },
-  {
     id: 'cosmic',
     graph: 'cosmic-threejs',
     category: 'Web',
@@ -380,36 +334,6 @@ export const projects = [
     tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'astronomy'],
     demo: 'https://cosmic.xodjayev.uz/',
     img: PrevCosmic,
-  },
-  {
-    id: 'aeternum',
-    graph: 'aeternum-threejs',
-    category: 'Web',
-    title: 'AETERNUM — Memento Mori',
-    desc: 'An interactive relic forged in WebGL — a four-act meditation on mortality (The Descent, The Relic, The Reckoning, Eternity) built around a smouldering stone with scroll-bound camera moves and film-grain post.',
-    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'GLSL', 'art'],
-    demo: 'https://3js.xodjayev.uz/',
-    img: PrevAeternum,
-  },
-  {
-    id: 'vantage',
-    graph: 'vantage-threejs',
-    category: 'Web',
-    title: 'VANTAGE — 3D Car Walkaround',
-    desc: 'A scroll-driven walkaround of a 2026 concept car rendered as real geometry in a virtual studio — silhouette → exterior → engine teardown → live paint configurator (MeshPhysicalMaterial clearcoat) → telemetry, with LOD for mobile.',
-    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'PBR', 'automotive'],
-    demo: 'https://cars.xodjayev.uz/',
-    img: PrevVantage,
-  },
-  {
-    id: 'neonfall',
-    graph: 'neonfall-threejs',
-    category: 'Web',
-    title: 'NEONFALL — Arcade Experience',
-    desc: 'A scroll-driven neon-noir arcade that boots up around you — a world hub of game portals, two procedural low-poly levels (Neon Spire, Undergrid) and a playable scout-ship arena, lit by an UnrealBloom glow pipeline.',
-    tags: ['Three.js', 'GSAP', 'Lenis', 'WebGL', 'Bloom', 'game'],
-    demo: 'https://gaming.xodjayev.uz/',
-    img: PrevNeonfall,
   },
   {
     id: 'strata',

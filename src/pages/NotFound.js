@@ -1,35 +1,52 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import TerminalWindow from '../components/terminal/TerminalWindow';
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import PageHeader from '../components/ui/PageHeader';
+import { Sprite } from '../components/ui/PixelArt';
+import { ghost } from '../data/pixelArt';
 import { setDocTitle } from '../utils/helpers';
 
-const Msg = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 14px;
-  line-height: 1.8;
-  color: ${({ theme }) => theme.colors.text};
-  em { color: ${({ theme }) => theme.colors.danger}; font-style: normal; }
-  a { color: ${({ theme }) => theme.colors.primary}; }
+const float = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+`;
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+`;
+
+const Ghost = styled.div`
+  animation: ${float} 1.6s steps(4) infinite;
+`;
+
+const Links = styled.p`
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 19px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 `;
 
 const NotFound = () => {
-  const loc = useLocation();
-  useEffect(() => setDocTitle('404'), []);
+  useEffect(() => setDocTitle('page not found'), []);
   return (
-    <TerminalWindow title="bash: error" variant="cyan">
-      <Msg>
-        <div>
-          guest@asad:~$ <em>{loc.pathname.replace('/', '')}</em>
-        </div>
-        <div>bash: {loc.pathname}: command not found</div>
-        <div>&nbsp;</div>
-        <div>
-          did you mean: <Link to="/">~/home</Link> · <Link to="/works">~/works</Link> ·{' '}
-          <Link to="/about">~/about</Link>?
-        </div>
-      </Msg>
-    </TerminalWindow>
+    <>
+      <PageHeader title="Page not found" lede="That address does not exist on this site. It may have moved." />
+      <Row>
+        <Ghost>
+          <Sprite rows={ghost} size={10} />
+        </Ghost>
+        <Links>
+          <Link to="/">Home</Link>
+          <Link to="/works">Projects</Link>
+          <Link to="/contributions">Contributions</Link>
+          <Link to="/blog">Writing</Link>
+        </Links>
+      </Row>
+    </>
   );
 };
 

@@ -1,69 +1,73 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import TerminalWindow from '../terminal/TerminalWindow';
-import { fastContainerVariants, fadeInVariants, itemVariants, inViewProps } from '../../lib/motion';
-import { Section, Eyebrow, MoreLink } from './previewStyles';
+import { aiStudies, aiGoals, aiBuilt } from '../../data/ai';
+import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
+import { Section, Head, Heading, Lede, MoreLink } from './previewStyles';
 
-const P = styled(motion.p)`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.text};
-  & + & {
-    margin-top: ${({ theme }) => theme.space(3)};
-  }
-  strong {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
+const Cols = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${({ theme }) => theme.space(10)};
+  @media (max-width: 860px) { grid-template-columns: 1fr; gap: ${({ theme }) => theme.space(8)}; }
 `;
 
-const ChipRow = styled(motion.div)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: ${({ theme }) => theme.space(4)};
+const Col = styled(motion.div)`
+  h3 { font-size: 20px; margin-bottom: ${({ theme }) => theme.space(3)}; }
 `;
 
-const Chip = styled(motion.span)`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  border: 1px solid color-mix(in srgb, ${({ theme }) => theme.colors.secondary} 45%, transparent);
-  color: ${({ theme }) => theme.colors.secondary};
+const Dl = styled.dl`
+  display: grid;
+  gap: ${({ theme }) => theme.space(3)};
+  dt { font-family: ${({ theme }) => theme.fonts.ui}; font-weight: 600; font-size: 15px; }
+  dd { color: ${({ theme }) => theme.colors.textMuted}; font-size: 16px; margin-top: 2px; }
+`;
+
+const Built = styled.p`
+  margin-top: ${({ theme }) => theme.space(5)};
+  font-family: ${({ theme }) => theme.fonts.ui};
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textMuted};
 `;
 
 const PreviewAI = () => (
-  <Section variants={fastContainerVariants} {...inViewProps}>
-    <Eyebrow variants={fadeInVariants} $accent="#00ccff">
-      <span>$</span> ai --status
-    </Eyebrow>
-    <motion.div variants={itemVariants}>
-      <TerminalWindow title="~/ai-ecosystem" variant="cyan" glow>
-        <P variants={itemVariants}>
-          AI isn't a bolt-on for me — it's part of the build loop. I design and run{' '}
-          <strong>AI agents</strong> that plan, scaffold, and review code alongside me, and
-          keep a small ecosystem of models and tools orchestrated for whatever the task needs.
-        </P>
-        <P variants={itemVariants}>
-          That same agentic approach extends to <strong>quality</strong>: automated pipelines
-          that generate, run, and self-heal end-to-end tests, catch regressions before release,
-          and free up my time for the parts of a product that still need a human eye.
-        </P>
-        <ChipRow variants={fastContainerVariants}>
-          {['Agentic Coding', 'Model Orchestration', 'Automated QA', 'LLM Integrations', 'CI/CD Automation'].map(
-            (c) => (
-              <Chip key={c} variants={itemVariants}>
-                {c}
-              </Chip>
-            )
-          )}
-        </ChipRow>
-      </TerminalWindow>
-    </motion.div>
-    <MoreLink to="/skills">see the full AI &amp; automation stack →</MoreLink>
+  <Section variants={containerVariants} {...inViewProps}>
+    <Head>
+      <Heading variants={itemVariants}>AI: what I study and where I am going</Heading>
+      <MoreLink to="/blog/future-goals">Read the full goals post</MoreLink>
+    </Head>
+    <Lede>
+      AI is the direction my work is moving in. I am learning how models are built and run, and I
+      want to contribute to the infrastructure and security around them.
+    </Lede>
+    <Cols>
+      <Col variants={itemVariants}>
+        <h3>Currently studying</h3>
+        <Dl>
+          {aiStudies.map((s) => (
+            <div key={s.name}>
+              <dt>{s.name}</dt>
+              <dd>{s.note}</dd>
+            </div>
+          ))}
+        </Dl>
+        <Built>
+          Built so far: {aiBuilt.join(', ')}. <Link to="/works">See the projects</Link>.
+        </Built>
+      </Col>
+      <Col variants={itemVariants}>
+        <h3>Goals</h3>
+        <Dl>
+          {aiGoals.map((g) => (
+            <div key={g.title}>
+              <dt>{g.title}</dt>
+              <dd>{g.body}</dd>
+            </div>
+          ))}
+        </Dl>
+      </Col>
+    </Cols>
   </Section>
 );
 

@@ -1,69 +1,115 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { config } from '../../data/config';
+import { Sprite } from '../ui/PixelArt';
+import { heart } from '../../data/pixelArt';
 
 const Wrap = styled.footer`
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  padding: ${({ theme }) => theme.space(8)} ${({ theme }) => theme.space(4)};
-  margin-top: ${({ theme }) => theme.space(12)};
+  border-top: 2px solid ${({ theme }) => theme.colors.ink};
+  background: ${({ theme }) => theme.colors.bgSecondary};
+  font-family: ${({ theme }) => theme.fonts.ui};
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.textMuted};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
 `;
 
 const Inner = styled.div`
-  max-width: 1100px;
+  width: 95%;
   margin: 0 auto;
+  padding: ${({ theme }) => theme.space(10)} 0 ${({ theme }) => theme.space(6)};
   display: grid;
-  gap: ${({ theme }) => theme.space(6)};
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: ${({ theme }) => theme.space(8)};
+  grid-template-columns: 1.4fr 1fr 1fr;
+  @media (max-width: 760px) { grid-template-columns: 1fr; gap: ${({ theme }) => theme.space(6)}; }
 `;
 
 const Block = styled.div`
-  h4 { color: ${({ theme }) => theme.colors.primary}; margin-bottom: 8px; font-family: inherit; font-size: 12px; font-weight: 700; }
-  a { display: block; color: ${({ theme }) => theme.colors.textMuted}; }
-  a:hover { color: ${({ theme }) => theme.colors.secondary}; }
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.text};
+    margin-bottom: 4px;
+  }
+  a { color: ${({ theme }) => theme.colors.textMuted}; width: fit-content; }
+  a:hover { color: ${({ theme }) => theme.colors.text}; text-decoration: underline; text-decoration-thickness: 2px; }
+  p { font-family: ${({ theme }) => theme.fonts.serif}; font-size: 16px; line-height: 1.55; max-width: 36ch; }
 `;
 
 const Bottom = styled.div`
-  max-width: 1100px;
-  margin: ${({ theme }) => theme.space(6)} auto 0;
+  width: 95%;
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.space(4)} 0 ${({ theme }) => theme.space(8)};
+  border-top: 2px dotted ${({ theme }) => theme.colors.border};
+  font-size: 13px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 8px;
-  padding-top: ${({ theme }) => theme.space(4)};
-  border-top: 1px dashed ${({ theme }) => theme.colors.border};
 `;
 
-const Version = styled.span`
-  color: ${({ theme }) => theme.colors.secondary};
+const fmtTime = () =>
+  new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Tashkent' }).format(new Date());
+
+const ClockWrap = styled.span`
+  margin-left: auto;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 13px;
+`;
+
+const Clock = () => {
+  const [t, setT] = useState(fmtTime);
+  useEffect(() => {
+    const id = setInterval(() => setT(fmtTime()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <ClockWrap>
+      Tashkent <time>{t}</time>
+    </ClockWrap>
+  );
+};
+
+const HeartLink = styled(Link)`
+  display: inline-flex;
+  text-decoration: none;
+  transition: transform 90ms steps(2);
+  &:hover { transform: translateY(-3px); }
 `;
 
 const Footer = () => (
   <Wrap>
     <Inner>
       <Block>
-        <h4># contact</h4>
+        <h2>{config.name}</h2>
+        <p>Software developer working toward AI systems, with merged contributions to NVIDIA open-source projects.</p>
+      </Block>
+      <Block>
+        <h2>Contact</h2>
+        <a href={`mailto:${config.academicEmail}`}>{config.academicEmail}</a>
         <a href={`mailto:${config.email}`}>{config.email}</a>
+        <a href={config.socials.github} target="_blank" rel="noreferrer">GitHub</a>
+        <a href={config.socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href={config.socials.telegram} target="_blank" rel="noreferrer">Telegram</a>
       </Block>
       <Block>
-        <h4># social</h4>
-        <a href={config.socials.telegram} target="_blank" rel="noreferrer">telegram</a>
-        <a href={config.socials.instagram} target="_blank" rel="noreferrer">instagram</a>
-        <a href={config.socials.linkedin} target="_blank" rel="noreferrer">linkedin</a>
-      </Block>
-      <Block>
-        <h4># nav</h4>
-        <a href="/">home</a>
-        <a href="/works">works</a>
-        <a href="/about">about</a>
-        <a href="/contacts">contact</a>
+        <h2>Site</h2>
+        <Link to="/works">Projects</Link>
+        <Link to="/contributions">Contributions</Link>
+        <Link to="/blog">Writing</Link>
+        <Link to="/about">About</Link>
       </Block>
     </Inner>
     <Bottom>
-      <span>© {new Date().getFullYear()} {config.name}. built with ♥ in the terminal.</span>
-      <span>build <Version>{config.version}</Version></span>
+      <span>© {new Date().getFullYear()} {config.fullName}</span>
+      <span aria-hidden="true">·</span>
+      <span>Drawn pixel by pixel</span>
+      <HeartLink to="/ascii" aria-label="Pixel heart">
+        <Sprite rows={heart} size={3} />
+      </HeartLink>
+      <Clock />
     </Bottom>
   </Wrap>
 );

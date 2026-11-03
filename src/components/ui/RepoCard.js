@@ -5,28 +5,19 @@ import { GitHubIcon, GraphIcon } from './ProjectCard';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
 import { formatUpdated } from '../../lib/github';
 import { appgraphUrl } from '../../data/config';
+import { pixelBox, pixelPress } from '../../styles/pixel';
 
-// Green + black: green accent; cyan reserved for AI/ML + the live "Open Source" feed.
-const accentFor = (theme, category) =>
-  category === 'AI/ML' || category === 'Open Source'
-    ? theme.colors.secondary
-    : theme.colors.primary;
+const accentFor = (theme) => theme.colors.primary;
 
 const Card = styled(motion.article)`
   --accent: ${({ theme, $category }) => accentFor(theme, $category)};
   display: flex;
   flex-direction: column;
+  ${pixelBox(4)}
   background: ${({ theme }) => theme.colors.bgSecondary};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
   overflow: hidden;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  transition: border-color ${({ theme }) => theme.animation.fast},
-    box-shadow ${({ theme }) => theme.animation.fast};
-  &:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent);
-  }
+  font-family: ${({ theme }) => theme.fonts.ui};
+  ${pixelPress}
 `;
 
 const Cover = styled.div`
@@ -40,9 +31,6 @@ const Cover = styled.div`
     display: block;
     transition: transform ${({ theme }) => theme.animation.normal}
       ${({ theme }) => theme.animation.easing};
-  }
-  ${Card}:hover & img {
-    transform: scale(1.05);
   }
 `;
 
@@ -64,17 +52,18 @@ const Head = styled.div`
 
 const Name = styled.h3`
   margin: 0;
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.primary};
-  word-break: break-all;
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 21px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const Cat = styled.span`
   margin-left: auto;
-  font-size: 10px;
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  border-radius: 3px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.textMuted};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 0;
   padding: 1px 6px;
   white-space: nowrap;
 `;
@@ -82,7 +71,8 @@ const Cat = styled.span`
 const Desc = styled.p`
   margin: 0;
   flex: 1;
-  font-size: 12.5px;
+  font-family: ${({ theme }) => theme.fonts.serif};
+  font-size: 16px;
   line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
 `;
@@ -92,7 +82,7 @@ const Meta = styled.div`
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  font-size: 11px;
+  font-size: 13px;
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
@@ -115,15 +105,15 @@ const View = styled.a`
   margin-top: 4px;
   padding: 6px 10px;
   align-self: flex-start;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: 12px;
-  transition: all ${({ theme }) => theme.animation.fast};
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  border-radius: 0;
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 14px;
+  text-decoration: none;
+  transition: border-color ${({ theme }) => theme.animation.fast};
   &:hover {
-    border-color: var(--accent);
-    color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 25%, transparent);
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accentInk};
   }
 `;
 
@@ -152,15 +142,15 @@ const RepoCard = ({ repo }) => {
           <Name>{repo.title || repo.name}</Name>
           <Cat>{category}</Cat>
         </Head>
-        <Desc>{repo.description || '// no description provided'}</Desc>
+        <Desc>{repo.description || 'No description provided.'}</Desc>
         <Meta>
           {repo.language && <Lang>{repo.language}</Lang>}
-          <span>★ {repo.stars}</span>
-          {repo.updatedAt && <span>updated {formatUpdated(repo.updatedAt)}</span>}
+          <span>{repo.stars} stars</span>
+          {repo.updatedAt && <span>Updated {formatUpdated(repo.updatedAt)}</span>}
         </Meta>
         <Actions>
           <View href={repo.htmlUrl} target="_blank" rel="noreferrer">
-            <GitHubIcon /> view on github ↗
+            <GitHubIcon /> View on GitHub
           </View>
           {repo.graph && (
             <View
@@ -169,7 +159,7 @@ const RepoCard = ({ repo }) => {
               rel="noreferrer"
               title="Interactive architecture graphs — file tree, system design, flows"
             >
-              <GraphIcon /> sys-design
+              <GraphIcon /> Architecture
             </View>
           )}
         </Actions>

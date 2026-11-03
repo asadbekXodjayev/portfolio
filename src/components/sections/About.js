@@ -1,166 +1,109 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import TerminalWindow from '../terminal/TerminalWindow';
 import { config, interests } from '../../data/config';
-import { bioLines, timeline, currentlyExploring } from '../../data/about';
-import { asciiPortrait } from '../../utils/ascii';
+import { bioLines, timeline } from '../../data/about';
+import { aiStudies, aiGoals } from '../../data/ai';
 import { containerVariants, itemVariants, inViewProps } from '../../lib/motion';
 
 const Stack = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.space(8)};
+  gap: ${({ theme }) => theme.space(16)};
 `;
 
-const Grid = styled.div`
+const Block = styled.section`
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: ${({ theme }) => theme.space(8)};
+  @media (max-width: 800px) { grid-template-columns: 1fr; gap: ${({ theme }) => theme.space(4)}; }
+`;
+
+const Label = styled.h2`
+  font-size: 24px;
+  position: sticky;
+  top: 84px;
+  align-self: start;
+  @media (max-width: 800px) { position: static; }
+`;
+
+const Prose = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.space(4)};
+  p { font-size: 19px; line-height: 1.65; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  a { text-underline-offset: 3px; }
+`;
+
+const Facts = styled.dl`
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 8px 16px;
+  font-family: ${({ theme }) => theme.fonts.ui};
+  font-size: 15px;
+  padding-bottom: ${({ theme }) => theme.space(5)};
+  border-bottom: 2px dotted ${({ theme }) => theme.colors.border};
+  dt { color: ${({ theme }) => theme.colors.textMuted}; }
+`;
+
+const Dl = styled.dl`
+  display: grid;
+  gap: ${({ theme }) => theme.space(4)};
+  dt { font-family: ${({ theme }) => theme.fonts.ui}; font-weight: 600; font-size: 16px; }
+  dd { font-size: 17px; color: ${({ theme }) => theme.colors.textMuted}; margin-top: 2px; }
+`;
+
+const Timeline = styled(motion.ol)`
+  list-style: none;
   display: grid;
   gap: ${({ theme }) => theme.space(6)};
-  grid-template-columns: 1fr;
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1.4fr;
-  }
 `;
 
-const Ascii = styled.pre`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 10px;
-  line-height: 1.1;
-  text-align: center;
+const Entry = styled(motion.li)`
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: ${({ theme }) => theme.space(4)};
+  @media (max-width: 560px) { grid-template-columns: 1fr; gap: 2px; }
+  time { font-family: ${({ theme }) => theme.fonts.mono}; font-size: 13px; color: ${({ theme }) => theme.colors.textMuted}; padding-top: 5px; }
+  h3 { font-size: 20px; margin-bottom: 4px; }
+  p { font-size: 17px; color: ${({ theme }) => theme.colors.textMuted}; }
 `;
 
-const Line = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
-  color: ${({ theme }) => theme.colors.text};
-  margin: 4px 0;
-  line-height: 1.55;
-  strong {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-  em {
-    color: ${({ theme }) => theme.colors.secondary};
-    font-style: normal;
-  }
-`;
-
-const InterestGrid = styled.div`
+const InterestRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: ${({ theme }) => theme.space(4)};
 `;
 
 const Chip = styled.button`
-  border: 1px solid ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.border)};
-  color: ${({ theme, $active }) => ($active ? theme.colors.bg : theme.colors.text)};
-  background: ${({ theme, $active }) => ($active ? theme.colors.primary : 'transparent')};
-  padding: 4px 10px;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 150ms;
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
+  padding: 5px 12px;
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 16px;
+  border: 2px solid ${({ theme }) => theme.colors.ink};
+  color: ${({ theme, $active }) => ($active ? theme.colors.accentInk : theme.colors.text)};
+  background: ${({ theme, $active }) => ($active ? theme.colors.accent : theme.colors.bgSecondary)};
+  box-shadow: ${({ $active }) => ($active ? 'none' : '3px 3px 0')} ${({ theme }) => theme.colors.shadow};
+  transform: ${({ $active }) => ($active ? 'translate(3px, 3px)' : 'none')};
+  &:hover { background: ${({ theme }) => theme.colors.accent}; color: ${({ theme }) => theme.colors.accentInk}; }
 `;
 
-const Desc = styled.div`
-  margin-top: 12px;
-  padding: 10px;
-  border-left: 2px solid ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.surface};
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 13px;
-`;
-
-const SectionTitle = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 13px;
+const Desc = styled.p`
+  margin-top: 14px;
+  padding-left: 14px;
+  border-left: 4px solid ${({ theme }) => theme.colors.accent};
+  font-size: 17px;
   color: ${({ theme }) => theme.colors.textMuted};
-  margin-bottom: ${({ theme }) => theme.space(2)};
-  strong {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
 `;
 
-const Timeline = styled(motion.div)`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.space(5)};
-  padding-left: ${({ theme }) => theme.space(6)};
-  &::before {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 4px;
-    bottom: 4px;
-    width: 1px;
-    background: ${({ theme }) => theme.colors.border};
-  }
-`;
+const facts = bioLines.filter((b) => /^<strong>[a-z]+:<\/strong>/i.test(b.t));
+const paragraphs = bioLines.filter((b) => !/^<strong>[a-z]+:<\/strong>/i.test(b.t));
 
-const Entry = styled(motion.div)`
-  position: relative;
-  &::before {
-    content: '';
-    position: absolute;
-    left: -${({ theme }) => theme.space(6)};
-    top: 4px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: ${({ theme }) => theme.colors.bg};
-    border: 2px solid ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 12px ${({ theme }) => theme.colors.primary}55;
-  }
-`;
-
-const Year = styled.div`
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.primary};
-  opacity: 0.7;
-`;
-
-const EntryTitle = styled.h3`
-  margin: 2px 0 4px;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 15px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const EntryBody = styled.p`
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const ExploreGrid = styled(motion.div)`
-  display: grid;
-  gap: ${({ theme }) => theme.space(3)};
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-`;
-
-const ExploreCard = styled(motion.div)`
-  padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(4)};
-  border: 1px solid color-mix(in srgb, ${({ theme }) => theme.colors.secondary} 35%, transparent);
-  border-radius: 6px;
-  background: ${({ theme }) => theme.colors.surface};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  strong {
-    color: ${({ theme }) => theme.colors.secondary};
-    font-size: 13px;
-  }
-  span {
-    display: block;
-    margin-top: 4px;
-    font-size: 12px;
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-`;
+const parseFact = (html) => {
+  const m = html.match(/^<strong>([^<]+):<\/strong>\s*(.*)$/i);
+  return m ? { k: m[1], v: m[2].replace(/&amp;/g, '&') } : { k: '', v: html };
+};
 
 const About = () => {
   const [active, setActive] = useState('');
@@ -168,72 +111,92 @@ const About = () => {
 
   return (
     <Stack>
-      <Grid>
-        <TerminalWindow title="~/about/portrait">
-          <Ascii>{asciiPortrait}</Ascii>
-          <div style={{ marginTop: 12, fontSize: 12, color: '#999' }}>
-            <div># system</div>
-            <div>os:     {config.systemInfo.os}</div>
-            <div>kernel: {config.systemInfo.kernel}</div>
-            <div>shell:  {config.systemInfo.shell}</div>
-            <div>editor: {config.systemInfo.editor}</div>
-            <div>uptime: {config.systemInfo.uptime}</div>
-            <div>host:   {config.systemInfo.host}</div>
-          </div>
-        </TerminalWindow>
+      <Block>
+        <Label>Background</Label>
+        <Prose>
+          <Facts>
+            {facts
+              .map((f) => parseFact(f.t))
+              .filter((f) => !/^(user|email)$/i.test(f.k))
+              .map((f) => (
+                <React.Fragment key={f.k}>
+                  <dt>{f.k[0].toUpperCase() + f.k.slice(1)}</dt>
+                  <dd>{f.v}</dd>
+                </React.Fragment>
+              ))}
+            <dt>Email</dt>
+            <dd>
+              <a href={`mailto:${config.academicEmail}`}>{config.academicEmail}</a>
+            </dd>
+          </Facts>
+          {paragraphs.map((b, i) => (
+            <p key={i} dangerouslySetInnerHTML={{ __html: b.t }} />
+          ))}
+        </Prose>
+      </Block>
 
-        <TerminalWindow title="~/about/bio">
-          <motion.div variants={containerVariants} {...inViewProps}>
-            {bioLines.map((b, i) => (
-              <Line key={i} as={motion.div} variants={itemVariants} dangerouslySetInnerHTML={{ __html: b.t }} />
+      <Block>
+        <Label>AI: studies and goals</Label>
+        <Prose>
+          <p>
+            AI is where my work is heading. I am studying how models are built and run, and I want
+            to contribute to the infrastructure and security around them. The longer version is in{' '}
+            <Link to="/blog/future-goals">my goals post</Link>.
+          </p>
+          <Dl>
+            {aiStudies.map((s) => (
+              <div key={s.name}>
+                <dt>{s.name}</dt>
+                <dd>{s.note}</dd>
+              </div>
             ))}
-          </motion.div>
-          <div style={{ marginTop: 16, color: '#00ccff', fontSize: 12 }}># interests</div>
-          <InterestGrid>
+          </Dl>
+          <h3 style={{ fontSize: 20, marginTop: 8 }}>Goals</h3>
+          <Dl>
+            {aiGoals.map((g) => (
+              <div key={g.title}>
+                <dt>{g.title}</dt>
+                <dd>{g.body}</dd>
+              </div>
+            ))}
+          </Dl>
+        </Prose>
+      </Block>
+
+      <Block>
+        <Label>Timeline</Label>
+        <Timeline variants={containerVariants} {...inViewProps}>
+          {timeline.map((t) => (
+            <Entry key={t.year} variants={itemVariants}>
+              <time>{t.year}</time>
+              <div>
+                <h3>{t.title}</h3>
+                <p>{t.body}</p>
+              </div>
+            </Entry>
+          ))}
+        </Timeline>
+      </Block>
+
+      <Block>
+        <Label>Outside work</Label>
+        <div>
+          <InterestRow>
             {interests.map((i) => (
               <Chip
                 key={i.name}
+                type="button"
                 $active={i.name === active}
+                aria-pressed={i.name === active}
                 onClick={() => setActive(i.name === active ? '' : i.name)}
               >
                 {i.name}
               </Chip>
             ))}
-          </InterestGrid>
+          </InterestRow>
           {current && <Desc>{current.desc}</Desc>}
-        </TerminalWindow>
-      </Grid>
-
-      <div>
-        <SectionTitle>
-          <strong>$</strong> git log --oneline ~/journey
-        </SectionTitle>
-        <TerminalWindow title="~/about/timeline" variant="cyan">
-          <Timeline variants={containerVariants} {...inViewProps}>
-            {timeline.map((t) => (
-              <Entry key={t.year} variants={itemVariants}>
-                <Year>{t.year}</Year>
-                <EntryTitle>{t.title}</EntryTitle>
-                <EntryBody>{t.body}</EntryBody>
-              </Entry>
-            ))}
-          </Timeline>
-        </TerminalWindow>
-      </div>
-
-      <div>
-        <SectionTitle>
-          <strong>$</strong> watch ~/currently-exploring
-        </SectionTitle>
-        <ExploreGrid variants={containerVariants} {...inViewProps}>
-          {currentlyExploring.map((e) => (
-            <ExploreCard key={e.name} variants={itemVariants}>
-              <strong>{e.name}</strong>
-              <span>{e.note}</span>
-            </ExploreCard>
-          ))}
-        </ExploreGrid>
-      </div>
+        </div>
+      </Block>
     </Stack>
   );
 };

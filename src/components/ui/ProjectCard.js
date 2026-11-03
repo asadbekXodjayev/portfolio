@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import Badge from './Badge';
 import { itemVariants, cardHover, cardTap, cardExit } from '../../lib/motion';
 import { appgraphUrl } from '../../data/config';
+import { pixelBox, pixelPress } from '../../styles/pixel';
 
-// Green + black terminal theme: green everywhere, cyan only for the AI/ML tier.
-const accentFor = (theme, category) =>
-  category === 'AI/ML' ? theme.colors.secondary : theme.colors.primary;
+// One accent across the site: ink blue.
+const accentFor = (theme) => theme.colors.primary;
 
 // Card sets a single CSS var (--accent); every child reads it. Keeps things tidy.
 const Card = styled(motion.article)`
@@ -15,18 +15,11 @@ const Card = styled(motion.article)`
   position: relative;
   display: flex;
   flex-direction: column;
+  ${pixelBox(4)}
   background: ${({ theme }) => theme.colors.bgSecondary};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 6px;
   overflow: hidden;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  transition: border-color ${({ theme }) => theme.animation.fast},
-    box-shadow ${({ theme }) => theme.animation.fast};
-
-  &:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent);
-  }
+  font-family: ${({ theme }) => theme.fonts.ui};
+  ${pixelPress}
 `;
 
 // Full-card "stretched link": an invisible anchor covering the whole card.
@@ -42,6 +35,7 @@ const Cover = styled.div`
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.surface};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.ink};
   img {
     width: 100%;
     height: 100%;
@@ -49,9 +43,6 @@ const Cover = styled.div`
     display: block;
     transition: transform ${({ theme }) => theme.animation.normal}
       ${({ theme }) => theme.animation.easing};
-  }
-  ${Card}:hover & img {
-    transform: scale(1.05);
   }
 `;
 
@@ -62,16 +53,9 @@ const Placeholder = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  letter-spacing: 2px;
-  color: ${({ theme }) => theme.colors.bg};
-  background: linear-gradient(135deg, var(--accent) 0%, ${({ theme }) => theme.colors.bgSecondary} 90%);
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08) 0 10px, transparent 10px 20px);
-  }
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textMuted};
+  background: ${({ theme }) => theme.colors.surface};
 `;
 
 const Overlay = styled.div`
@@ -80,10 +64,10 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.colors.bg}cc;
+  background: color-mix(in srgb, ${({ theme }) => theme.colors.bg} 80%, transparent);
   color: var(--accent);
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 500;
   opacity: 0;
   transition: opacity ${({ theme }) => theme.animation.fast};
   ${Card}:hover & {
@@ -108,22 +92,25 @@ const TopRow = styled.div`
 
 const Title = styled.h3`
   margin: 0;
-  font-size: 15px;
-  color: ${({ theme }) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.fonts.pixel};
+  font-size: 21px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const Cat = styled.span`
-  font-size: 10px;
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  border-radius: 3px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.textMuted};
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  border-radius: 0;
   padding: 1px 6px;
   white-space: nowrap;
 `;
 
 const Desc = styled.p`
   margin: 0;
-  font-size: 12.5px;
+  font-family: ${({ theme }) => theme.fonts.serif};
+  font-size: 16px;
   line-height: 1.5;
   color: ${({ theme }) => theme.colors.textMuted};
   flex: 1;
@@ -143,17 +130,18 @@ const Footer = styled.div`
   gap: 12px;
   margin-top: 4px;
   padding-top: 10px;
-  border-top: 1px dashed ${({ theme }) => theme.colors.border};
-  font-size: 12px;
+  border-top: 2px dotted ${({ theme }) => theme.colors.border};
+  font-size: 14px;
 `;
 
 const ActionLink = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    text-decoration: underline;
   }
 `;
 
@@ -163,12 +151,12 @@ const Meta = styled.span`
   gap: 5px;
   margin-left: auto;
   color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 11px;
+  font-size: 13px;
 `;
 
 const Soon = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 11px;
+  font-size: 13px;
 `;
 
 export const GitHubIcon = (props) => (
@@ -214,7 +202,7 @@ const ProjectCard = ({ project }) => {
         ) : (
           <Placeholder>{category}</Placeholder>
         )}
-        {(demo || github) && <Overlay>view project →</Overlay>}
+        {(demo || github) && <Overlay>View project</Overlay>}
       </Cover>
       <Body>
         <TopRow>
@@ -225,19 +213,19 @@ const ProjectCard = ({ project }) => {
         {tags.length > 0 && (
           <Tags>
             {tags.map((t) => (
-              <Badge key={t}>#{t}</Badge>
+              <Badge key={t}>{t}</Badge>
             ))}
           </Tags>
         )}
         <Footer>
           {github && (
             <ActionLink href={github} target="_blank" rel="noreferrer">
-              <GitHubIcon /> code
+              <GitHubIcon /> Code
             </ActionLink>
           )}
           {demo && (
             <ActionLink href={demo} target="_blank" rel="noreferrer">
-              live ↗
+              Live site
             </ActionLink>
           )}
           {graph && (
@@ -247,14 +235,14 @@ const ProjectCard = ({ project }) => {
               rel="noreferrer"
               title="Interactive architecture graphs — file tree, system design, flows"
             >
-              <GraphIcon /> sys-design
+              <GraphIcon /> Architecture
             </ActionLink>
           )}
-          {placeholder && !demo && !github && <Soon>// details soon</Soon>}
+          {placeholder && !demo && !github && <Soon>Details coming soon</Soon>}
           {(stars != null || language) && (
             <Meta>
               {language && <span>{language}</span>}
-              {stars != null && <span>★ {stars}</span>}
+              {stars != null && <span>{stars} stars</span>}
             </Meta>
           )}
         </Footer>
